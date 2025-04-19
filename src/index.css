@@ -1,3 +1,45 @@
+/* src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.p-dropdown.p-focus {
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+.p-dropdown-items-wrapper {
+  margin-top: 10px;
+}
+.p-dropdown-panel {
+  margin-top: 4px;
+  border-radius: 4px;
+}
+.p-dropdown-label.p-placeholder {
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #4d4d4d;
+  letter-spacing: 0px;
+}
+.p-dropdown-label {
+  color: #000000 !important;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0px;
+}
+
+.p-dropdown-trigger {
+  width: 10px;
+  margin-right: 17.33px;
+  color: #808080;
+}
+/* .p-button-label {
+  font-family: Inter;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0px;
+  color: #ffffff;
+} */
