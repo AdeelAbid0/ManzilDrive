@@ -23,6 +23,9 @@ const Header = () => {
           <div className="flex items-center ml-[547px] gap-3">
             <Button
               label="Login"
+              onClick={() => {
+                navigate("/login");
+              }}
               className="text-primary font-inter font-medium text-sm border rounded border-primary w-[140px] h-[46px] focus:ring-0 focus:outline-none"
             />
             <Button

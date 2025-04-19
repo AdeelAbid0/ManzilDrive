@@ -5,6 +5,7 @@ import HeroSection from "./Components/HeroSection/HeroSection";
 import Products from "./Components/Products/Products";
 import Footer from "./Components/Footer/Footer";
 import Register from "./Pages/Register/Register";
+import Login from "./Pages/Login/Login";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
             }
           />
           <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </div>
     </div>
