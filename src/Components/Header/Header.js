@@ -3,12 +3,17 @@ import { Logo } from "../../Utils/Icons";
 
 import { Button } from "primereact/button";
 import { useNavigate } from "react-router-dom";
-const Header = () => {
+const Header = ({ setLogin }) => {
   const navigate = useNavigate();
   return (
     <div className="flex justify-center items-center w-[1440px] h-[70px] bg-[#FFFFFF]">
       <div className="flex w-[1312px]">
-        <div className="flex items-center  w-[157px] gap-[8px]">
+        <div
+          className="flex items-center  w-[157px] gap-[8px] cursor-pointer"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
           <Logo />
           <h1 className="text-primary font-bold text-lg font-inter leading-[100%]">
             Manzil Drive
@@ -24,13 +29,16 @@ const Header = () => {
             <Button
               label="Login"
               onClick={() => {
-                navigate("/login");
+
+                setLogin(false);
+
               }}
               className="text-primary font-inter font-medium text-sm border rounded border-primary w-[140px] h-[46px] focus:ring-0 focus:outline-none"
             />
             <Button
               label="Register"
               onClick={() => {
+                setLogin(false);
                 navigate("/register");
               }}
               className="text-white font-medium text-sm border rounded border-primary w-[140px] h-[46px] bg-primary focus:ring-0 focus:outline-none"

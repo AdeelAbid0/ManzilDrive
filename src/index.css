@@ -1,14 +1,15 @@
-/* src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/********************************************* DROPDOWN */
 .p-dropdown.p-focus {
   box-shadow: none !important;
   border-color: transparent !important;
 }
 .p-dropdown-items-wrapper {
   margin-top: 10px;
+  max-height: 240px !important;
 }
 .p-dropdown-panel {
   margin-top: 4px;
@@ -35,11 +36,16 @@
   margin-right: 17.33px;
   color: #808080;
 }
-/* .p-button-label {
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+  color: white !important;
+  background-color: #00796b !important;
+}
+
+/********************************************* BUTTON */
+
+.p-button-label {
   font-family: Inter;
   font-weight: 500;
-  font-size: 16px;
   line-height: 22px;
   letter-spacing: 0px;
-  color: #ffffff;
-} */
+}
