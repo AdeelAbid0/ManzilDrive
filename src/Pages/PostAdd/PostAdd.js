@@ -3,8 +3,8 @@ import { InputText } from "primereact/inputtext";
 import React, { useState } from "react";
 import { InputTextarea } from "primereact/inputtextarea";
 import { CheckIcon } from "../../Utils/Icons";
-import ImageUpload from "./Component/ImageUpload";
-import PersonalInfo from "./Component/PersonalInfo";
+import ImageUpload from "./Components/ImageUpload";
+import PersonalInfo from "./Components/PersonalInfo";
 const PostAdd = () => {
   const [selectedCity, setSelectedCity] = useState(null);
   const [checked, setChecked] = useState(false);
