@@ -4,7 +4,7 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { useNavigate } from "react-router-dom";
 
-const Login = ({ setLogin }) => {
+const Login = () => {
   const navigate = useNavigate();
 
   return (
@@ -41,10 +41,12 @@ const Login = ({ setLogin }) => {
           type="email"
           placeholder="Email"
           className="font-inter font-normal text-input text-sm w-[344px] h-[54px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3 mt-4 bg-[#F7F7F7]"
+
         />
         <InputText
           type="text"
           placeholder="Password"
+
           className="font-inter font-normal text-input text-sm w-[344px] h-[54px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3 mt-4 bg-[#F7F7F7]"
         />
         <Button
@@ -53,6 +55,7 @@ const Login = ({ setLogin }) => {
             setLogin(true);
             navigate("/postadd");
           }}
+
           className="text-white font-inter font-medium text-sm border rounded border-primary leading-[22px] w-[344px] h-[48px] bg-primary focus:ring-0 focus:outline-none mt-4"
         />
         <div className="flex items-start w-[344px] h-[28px] mt-2">
