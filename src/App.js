@@ -6,9 +6,9 @@ import Products from "./Components/Products/Products";
 import Footer from "./Components/Footer/Footer";
 import Register from "./Pages/Register/Register";
 import Login from "./Pages/Login/Login";
-import Dashboard from "./Components/Dashboard/Dashboard";
 import Sidebar from "./Components/Sidebar/Sidebar";
-import PostAdd from "./Components/PostAdd/PostAdd";
+import Dashboard from "./Pages/Dashboard/Dashboard";
+import PostAdd from "./Pages/PostAdd/PostAdd";
 
 const App = () => {
   const [login, setLogin] = useState(false);
