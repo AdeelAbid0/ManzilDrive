@@ -63,7 +63,7 @@ const Footer = () => {
           <InputText
             type="email"
             placeholder="Email"
-            className="font-inter font-normal text-black text-sm w-[344px] h-[40px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3 mt-4"
+            className="font-inter font-normal text-input text-sm w-[344px] h-[40px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3 mt-4"
           />
           <Button
             label="Subscribe"

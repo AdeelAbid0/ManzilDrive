@@ -38,27 +38,27 @@ const Register = () => {
         <InputText
           type="email"
           placeholder="Email"
-          className="font-inter font-normal text-black text-sm w-[344px] h-[54px] rounded focus:ring-0 focus:outline-none placeholder-[#B1B0B0] placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3 mt-4 bg-[#F7F7F7]"
+          className="font-inter font-normal text-input text-sm w-[344px] h-[54px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3 mt-4 bg-[#F7F7F7]"
         />
         <InputText
           type="text"
           placeholder="Password"
-          className="font-inter font-normal text-black text-sm w-[344px] h-[54px] rounded focus:ring-0 focus:outline-none placeholder-[#B1B0B0] placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3 mt-4 bg-[#F7F7F7]"
+          className="font-inter font-normal text-input text-sm w-[344px] h-[54px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3 mt-4 bg-[#F7F7F7]"
         />
         <InputText
           type="number"
           placeholder="Phone Number"
-          className="font-inter font-normal text-black text-sm w-[344px] h-[54px] rounded focus:ring-0 focus:outline-none placeholder-[#B1B0B0] placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3 mt-4 bg-[#F7F7F7]"
+          className="font-inter font-normal text-input text-sm w-[344px] h-[54px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3 mt-4 bg-[#F7F7F7]"
         />
         <InputText
           type="text"
           placeholder="Shop Name"
-          className="font-inter font-normal text-black text-sm w-[344px] h-[54px] rounded focus:ring-0 focus:outline-none placeholder-[#B1B0B0] placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3 mt-4 bg-[#F7F7F7]"
+          className="font-inter font-normal text-input text-sm w-[344px] h-[54px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3 mt-4 bg-[#F7F7F7]"
         />
         <InputText
           type="text"
           placeholder="Address"
-          className="font-inter font-normal text-black text-sm w-[344px] h-[54px] rounded focus:ring-0 focus:outline-none placeholder-[#B1B0B0] placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3 mt-4 bg-[#F7F7F7]"
+          className="font-inter font-normal text-input text-sm w-[344px] h-[54px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3 mt-4 bg-[#F7F7F7]"
         />
         <Button
           label="Register"

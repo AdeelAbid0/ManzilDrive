@@ -7,7 +7,8 @@ module.exports = {
         primarygrey: "#6383A6",
         primaryblue: "#00417A",
         secondary: "#001326",
-        placeholder: "#4D4D4D",
+        placeholder: "#57756E",
+        input: "#666666",
         search: "#004F95",
         gradient: "#001F3F",
       },
@@ -24,5 +25,6 @@ module.exports = {
       },
     },
   },
+
   plugins: [],
 };

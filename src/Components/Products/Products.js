@@ -20,7 +20,7 @@ const Products = () => {
         <div>
           <InputText
             placeholder="Car Make or Model"
-            className="font-inter font-normal text-black text-sm w-[271px] h-[42px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
+            className="font-inter font-normal text-input text-sm w-[271px] h-[42px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
           />
           <div className="absolute mt-[-29px] ml-[240px]">
             <SearchIcon />
@@ -33,13 +33,13 @@ const Products = () => {
             options={cities}
             optionLabel="name"
             placeholder="Select a City"
-            className="font-inter items-center font-normal text-black text-sm w-[271px] h-[42px] bg-white rounded placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
+            className="font-inter items-center font-normal text-input text-sm w-[271px] h-[42px] bg-white rounded placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
           />
         </div>
         <div>
           <InputText
             placeholder="Location"
-            className="font-inter font-normal text-black text-sm w-[271px] h-[42px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
+            className="font-inter font-normal text-input text-sm w-[271px] h-[42px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
           />
         </div>
         <div>
