@@ -29,8 +29,9 @@ const Header = ({ setLogin }) => {
             <Button
               label="Login"
               onClick={() => {
+
                 setLogin(false);
-                navigate("/login");
+
               }}
               className="text-primary font-inter font-medium text-sm border rounded border-primary w-[140px] h-[46px] focus:ring-0 focus:outline-none"
             />
