@@ -19,7 +19,7 @@ const ImageUpload = () => {
 
   return (
     <div className="flex flex-col gap-3">
-      {[0, 1, 2].map((row) => (
+      {[0, 1].map((row) => (
         <div key={row} className="flex gap-3">
           {[0, 1, 2].map((col) => {
             const index = row * 3 + col;

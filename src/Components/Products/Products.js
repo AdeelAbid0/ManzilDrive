@@ -4,9 +4,11 @@ import { SearchIcon } from "../../Utils/Icons";
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import Details from "../Details.js/Details";
+import HeroSection from "../HeroSection/HeroSection";
 const Products = () => {
   const [selectedCity, setSelectedCity] = useState(null);
   const [checked, setChecked] = useState(false);
+  const [viewDetail, setViewDetail] = useState(false);
   const cities = [
     { name: "New York", code: "NY" },
     { name: "Rome", code: "RM" },
@@ -16,44 +18,50 @@ const Products = () => {
   ];
   return (
     <div className="flex flex-col items-center w-[1440px] h-auto">
-      <div className="flex items-center w-[1180px] h-[90px] rounded bg-search mt-[-45px] pl-[24px] gap-4">
-        <div>
-          <InputText
-            placeholder="Car Make or Model"
-            className="font-inter font-normal text-input text-sm w-[271px] h-[42px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
-          />
-          <div className="absolute mt-[-29px] ml-[240px]">
-            <SearchIcon />
+      {!viewDetail && <HeroSection />}
+      {!viewDetail && (
+        <div className="flex items-center w-[1180px] h-[90px] rounded bg-search mt-[-45px] pl-[24px] gap-4">
+          <div>
+            <InputText
+              placeholder="Car Make or Model"
+              className="font-inter font-normal text-input text-sm w-[271px] h-[42px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
+            />
+            <div className="absolute mt-[-29px] ml-[240px]">
+              <SearchIcon />
+            </div>
+          </div>
+          <div>
+            <Dropdown
+              value={selectedCity}
+              onChange={(e) => setSelectedCity(e.value)}
+              options={cities}
+              optionLabel="name"
+              placeholder="Select a City"
+              className="font-inter items-center font-normal text-input text-sm w-[271px] h-[42px] bg-white rounded placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
+            />
+          </div>
+          <div>
+            <InputText
+              placeholder="Location"
+              className="font-inter font-normal text-input text-sm w-[271px] h-[42px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
+            />
+          </div>
+          <div>
+            <Button
+              label="Search"
+              className="text-white font-inter font-medium text-sm border rounded border-primary bg-[#22AB9B] w-[271px] h-[46px] focus:ring-0 focus:outline-none"
+            />
           </div>
         </div>
-        <div>
-          <Dropdown
-            value={selectedCity}
-            onChange={(e) => setSelectedCity(e.value)}
-            options={cities}
-            optionLabel="name"
-            placeholder="Select a City"
-            className="font-inter items-center font-normal text-input text-sm w-[271px] h-[42px] bg-white rounded placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
-          />
+      )}
+      {!viewDetail && (
+        <div className="mt-10">
+          <h1 className="font-inter font-medium text-2xl leading-[100%] text-secondary">
+            Rental Cars in Rawalpindi
+          </h1>
         </div>
-        <div>
-          <InputText
-            placeholder="Location"
-            className="font-inter font-normal text-input text-sm w-[271px] h-[42px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
-          />
-        </div>
-        <div>
-          <Button
-            label="Search"
-            className="text-white font-inter font-medium text-sm border rounded border-primary bg-[#22AB9B] w-[271px] h-[46px] focus:ring-0 focus:outline-none"
-          />
-        </div>
-      </div>
-      <div className="mt-10">
-        <h1 className="font-inter font-medium text-2xl leading-[100%] text-secondary">
-          Rental Cars in Rawalpindi
-        </h1>
-      </div>
+      )}
+
       <div className="flex mt-6 gap-1 " style={{ height: "auto" }}>
         <div className="flex h-[422px] w-[180px] bg-white">
           <div className="flex flex-col w-[148px] h-[390px] ml-4 mt-4">
@@ -164,7 +172,7 @@ const Products = () => {
           </div>
         </div>
         <div className="h-auto w-[996px]">
-          <Details />
+          <Details viewDetail={viewDetail} setViewDetail={setViewDetail} />
         </div>
       </div>
     </div>
