@@ -21,7 +21,7 @@ const App = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="w-[1440px] bg-[#FAFAFA] h-auto">
+      <div className="max-w-[1440px] bg-[#FAFAFA] h-auto">
         {!isAuthPage && <Header setLogin={setLogin} />}
 
         {isAuthPage ? (
@@ -39,7 +39,6 @@ const App = () => {
                   path="/"
                   element={
                     <>
-                      <HeroSection />
                       <Products />
                       <Footer />
                     </>
