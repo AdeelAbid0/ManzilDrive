@@ -6,6 +6,8 @@ on:
       - main
     types: [closed]
 
+  workflow_dispatch:  # 👈 Enables manual runs from the GitHub UI
+
 jobs:
   deploy:
     if: github.event.pull_request.merged == true
