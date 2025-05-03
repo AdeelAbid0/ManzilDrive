@@ -29,6 +29,7 @@ jobs:
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@v2.2.0
         with:
-          args: deploy --only hosting
+         args: deploy --only hosting --project manzil-drive
+
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
