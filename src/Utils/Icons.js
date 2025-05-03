@@ -1,9 +1,9 @@
-export const Logo = () => {
+export const Logo = ({ size = 40 }) => {
   return (
     <>
       <svg
-        width="40"
-        height="40"
+        width={size}
+        height={size}
         viewBox="0 0 40 40"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -892,6 +892,89 @@ export const EditProfile = () => {
           rx="5"
           stroke="#00796B"
           stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </>
+  );
+};
+export const Hambergur = () => {
+  return (
+    <>
+      <svg
+        width="32"
+        height="32"
+        viewBox="0 0 32 32"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M7.33105 15.9999H24.6712"
+          stroke="#001F3F"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M7.33105 15.9999H24.6712"
+          stroke="black"
+          stroke-opacity="0.2"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M7.33105 15.9999H24.6712"
+          stroke="black"
+          stroke-opacity="0.2"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M7.33105 21.3355H24.6712"
+          stroke="#001F3F"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M7.33105 21.3355H24.6712"
+          stroke="black"
+          stroke-opacity="0.2"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M7.33105 21.3355H24.6712"
+          stroke="black"
+          stroke-opacity="0.2"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M7.33008 10.6644H24.6702"
+          stroke="#001F3F"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M7.33008 10.6644H24.6702"
+          stroke="black"
+          stroke-opacity="0.2"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M7.33008 10.6644H24.6702"
+          stroke="black"
+          stroke-opacity="0.2"
+          stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
         />
