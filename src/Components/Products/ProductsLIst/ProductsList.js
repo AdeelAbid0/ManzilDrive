@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import Details from "../../Details.js/Details";
 
 const ProductsList = ({ viewDetail, setViewDetail }) => {
-  const [checked, setChecked] = useState(false);
+  const checked = false;
   return (
     <div className="flex w-full justify-center">
       <div className="flex  mt-6 gap-1 h-auto">

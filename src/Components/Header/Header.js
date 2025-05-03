@@ -3,7 +3,6 @@ import { Hambergur, Logo } from "../../Utils/Icons";
 import { Sidebar } from "primereact/sidebar";
 import { Button } from "primereact/button";
 import { useNavigate } from "react-router-dom";
-import Loader from "../Loader/Loader";
 const Header = ({ setLogin }) => {
   const navigate = useNavigate();
   const [menu, setMenu] = useState(false);

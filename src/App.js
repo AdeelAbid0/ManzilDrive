@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Header from "./Components/Header/Header";
-import HeroSection from "./Components/HeroSection/HeroSection";
 import Products from "./Components/Products/Products";
 import Footer from "./Components/Footer/Footer";
 import Register from "./Pages/Register/Register";
