@@ -1,15 +1,17 @@
-import React from "react";
-import { Logo } from "../../Utils/Icons";
-
+import React, { useState } from "react";
+import { Hambergur, Logo } from "../../Utils/Icons";
+import { Sidebar } from "primereact/sidebar";
 import { Button } from "primereact/button";
 import { useNavigate } from "react-router-dom";
+import Loader from "../Loader/Loader";
 const Header = ({ setLogin }) => {
   const navigate = useNavigate();
+  const [menu, setMenu] = useState(false);
   return (
-    <div className="flex justify-center items-center w-[1440px] h-[70px] bg-[#FFFFFF]">
-      <div className="flex w-[1312px]">
+    <div className="flex justify-center items-center w-full max-w-[1440px] h-[70px] ">
+      <div className="flex w-[91.11%] max-w-[1312px] md:gap-10 lg:gap-20">
         <div
-          className="flex items-center  w-[157px] gap-[8px] cursor-pointer"
+          className="flex items-center  w-[11.96%] min-w-[156px] gap-[8px] cursor-pointer"
           onClick={() => {
             navigate("/");
           }}
@@ -19,19 +21,17 @@ const Header = ({ setLogin }) => {
             Manzil Drive
           </h1>
         </div>
-        <div className="flex justify-between">
-          <div className="flex text-primary font-inter list-none items-center gap-8 w-[236px] ml-20">
+        <div className="hidden md:flex justify-between w-[81.9%]">
+          <div className="flex text-primary font-inter list-none items-center gap-8 min-w-[236px] w-[21.95%]">
             <li>Car Rental</li>
             <li>Events</li>
             <li>Tour</li>
           </div>
-          <div className="flex items-center ml-[547px] gap-3">
+          <div className="flex items-center gap-3">
             <Button
               label="Login"
               onClick={() => {
-
                 setLogin(false);
-
               }}
               className="text-primary font-inter font-medium text-sm border rounded border-primary w-[140px] h-[46px] focus:ring-0 focus:outline-none"
             />
@@ -45,7 +45,31 @@ const Header = ({ setLogin }) => {
             />
           </div>
         </div>
+        <div
+          className="flex w-full justify-end md:hidden cursor-pointer"
+          onClick={() => {
+            setMenu(true);
+          }}
+        >
+          <Hambergur />
+        </div>
       </div>
+      {menu && (
+        <Sidebar
+          showCloseIcon={false}
+          visible={menu}
+          onHide={() => setMenu(false)}
+          className="w-[200px]"
+        >
+          <div>
+            <ul className="flex flex-col gap-8 list-none text-primary font-inter ">
+              <li>Car Rental</li>
+              <li>Events</li>
+              <li>Tour</li>
+            </ul>
+          </div>
+        </Sidebar>
+      )}
     </div>
   );
 };

@@ -21,7 +21,7 @@ const App = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="max-w-[1440px] bg-[#FAFAFA] h-auto">
+      <div className=" w-full max-w-[1440px] bg-[#FAFAFA]">
         {!isAuthPage && <Header setLogin={setLogin} />}
 
         {isAuthPage ? (
