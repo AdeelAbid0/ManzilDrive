@@ -22,23 +22,6 @@ export const useClientQuery = ({
   });
 };
 
-export const useClientQueies = ({
-  queryKeys = [],
-  urls = [],
-  enabled = true,
-  staleTime = 5 * 60 * 1000,
-}) => {
-  return useQueries({
-    queries: urls.map((url) => ({
-      queryKey: [url],
-      queryFn: async () =>
-        await fetch(`${BASE_URL}${url}`).then((res) => res.json()),
-      enabled: enabled && !!url,
-      staleTime,
-    })),
-  });
-};
-
 export const useClientMutation = ({
   queryKeys = [],
   url = "",
