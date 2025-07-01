@@ -21,7 +21,8 @@ module.exports = {
       },
       fontFamily: {
         inter: ["Inter", "sans-serif"],
-        archivo: ["Archivo", "sams-serif"],
+        archivo: ["Archivo", "sans-serif"],
+        manrope: ["Manrope", "sans-serif"],
       },
     },
   },

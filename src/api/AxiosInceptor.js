@@ -1,15 +1,15 @@
-import axios from 'axios';
+import axios from "axios";
 
 // Create instance
-const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
+const api = axios.create({
+  baseURL: process.env.REACT_APP_API_URL || "http://localhost:5000/api",
   timeout: 10000,
 });
 
 // Request Interceptor
-axiosInstance.interceptors.request.use(
+api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token'); // or from cookies
+    const token = localStorage.getItem("token"); // or from cookies
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -19,15 +19,15 @@ axiosInstance.interceptors.request.use(
 );
 
 // Response Interceptor
-axiosInstance.interceptors.response.use(
+api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      console.warn('Unauthorized! Redirecting to login...');
+      console.warn("Unauthorized! Redirecting to login...");
       // You can auto-logout or redirect here
     }
     return Promise.reject(error);
   }
 );
 
-export default axiosInstance;
+export default api;

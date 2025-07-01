@@ -12,7 +12,6 @@ import PostAdd from "./Pages/PostAdd/PostAdd";
 const App = () => {
   const [login, setLogin] = useState(false);
   const location = useLocation();
-  console.log("Testing");
   const isAuthPage =
     location.pathname === "/login" || location.pathname === "/register";
   const isHomePage = location.pathname === "/";

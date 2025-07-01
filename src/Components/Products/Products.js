@@ -7,9 +7,8 @@ import { Button } from "primereact/button";
 import HeroSection from "../HeroSection/HeroSection";
 import ProductsList from "./ProductsLIst/ProductsList";
 const Products = () => {
-  const [selectedCity, setSelectedCity] = useState(null);
-  // const [checked, setChecked] = useState(false);
   const [viewDetail, setViewDetail] = useState(false);
+  const [selectedCity, setSelectedCity] = useState(null);
   const cities = [
     { name: "New York", code: "NY" },
     { name: "Rome", code: "RM" },
