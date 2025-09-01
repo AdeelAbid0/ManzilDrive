@@ -1,18 +1,44 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/********************************************* InputText (type = number) increment decrement arrow*/
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}
 
+/********************************************* InputText */
+.p-inputtext:focus {
+  box-shadow: none !important;
+  border-color: transparent !important;
+  outline: none !important;
+}
+
+.p-inputtext {
+  padding-right: 12px !important;
+}
+/* .p-component {
+  padding-right: 12px !important;
+} */
 /********************************************* DROPDOWN */
+
 .p-dropdown.p-focus {
   box-shadow: none !important;
   border-color: transparent !important;
 }
 .p-dropdown-items-wrapper {
-  margin-top: 10px;
+  margin-top: 8px;
+  margin-bottom: 8px;
   max-height: 240px !important;
 }
 .p-dropdown-panel {
   margin-top: 4px;
+  padding: 16px;
+  background: white;
   border-radius: 4px;
 }
 .p-dropdown-label.p-placeholder {
@@ -20,7 +46,7 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 18px;
-  color: #4d4d4d;
+  color: #57756e;
   letter-spacing: 0px;
 }
 .p-dropdown-label {
@@ -29,23 +55,149 @@
   font-size: 14px;
   line-height: 18px;
   letter-spacing: 0px;
+  padding-left: 12px;
+}
+.p-dropdown .p-dropdown-label.p-placeholder {
+  color: #57756e !important;
+  font-family: Inter !important;
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  line-height: 18px !important;
+  letter-spacing: 0px !important;
+  border: none !important;
 }
 
+.p-dropdown-item {
+  height: 32px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #445d58;
+}
 .p-dropdown-trigger {
-  width: 10px;
-  margin-right: 17.33px;
+  width: 20px;
+  padding-right: 12px;
   color: #808080;
 }
+.p-dropdown-items {
+  margin: 0px;
+}
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+  color: white !important;
+  background-color: #00796b !important;
+  height: 32px;
+}
+.p-dropdown-filter {
+  font-size: 14px;
+  font-weight: 400;
+  color: #3e464c;
+  display: flex;
+  align-items: center;
+  background: #f7f7f7;
+  border: 1px solid #e3e7ea;
+  height: 42px;
+  padding-left: 8px;
+}
+.p-dropdown-empty-message {
+  display: flex;
+  padding-left: 8px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #3e464c;
+}
+.p-dropdown-filter-icon {
+  display: none;
+}
+.p-dropdown-panel .p-dropdown-filter::placeholder {
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #57756e;
+  letter-spacing: 0px;
+}
+.p-dropdown:hover,
+.p-dropdown.p-focus,
+.p-dropdown.p-hover {
+  border-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+/********************************************* AutoComplete input */
+.p-autocomplete-input {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 400;
+  color: #3e464c;
+  display: flex;
+  align-items: center;
+  background: #f7f7f7;
+  height: 49px;
+  padding-left: 8px;
+}
+.p-autocomplete-input::placeholder {
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #57756e;
+  letter-spacing: 0px;
+}
+.p-autocomplete-dropdown {
+  display: none;
+}
+.p-autocomplete-loader {
+  right: 12px;
+}
+.p-autocomplete-item:hover {
+  width: 100%;
+  color: #3e464c;
+  display: flex;
+  align-items: center;
+  background: #00796b;
+  height: 49px;
+}
+.p-autocomplete-item:hover {
   color: white !important;
   background-color: #00796b !important;
 }
 
 /********************************************* BUTTON */
-
 .p-button-label {
   font-family: Inter;
   font-weight: 500;
   line-height: 22px;
   letter-spacing: 0px;
+}
+.p-button:focus {
+  box-shadow: none !important;
+  border-color: #00796b !important;
+  outline: #00796b !important;
+}
+.p-button {
+  position: relative;
+}
+.p-button-loading-icon {
+  display: flex;
+}
+
+/********************************************* OTP */
+
+.p-inputotp-input {
+  display: flex;
+  gap: 24px !important;
+  justify-items: center;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  width: 32px;
+  padding: 10px;
+  height: 44px;
+  color: #445d58;
+  background-color: #00796b17;
+}
+/********************************************* Dialog */
+.p-dialog-content {
+  border-radius: 12px !important;
+  padding: 40px !important;
 }

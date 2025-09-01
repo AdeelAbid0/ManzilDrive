@@ -1,4 +1,3 @@
-import React from "react";
 import {
   CarRentalIcon,
   DashboardIcon,
@@ -10,14 +9,14 @@ import { useNavigate } from "react-router-dom";
 const Sidebar = () => {
   const navigate = useNavigate();
   return (
-    <div className="mt-2 h-auto rounded-tr-[4px] w-[242px] bg-white">
-      <div className="h-[199px]  mt-12 ">
+    <div className="mt-2 h-auto rounded-tr-[4px] w-full bg-white">
+      <div className="h-full pt-12 ">
         <h1 className="pl-6 font-inter font-normal text-xs leading-[100%] tracking-[1px] text-[#082431]">
           MENU
         </h1>
         <div className="flex flex-col gap-2">
           <div
-            className="flex items-center pl-6 w-[242px] h-[36px] gap-2 mt-4 hover:bg-[#00796B1A] hover:cursor-pointer group"
+            className="flex items-center pl-6 h-[36px] gap-2 mt-4 hover:bg-[#00796B1A] hover:cursor-pointer group"
             onClick={() => {
               navigate("/dashboard");
             }}
@@ -29,7 +28,7 @@ const Sidebar = () => {
               Dashboard
             </p>
           </div>
-          <div className="flex items-center pl-6 w-[242px] h-[36px] gap-2 mt-4 hover:bg-[#00796B1A] hover:cursor-pointer group">
+          <div className="flex items-center pl-6 h-[36px] gap-2 mt-4 hover:bg-[#00796B1A] hover:cursor-pointer group">
             <span>
               <CarRentalIcon />
             </span>
@@ -37,7 +36,7 @@ const Sidebar = () => {
               Car Rental
             </p>
           </div>
-          <div className="flex items-center pl-6 w-[242px] h-[36px] gap-2 mt-4 hover:bg-[#00796B1A] hover:cursor-pointer group">
+          <div className="flex items-center pl-6 h-[36px] gap-2 mt-4 hover:bg-[#00796B1A] hover:cursor-pointer group">
             <span>
               <MessagesIcon />
             </span>
@@ -45,7 +44,7 @@ const Sidebar = () => {
               Messages
             </p>
           </div>
-          <div className="flex items-center pl-6 w-[242px] h-[36px] gap-2 mt-4 hover:bg-[#00796B1A] hover:cursor-pointer group">
+          <div className="flex items-center pl-6 h-[36px] gap-2 mt-4 hover:bg-[#00796B1A] hover:cursor-pointer group">
             <span>
               <SettingsIcon />
             </span>

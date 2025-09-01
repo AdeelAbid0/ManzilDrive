@@ -1,13 +1,11 @@
-import React from "react";
 import Details from "../../Details.js/Details";
-
-const ProductsList = ({ viewDetail, setViewDetail }) => {
+const ProductsList = () => {
   const checked = false;
   return (
     <div className="flex w-full justify-center">
-      <div className="flex  mt-6 gap-1 h-auto">
-        <div className="hidden lg:flex h-[422px] w-[180px] bg-white">
-          <div className="flex flex-col w-[148px] h-[390px] ml-4 mt-4">
+      <div className="flex w-full justify-center gap-4 mt-6">
+        <div className="hidden md:flex h-[422px] w-[13%] max-w-[180px] bg-white ">
+          <div className="flex flex-col w-[148px] ml-4 mt-4">
             <h1 className="font-inter font-medium text-sm leading-[18px] text-transparent bg-clip-text bg-hero">
               Filters
             </h1>
@@ -114,8 +112,8 @@ const ProductsList = ({ viewDetail, setViewDetail }) => {
             </div>
           </div>
         </div>
-        <div className="flex justify-start h-auto md:ml-0 w-full">
-          <Details viewDetail={viewDetail} setViewDetail={setViewDetail} />
+        <div>
+          <Details />
         </div>
       </div>
     </div>

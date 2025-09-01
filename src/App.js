@@ -1,52 +1,41 @@
-import React, { useState } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Header from "./Components/Header/Header";
-import Products from "./Components/Products/Products";
-import Footer from "./Components/Footer/Footer";
-import Register from "./Pages/Register/Register";
-import Login from "./Pages/Login/Login";
 import Sidebar from "./Components/Sidebar/Sidebar";
-import Dashboard from "./Pages/Dashboard/Dashboard";
-import PostAdd from "./Pages/PostAdd/PostAdd";
+import Footer from "./Components/Footer/Footer";
+import AppRoutes from "./Routes/AppRoutes";
+import NotificationProvider from "./Components/Notification/Notification";
 
 const App = () => {
-  const [login, setLogin] = useState(false);
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("User"));
   const location = useLocation();
-  const isAuthPage =
-    location.pathname === "/login" || location.pathname === "/register";
+
+  // Remove automatic navigation - let routes handle this
+  const isAuthPage = location.pathname.startsWith("/auth");
   const isHomePage = location.pathname === "/";
-  const showSidebar = login && !isAuthPage && !isHomePage;
+  const showSidebar = user && !isAuthPage && !isHomePage;
 
   return (
     <div className="flex justify-center">
-      <div className=" w-full max-w-[1440px] bg-[#FAFAFA]">
-        {!isAuthPage && <Header setLogin={setLogin} />}
+      <NotificationProvider />
+      <div className="w-full max-w-[1440px] bg-[#FAFAFA]">
+        {!isAuthPage && <Header />}
 
-        {isAuthPage ? (
-          <Routes>
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login setLogin={setLogin} />} />
-          </Routes>
-        ) : (
-          <div className="flex gap-10">
-            {showSidebar && <Sidebar />}
-
-            <div className="flex-1">
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <>
-                      <Products />
-                      <Footer />
-                    </>
-                  }
-                />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/postadd" element={<PostAdd />} />
-              </Routes>
+        <div className="flex gap-0 w-full max-w-[1440px] min-h-[calc(100vh-70px)]">
+          {showSidebar && (
+            <div className="hidden md:block md:w-[17%]">
+              <Sidebar />
             </div>
+          )}
+
+          <div className="flex flex-col w-full h-auto pt-[70px]">
+            <AppRoutes user={user} />
           </div>
+        </div>
+
+        {(location.pathname === "/" || location.pathname === "/detail") && (
+          <Footer />
         )}
       </div>
     </div>

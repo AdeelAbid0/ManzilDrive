@@ -3,11 +3,12 @@ import { Hambergur, Logo } from "../../Utils/Icons";
 import { Sidebar } from "primereact/sidebar";
 import { Button } from "primereact/button";
 import { useNavigate } from "react-router-dom";
-const Header = ({ setLogin }) => {
+const Header = () => {
   const navigate = useNavigate();
   const [menu, setMenu] = useState(false);
+  const user = JSON.parse(localStorage.getItem("User"));
   return (
-    <div className="flex justify-center items-center w-full max-w-[1440px] h-[70px] ">
+    <div className="flex justify-center items-center w-full max-w-[1440px] h-[70px] bg-white fixed z-[999]">
       <div className="flex w-[91.11%] max-w-[1312px] md:gap-10 lg:gap-20">
         <div
           className="flex items-center  w-[11.96%] min-w-[156px] gap-[8px] cursor-pointer"
@@ -28,20 +29,27 @@ const Header = ({ setLogin }) => {
           </div>
           <div className="flex items-center gap-3">
             <Button
-              label="Login"
+              label={user ? "Logout" : "Login"}
               onClick={() => {
-                setLogin(false);
+                if (user) {
+                  localStorage.removeItem("User");
+                  localStorage.removeItem("Token");
+                  navigate("/");
+                } else {
+                  navigate("/login");
+                }
               }}
-              className="text-primary font-inter font-medium text-sm border rounded border-primary w-[140px] h-[46px] focus:ring-0 focus:outline-none"
+              className="text-primary font-inter font-medium text-sm border rounded border-primary w-[140px] h-[46px]"
             />
-            <Button
-              label="Register"
-              onClick={() => {
-                setLogin(false);
-                navigate("/register");
-              }}
-              className="text-white font-medium text-sm border rounded border-primary w-[140px] h-[46px] bg-primary focus:ring-0 focus:outline-none"
-            />
+            {!user && (
+              <Button
+                label="Register"
+                onClick={() => {
+                  navigate("/register");
+                }}
+                className="text-white font-medium text-sm border rounded border-primary w-[140px] h-[46px] bg-primary"
+              />
+            )}
           </div>
         </div>
         <div

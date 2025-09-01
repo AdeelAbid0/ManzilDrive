@@ -5,7 +5,9 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
+import axios from "axios";
 import { isEmpty } from "lodash";
+import api from "./AxiosInceptor";
 const BASE_URL = process.env.REACT_APP_API_URL;
 
 export const useClientQuery = ({
@@ -16,12 +18,12 @@ export const useClientQuery = ({
 }) => {
   return useQuery({
     queryKey: queryKeys?.length ? queryKeys : [url],
-    queryFn: () => fetch(`${BASE_URL}${url}`).then((res) => res.json()),
+    queryFn: () => api.get(url).then((res) => res.data),
     enabled: enabled && !!url,
     staleTime,
+    retry: 0,
   });
 };
-
 export const useClientMutation = ({
   queryKeys = [],
   url = "",
@@ -29,16 +31,28 @@ export const useClientMutation = ({
 }) => {
   return useMutation({
     mutationKey: queryKeys?.length ? queryKeys : [url],
-    mutationFn: ({ suffixUrl, ...data }) => {
-      const body = isEmpty(data) ? undefined : JSON.stringify(data);
-      return fetch(`${BASE_URL}${url}${suffixUrl ?? ""}`, {
-        method,
-        body,
-        headers: {
-          "Content-Type": "application/json",
-          // ".Aspxauth": localStorage.getItem("Token")
-        },
-      }).then((res) => res.json());
+    mutationFn: async (payload) => {
+      try {
+        let finalUrl = url;
+        let body = payload;
+
+        // If payload is a plain object with suffixUrl
+        if (!(payload instanceof FormData) && payload?.suffixUrl) {
+          finalUrl = `${url}${payload.suffixUrl ?? ""}`;
+          const { suffixUrl, ...rest } = payload;
+          body = isEmpty(rest) ? undefined : rest;
+        }
+
+        const response = await api({
+          method,
+          url: finalUrl,
+          data: body, // Can be FormData or JSON object
+        });
+
+        return response.data;
+      } catch (error) {
+        throw error.response?.data || error;
+      }
     },
   });
 };

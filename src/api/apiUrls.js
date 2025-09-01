@@ -2,16 +2,22 @@ export const ApiUrl = {
   Auth: {
     Register: "business/register",
     Login: "auth/login",
+    GoogleLogin: "auth/google-login",
     VerifyEmail: "business/verify-email",
     ResendEmailVerification: "business/resend-email-verification",
     VerifyPhone: "business/verify-phone",
-    SendPhoneVerification: "business/send-phone-verification",
+    SendPhoneVerification: "business/resend-phone-verification",
   },
 
   Business: {
+    GetBusinessDetail: (businessId) =>
+      `business/getBusinessById?id=${businessId}`,
     ApproveBusiness: (businessId) => `business/approve/${businessId}`,
+    AddBusiness: "business/update",
     GetAllActiveBusiness: (isApproved) =>
       `business/all-active?isApproved=${isApproved}`,
+    VerifyPhone: "business/verifyPhoneNumber",
+    sendOTP: "business/sendPhoneVerificationCode",
   },
 
   Vehicle: {
@@ -32,6 +38,10 @@ export const ApiUrl = {
     GetAllActiveByCountryId: (countryId) =>
       `cities/active/by-country/${countryId}`,
   },
+  Location: {
+    GetLocation: ({ input, sessionToken }) =>
+      `places/autocomplete?input=${input}&sessionToken=${sessionToken}`,
+  },
 
   Country: {
     AddCountry: "countries",
@@ -43,7 +53,7 @@ export const ApiUrl = {
   Makes: {
     CreateCarMake: "car-makemodel/",
     GetAllMakes: "car-makemodel/allMakes",
-    GetAllActiveMakes: (makes) => `car-makemodel/active-makes?=${makes}`,
+    GetAllActiveMakes: () => `car-makemodel/active-makes`,
     SetMakeStatus: (makeId) => `car-makemodel/${makeId}/set-status`,
   },
 
@@ -52,5 +62,9 @@ export const ApiUrl = {
     SetModelStatus: (modelId) => `car-makemodel/models/${modelId}/set-status`,
     AddMakeModel: (makeId) => `car-makemodel/${makeId}/add-model`,
     ActiveModelByMake: (makeId) => `car-makemodel/${makeId}/active-models`,
+  },
+  Variant: {
+    GetVariantBymodel: (modelId) =>
+      `car-makemodel/variantby-model?modelId=${modelId}`,
   },
 };

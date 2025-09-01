@@ -1,292 +1,311 @@
-import { Dropdown } from "primereact/dropdown";
-import { InputText } from "primereact/inputtext";
-import React, { useState } from "react";
-import { InputTextarea } from "primereact/inputtextarea";
-import { CheckIcon } from "../../Utils/Icons";
 import ImageUpload from "./Components/ImageUpload";
 import PersonalInfo from "./Components/PersonalInfo";
+import {
+  AddBusiness,
+  AddVehicle,
+  useGetAllMakes,
+  useGetAllmodelByMake,
+  useGetAllVariantsBymodel,
+  useGetBusinessDetail,
+  useSendOTP,
+  useVerifyPhoneAuth,
+} from "./hooks/PostApi";
+import CarDetailForm from "./Components/CarDetailForm";
+import { useFormik } from "formik";
+import { initialValues } from "./Form/postadd.initial";
+import { ValidationSchema } from "./Form/postadd.schema";
+import { useEffect, useMemo, useState } from "react";
+import PrimaryButton from "../../Common/Button/Button";
+import { Button } from "primereact/button";
+import { ValidationSchemaPersonalInfo } from "./Form/personalinfo.schema";
+import { initialValuesPersonalInfo } from "./Form/personalinfo.initial";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { showNotification } from "../../slices/notificationSlice";
+
 const PostAdd = () => {
-  const [selectedCity, setSelectedCity] = useState(null);
-  const [checked, setChecked] = useState(false);
-  const cities = [
-    { name: "New York", code: "NY" },
-    { name: "Rome", code: "RM" },
-    { name: "London", code: "LDN" },
-    { name: "Istanbul", code: "IST" },
-    { name: "Paris", code: "PRS" },
+  const dispatch = useDispatch();
+  const [personalInfoActive, setPersonalInfoActive] = useState(false);
+  const [showOtpScreen, setShowOtpScreen] = useState(false);
+  const [images, setImages] = useState(Array(6).fill(null));
+
+  const userData = useMemo(() => {
+    return JSON.parse(localStorage.getItem("User"));
+  }, []);
+
+  const businessId = userData?.business?._id;
+
+  // ------------------- Formik for Car Detail -------------------
+  const formik = useFormik({
+    initialValues: initialValues,
+    validationSchema: ValidationSchema,
+    onSubmit: (values) => {
+      console.log({ values });
+    },
+  });
+
+  // ------------------- Formik for Personal Info -------------------
+  const formikPersonalInfo = useFormik({
+    initialValues: initialValuesPersonalInfo,
+    validationSchema: ValidationSchemaPersonalInfo,
+    onSubmit: (values) => {
+      const formDataForPersonalInfo = new FormData();
+      formDataForPersonalInfo.append("businessId", businessId);
+      formDataForPersonalInfo.append("name", values.name);
+      formDataForPersonalInfo.append("city", values.city);
+      formDataForPersonalInfo.append("phoneNumber", values.phoneNumber);
+      formDataForPersonalInfo.append("sessionToken", "");
+      formDataForPersonalInfo.append("shopName", formik.values.shopName);
+      formDataForPersonalInfo.append(
+        "secondaryNumber",
+        formik.values.secondaryNumber
+      );
+      formDataForPersonalInfo.append("address", values.location.label);
+      formDataForPersonalInfo.append("placeId", values.location.value);
+
+      addBusiness(formDataForPersonalInfo, {
+        onSuccess: (res) => {
+          dispatch(
+            showNotification({
+              message: "Business Updated Successfully",
+              status: "success",
+            })
+          );
+
+          const formDataForAddVehicle = new FormData();
+          formDataForAddVehicle.append("business", businessId);
+          formDataForAddVehicle.append("make", formik.values.make);
+          formDataForAddVehicle.append("model", formik?.values?.model);
+          formDataForAddVehicle.append("variant", formik?.values?.variant);
+          formDataForAddVehicle.append("year", formik.values.year);
+          formDataForAddVehicle.append(
+            "rentPerDay",
+            formik?.values?.rentPerDay
+          );
+          formDataForAddVehicle.append(
+            "description",
+            formik?.values?.description
+          );
+          formDataForAddVehicle.append(
+            "availability",
+            formik?.values?.availability
+          );
+          formDataForAddVehicle.append(
+            "transmission",
+            formik?.values?.transmission
+          );
+          formDataForAddVehicle.append(
+            "acheater",
+            formik?.values?.acheater === "AC / Heater installed" ? true : false
+          );
+          formDataForAddVehicle.append("seats", formik?.values?.seats);
+          images.forEach((file) => {
+            if (file) formDataForAddVehicle.append("photos", file);
+          });
+
+          addVehicle(formDataForAddVehicle, {
+            onSuccess: () => {
+              dispatch(
+                showNotification({
+                  message: "Post Added Successfully",
+                  status: "success",
+                })
+              );
+              formik.resetForm();
+              setPersonalInfoActive(false);
+              setImages([]);
+            },
+            onError: (error) => {
+              dispatch(
+                showNotification({
+                  message: "Post Added Error",
+                  status: "error",
+                })
+              );
+            },
+          });
+        },
+        onError: (res) => {
+          dispatch(
+            showNotification({
+              message: "Failed to update business information",
+              status: "succerroress",
+            })
+          );
+        },
+      });
+    },
+  });
+
+  // ------------------- API HOOKS -------------------
+  // Get all makes api
+  const { data: makesData } = useGetAllMakes();
+  // Get All models by make api
+  const makeId = formik.values.make;
+  const modelId = formik.values.model;
+  const { data: modelsData, refetch: refetchmodel } =
+    useGetAllmodelByMake(makeId);
+  // Get All Variants api
+  const { data: variantData, refetch: refetchVariant } =
+    useGetAllVariantsBymodel(modelId);
+  // Add Business api
+  const { mutate: addBusiness, isPending: BusinessLoading } = AddBusiness();
+  // Add Vehicle api
+  const { mutate: addVehicle } = AddVehicle();
+  // Get Business Detail api
+  const { data: BusinessDetail, refetch: refetchBusinessDetail } =
+    useGetBusinessDetail(businessId);
+  // send otp to number api
+  const { mutate: sendOTP } = useSendOTP();
+  const handleSendOTP = () => {
+    console.log("called send otp");
+    sendOTP(
+      {
+        phoneNumber: formikPersonalInfo.values.phoneNumber.toString(),
+        businessId: businessId,
+      },
+      {
+        onSuccess: (res) => {
+          setShowOtpScreen(true);
+          dispatch(
+            showNotification({
+              message: "OTP sent successfully",
+              status: "success",
+            })
+          );
+        },
+        onError: (error) => {
+          dispatch(
+            showNotification({
+              message: "Error while sending OTP",
+              status: "error",
+            })
+          );
+        },
+      }
+    );
+  };
+
+  // Verify OTP api
+  const { mutate: verifyOTP } = useVerifyPhoneAuth();
+  const handleVerifyOTP = () => {
+    verifyOTP(
+      {
+        phoneNumber: formikPersonalInfo.values.phoneNumber.toString(),
+        phoneCode: "5578",
+      },
+      {
+        onSuccess: (res) => {
+          setShowOtpScreen(false);
+          dispatch(
+            showNotification({
+              message: "OTP verified successfully",
+              status: "success",
+            })
+          );
+          refetchBusinessDetail();
+        },
+        onError: (error) => {
+          dispatch(
+            showNotification({
+              message: "OTP verify error",
+              status: "error",
+            })
+          );
+        },
+      }
+    );
+  };
+
+  // ------------------- Effects -------------------
+  useEffect(() => {
+    if (BusinessDetail?.phoneVerified) {
+      formikPersonalInfo.setFieldValue(
+        "phoneNumber",
+        BusinessDetail?.phoneNumber
+      );
+      formikPersonalInfo.setFieldValue("name", BusinessDetail.name);
+      formikPersonalInfo.setFieldValue("city", BusinessDetail?.city?._id);
+      formikPersonalInfo.setFieldValue("location", {
+        value: BusinessDetail?.location?.placeId,
+        label: BusinessDetail?.location?.address,
+      });
+    }
+  }, [BusinessDetail]);
+
+  // ------------------- UI helpers -------------------
+  const requiredFields = [
+    "make",
+    "model",
+    "variant",
+    "year",
+    "rentPerDay",
+    "description",
+    "availability",
+    "acheater",
+    "transmission",
+    "seats",
   ];
+  const disablefield = useMemo(
+    () => requiredFields.some((field) => !formik.values[field]),
+    [formik.values]
+  );
+
+  // ------------------- RENDER -------------------
   return (
-    <div className="flex flex-col items-center mt-2 w-[1094px] bg-white mb-8">
-      <div className="flex flex-col w-[648px] mt-8">
-        <h1 className="font-inter font-semibold text-[32px] text-[#4D4D4D] leading-[100%]">
-          Post Your Add
-        </h1>
-        <p className="mt-4 font-inter font-normal text-sm text-[#666666] leading-[18px]">
-          Include Some Details
-        </p>
-        <div className="flex flex-col mt-4">
-          <Dropdown
-            value={selectedCity}
-            onChange={(e) => setSelectedCity(e.value)}
-            options={cities}
-            optionLabel="name"
-            placeholder="Select a City"
-            className="font-inter items-center font-normal text-input text-sm h-[49px] bg-[#F7F7F7] rounded placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] "
-          />
-          <InputText
-            placeholder="Rent Per Day"
-            className="mt-3 font-inter font-normal text-input text-sm bg-[#F7F7F7] h-[49px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
-          />
-          <InputText
-            placeholder="Add Location"
-            className="mt-3 font-inter font-normal text-input text-sm bg-[#F7F7F7] h-[49px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
-          />
-          <InputTextarea
-            autoResize={false}
-            placeholder="Add Description"
-            className="mt-3 font-inter font-normal text-input text-sm bg-[#F7F7F7] h-[120px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3 pt-4"
+    <div className="flex flex-col justify-center items-center mt-2 w-full mb-8 gap-6">
+      {personalInfoActive ? (
+        <div className="h-full w-full md:max-w-[766px] md:w-[64%] md:mt-6 p-4 md:p-0">
+          <PersonalInfo
+            formik={formikPersonalInfo}
+            BusinessDetail={BusinessDetail}
+            handleSendOTP={handleSendOTP}
+            handleVerifyOTP={handleVerifyOTP}
+            showOtpScreen={showOtpScreen}
+            setShowOtpScreen={setShowOtpScreen}
           />
         </div>
-        <div className="mt-4">
-          <label className="font-inter font-medium text-xs text-[#808080] leading-4">
-            Driver :
-          </label>
-          <div className="flex gap-4">
-            <div className="flex gap-2 h-7 items-center">
-              <div className="relative flex items-center">
-                <input
-                  type="checkbox"
-                  checked={checked}
-                  onChange={() => setChecked((prev) => !prev)}
-                  className="w-5 h-5 rounded-sm border border-[#666666] appearance-none checked:bg-primary checked:border-none"
-                />
-                {checked && <CheckIcon />}
-              </div>
-              <p className="font-inter font-normal text-[#666666] text-sm leading-[18px]">
-                With Driver
-              </p>
-            </div>
-            <div className="flex gap-2 h-7 items-center">
-              <div className="relative flex items-center">
-                <input
-                  type="checkbox"
-                  checked={checked}
-                  onChange={() => setChecked((prev) => !prev)}
-                  className="w-5 h-5 rounded-sm border border-[#666666] appearance-none checked:bg-primary checked:border-none"
-                />
-                {checked && <CheckIcon />}
-              </div>
-              <p className="font-inter font-normal text-[#666666] text-sm leading-[18px]">
-                Without Driver
-              </p>
-            </div>
-            <div className="flex gap-2 h-7 items-center">
-              <div className="relative flex items-center">
-                <input
-                  type="checkbox"
-                  checked={checked}
-                  onChange={() => setChecked((prev) => !prev)}
-                  className="w-5 h-5 rounded-sm border border-[#666666] appearance-none checked:bg-primary checked:border-none"
-                />
-                {checked && <CheckIcon />}
-              </div>
-              <p className="font-inter font-normal text-[#666666] text-sm leading-[18px]">
-                Both
-              </p>
-            </div>
+      ) : (
+        <div className="flex flex-col justify-center items-center md:mt-2 w-full max-w-[1198px] gap-6 p-4 md:p-0">
+          <div className="flex  w-full md:max-w-[766px] md:w-[64%] md:m-0 p-[24px_16px] border border-[#EDEDED] rounded-[12px] bg-white">
+            <CarDetailForm
+              formik={formik}
+              data={makesData}
+              modelsData={modelsData}
+              variantData={variantData}
+            />
+          </div>
+          <div className="flex flex-col  w-full md:max-w-[766px] md:w-[64%] md:m-0 p-[24px_16px] border border-[#EDEDED] rounded-[12px] bg-white">
+            <ImageUpload images={images} setImages={setImages} />
           </div>
         </div>
-        <div className="mt-6">
-          <label className="font-inter font-medium text-xs text-[#808080] leading-4">
-            Transmission :
-          </label>
-          <div className="flex gap-4">
-            <div className="flex gap-2 h-7 items-center">
-              <div className="relative flex items-center">
-                <input
-                  type="checkbox"
-                  checked={checked}
-                  onChange={() => setChecked((prev) => !prev)}
-                  className="w-5 h-5 rounded-sm border border-[#666666] appearance-none checked:bg-primary checked:border-none"
-                />
-                {checked && <CheckIcon />}
-              </div>
-              <p className="font-inter font-normal text-[#666666] text-sm leading-[18px]">
-                Automatic
-              </p>
-            </div>
-            <div className="flex gap-2 h-7 items-center">
-              <div className="relative flex items-center">
-                <input
-                  type="checkbox"
-                  checked={checked}
-                  onChange={() => setChecked((prev) => !prev)}
-                  className="w-5 h-5 rounded-sm border border-[#666666] appearance-none checked:bg-primary checked:border-none"
-                />
-                {checked && <CheckIcon />}
-              </div>
-              <p className="font-inter font-normal text-[#666666] text-sm leading-[18px]">
-                Manual
-              </p>
-            </div>
+      )}
+
+      <div className="flex justify-center w-full md:p-0 pl-4 pr-4">
+        <div className="flex justify-between w-full md:max-w-[766px] md:w-[64%] md:m-0 gap-10 ">
+          {personalInfoActive && (
+            <Button
+              label="Back"
+              className="bg-transparent border border-primary text-primary  flex justify-center items-center w-full h-[48px]"
+              onClick={() => {
+                setPersonalInfoActive(false);
+              }}
+            />
+          )}
+          <div className=" w-full h-auto !m-0">
+            <PrimaryButton
+              type={personalInfoActive ? "submit" : "button"}
+              label={personalInfoActive ? "Post Now" : "Next"}
+              disabled={disablefield}
+              loading={BusinessLoading}
+              handleClick={() => {
+                personalInfoActive
+                  ? formikPersonalInfo.handleSubmit()
+                  : setPersonalInfoActive(true);
+              }}
+            />
           </div>
         </div>
-        <div className="mt-6">
-          <label className="font-inter font-medium text-xs text-[#808080] leading-4">
-            AC/Heater :
-          </label>
-          <div className="flex gap-4">
-            <div className="flex gap-2 h-7 items-center">
-              <div className="relative flex items-center">
-                <input
-                  type="checkbox"
-                  checked={checked}
-                  onChange={() => setChecked((prev) => !prev)}
-                  className="w-5 h-5 rounded-sm border border-[#666666] appearance-none checked:bg-primary checked:border-none"
-                />
-                {checked && <CheckIcon />}
-              </div>
-              <p className="font-inter font-normal text-[#666666] text-sm leading-[18px]">
-                AC / Heater installed
-              </p>
-            </div>
-            <div className="flex gap-2 h-7 items-center">
-              <div className="relative flex items-center">
-                <input
-                  type="checkbox"
-                  checked={checked}
-                  onChange={() => setChecked((prev) => !prev)}
-                  className="w-5 h-5 rounded-sm border border-[#666666] appearance-none checked:bg-primary checked:border-none"
-                />
-                {checked && <CheckIcon />}
-              </div>
-              <p className="font-inter font-normal text-[#666666] text-sm leading-[18px]">
-                None
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="mt-6">
-          <label className="font-inter font-medium text-xs text-[#808080] leading-4">
-            Seats :
-          </label>
-          <div className="flex gap-4">
-            <div className="flex gap-2 h-7 items-center">
-              <div className="relative flex items-center">
-                <input
-                  type="checkbox"
-                  checked={checked}
-                  onChange={() => setChecked((prev) => !prev)}
-                  className="w-5 h-5 rounded-sm border border-[#666666] appearance-none checked:bg-primary checked:border-none"
-                />
-                {checked && <CheckIcon />}
-              </div>
-              <p className="font-inter font-normal text-[#666666] text-sm leading-[18px]">
-                2 Person
-              </p>
-            </div>
-            <div className="flex gap-2 h-7 items-center">
-              <div className="relative flex items-center">
-                <input
-                  type="checkbox"
-                  checked={checked}
-                  onChange={() => setChecked((prev) => !prev)}
-                  className="w-5 h-5 rounded-sm border border-[#666666] appearance-none checked:bg-primary checked:border-none"
-                />
-                {checked && <CheckIcon />}
-              </div>
-              <p className="font-inter font-normal text-[#666666] text-sm leading-[18px]">
-                4 Persons
-              </p>
-            </div>
-            <div className="flex gap-2 h-7 items-center">
-              <div className="relative flex items-center">
-                <input
-                  type="checkbox"
-                  checked={checked}
-                  onChange={() => setChecked((prev) => !prev)}
-                  className="w-5 h-5 rounded-sm border border-[#666666] appearance-none checked:bg-primary checked:border-none"
-                />
-                {checked && <CheckIcon />}
-              </div>
-              <p className="font-inter font-normal text-[#666666] text-sm leading-[18px]">
-                7 Persons
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="mt-6">
-          <label className="font-inter font-medium text-xs text-[#808080] leading-4">
-            Category :
-          </label>
-          <div className="flex gap-4">
-            <div className="flex gap-2 h-7 items-center">
-              <div className="relative flex items-center">
-                <input
-                  type="checkbox"
-                  checked={checked}
-                  onChange={() => setChecked((prev) => !prev)}
-                  className="w-5 h-5 rounded-sm border border-[#666666] appearance-none checked:bg-primary checked:border-none"
-                />
-                {checked && <CheckIcon />}
-              </div>
-              <p className="font-inter font-normal text-[#666666] text-sm leading-[18px]">
-                Economy
-              </p>
-            </div>
-            <div className="flex gap-2 h-7 items-center">
-              <div className="relative flex items-center">
-                <input
-                  type="checkbox"
-                  checked={checked}
-                  onChange={() => setChecked((prev) => !prev)}
-                  className="w-5 h-5 rounded-sm border border-[#666666] appearance-none checked:bg-primary checked:border-none"
-                />
-                {checked && <CheckIcon />}
-              </div>
-              <p className="font-inter font-normal text-[#666666] text-sm leading-[18px]">
-                Standard
-              </p>
-            </div>
-            <div className="flex gap-2 h-7 items-center">
-              <div className="relative flex items-center">
-                <input
-                  type="checkbox"
-                  checked={checked}
-                  onChange={() => setChecked((prev) => !prev)}
-                  className="w-5 h-5 rounded-sm border border-[#666666] appearance-none checked:bg-primary checked:border-none"
-                />
-                {checked && <CheckIcon />}
-              </div>
-              <p className="font-inter font-normal text-[#666666] text-sm leading-[18px]">
-                Luxury
-              </p>
-            </div>
-            <div className="flex gap-2 h-7 items-center">
-              <div className="relative flex items-center">
-                <input
-                  type="checkbox"
-                  checked={checked}
-                  onChange={() => setChecked((prev) => !prev)}
-                  className="w-5 h-5 rounded-sm border border-[#666666] appearance-none checked:bg-primary checked:border-none"
-                />
-                {checked && <CheckIcon />}
-              </div>
-              <p className="font-inter font-normal text-[#666666] text-sm leading-[18px]">
-                Commercial
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="flex flex-col gap-4 h-auto mt-6">
-        <h1 className="h-[18px] font-inter font-medium text-sm text-[#666666] leading-[18px]">
-          Upload upto 6 Photos
-        </h1>
-        <ImageUpload />
-      </div>
-      <div className="h-[400px] w-[648px] mt-6">
-        <PersonalInfo />
       </div>
     </div>
   );

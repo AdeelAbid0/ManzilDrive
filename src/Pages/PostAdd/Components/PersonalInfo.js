@@ -1,51 +1,182 @@
-import { Button } from "primereact/button";
-import React from "react";
-import { EditProfile } from "../../../Utils/Icons";
 import { InputText } from "primereact/inputtext";
+import { Dropdown } from "primereact/dropdown";
+import { useGetAllActiveByCountryId, useGetLocation } from "../hooks/PostApi";
+import { AutoComplete } from "primereact/autocomplete";
+import { useEffect, useState } from "react";
+import PhoneDialog from "./PhoneDialog";
+const PersonalInfo = ({
+  formik,
+  BusinessDetail,
+  handleSendOTP,
+  handleVerifyOTP,
+  showOtpScreen,
+  setShowOtpScreen,
+}) => {
+  const [sessionToken, setSessionToken] = useState("");
+  const [visible, setVisible] = useState(
+    BusinessDetail?.phoneVerified ? false : true
+  );
+  const {
+    data: CityData,
+    isLoading,
+    error,
+  } = useGetAllActiveByCountryId("665000000000000000000001");
+  const {
+    data: allLocations,
+    isLoading: isLoadingLocations,
+    isError: isLocationError,
+    refetch: refetchLocation,
+  } = useGetLocation({
+    input: formik.values.location || "",
+    sessionToken: sessionToken,
+  });
+  useEffect(() => {
+    if (formik.values.location) {
+      refetchLocation();
+    }
+  }, [formik.values.location]);
+  const handleChange = (e) => {
+    formik.setFieldValue("location", e.value);
+  };
 
-const PersonalInfo = () => {
+  // Custom template for dropdown items
+  const itemTemplate = (item) => {
+    return (
+      <div className="flex flex-col p-[8px_12px]">
+        <p className="font-inter text-[14px] font-normal leading-4 ">
+          {item.data.structured_formatting?.main_text || item.label}
+        </p>
+        {item.data.structured_formatting?.secondary_text && (
+          <p className="font-inter text-[12px] font-normal leading-4 ">
+            {item.data.structured_formatting.secondary_text}
+          </p>
+        )}
+      </div>
+    );
+  };
+  const handleSearch = (event) => {
+    formik.setFieldValue("location", event.query);
+    refetchLocation();
+  };
+  const suggestions = allLocations?.suggestions || [];
+  const filteredSuggestions = suggestions.map((item) => ({
+    label: item.description, // This is what will be shown in the dropdown
+    value: item.place_id, // This is what will be set as the value
+    data: item, // Keep the original data if needed
+  }));
+  console.log("locatoin val", formik.values.location);
   return (
-    <div>
-      <div className="h-[22px]">
-        <h1 className="font-inter font-bold text-base leading-[22px] text-[#666666]">
+    <div className="flex flex-col w-full max-w-[766px] p-[24px_16px] border border-[#EDEDED] rounded-[12px] bg-white">
+      {visible && (
+        <PhoneDialog
+          formik={formik}
+          visible={visible}
+          setVisible={setVisible}
+          handleSendOTP={handleSendOTP}
+          handleVerifyOTP={handleVerifyOTP}
+          showOtpScreen={showOtpScreen}
+          setShowOtpScreen={setShowOtpScreen}
+        />
+      )}
+      <div className="flex flex-col w-full">
+        <h1 className="font-inter font-bold text-[16px] text-[#666666] leading-[100%]">
           Personal Info
         </h1>
-      </div>
-      <div className="flex gap-6 mt-6">
-        <div className="flex items-center justify-center w-[118px] h-[118px] rounded-[50%] border">
-          <img
-            className="rounded-[50%] object-contain"
-            src="./Car.png"
-            alt=""
-          />
-        </div>
-        <div className="flex items-center">
-          <Button
-            label="Login"
-            className="text-primary font-inter font-medium text-sm border rounded border-primary w-[160px] h-[40px] focus:ring-0 focus:outline-none"
-          />
-        </div>
-      </div>
-      <div className="flex flex-col gap-3 w-[648px] h-[148px]">
-        <div className="flex w-full justify-end">
-          <EditProfile />
-        </div>
-        <div>
+
+        <div className="flex flex-col mt-4 gap-3">
           <InputText
-            placeholder="Rent Per Day"
-            className="mt-3 w-full font-inter font-normal text-input text-sm bg-[#F7F7F7] h-[50px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
+            type="text"
+            name="name"
+            value={formik.values.name}
+            placeholder="First and Last Name"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={` font-inter font-normal text-input text-sm bg-[#F7F7F7] h-[49px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3  ${
+              formik.touched.name && formik.errors.name
+                ? "border border-error text-error"
+                : ""
+            }`}
           />
-        </div>
-        <div>
+          <div className="flex gap-1">
+            <div className="font-inter flex justify-center items-center text-input  text-sm bg-[#F7F7F7] w-[59px] h-[50px] border border-[#BFD0CB] rounded">
+              +92
+            </div>
+            <InputText
+              type="number"
+              name="phoneNumber"
+              value={formik.values.phoneNumber}
+              disabled
+              placeholder="Phone Number"
+              className={` font-inter w-full font-normal text-input text-sm bg-[#F7F7F7] h-[49px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3  ${
+                formik.touched.phoneNumber && formik.errors.phoneNumber
+                  ? "border border-error text-error"
+                  : ""
+              }`}
+            />
+          </div>
+          <div className="flex gap-1">
+            <div className="font-inter flex justify-center items-center text-input  text-sm bg-[#F7F7F7] w-[59px] h-[50px] border border-[#BFD0CB] rounded">
+              +92
+            </div>
+            <InputText
+              type="number"
+              name="secondaryNumber"
+              onChange={(e) => {
+                const input = e.target.value;
+                if (/^\d{0,10}$/.test(input)) {
+                  formik.setFieldValue("secondaryNumber", input);
+                }
+              }}
+              value={formik.values.secondaryNumber}
+              placeholder="Secondary Number  or Whatsapp Number"
+              className={`w-full font-inter font-normal text-input text-sm bg-[#F7F7F7] h-[49px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3  ${
+                formik.touched.secondaryNumber && formik.errors.secondaryNumber
+                  ? "border border-error text-error"
+                  : ""
+              }`}
+            />
+          </div>
+
           <InputText
-            placeholder="Rent Per Day"
-            className="mt-3 w-full font-inter font-normal text-input text-sm bg-[#F7F7F7] h-[50px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
+            type="text"
+            name="shopName"
+            value={formik.values.shopName}
+            placeholder="Shop Name"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={` font-inter font-normal text-input text-sm bg-[#F7F7F7] h-[49px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3  ${
+              formik.touched.shopName && formik.errors.shopName
+                ? "border border-error text-error"
+                : ""
+            }`}
           />
-        </div>
-        <div className="mt-2">
-          <Button
-            label="Post Now"
-            className="text-white font-medium text-sm border rounded border-primary w-[160px] h-[40px] bg-primary focus:ring-0 focus:outline-none"
+          <Dropdown
+            value={formik.values.city}
+            name="city"
+            options={CityData}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            optionLabel="name"
+            optionValue="_id"
+            placeholder="City"
+            filter
+            filterPlaceholder="Search Make"
+            className={`font-inter items-center font-normal text-input text-sm h-[49px] bg-[#F7F7F7] rounded placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px]  ${
+              formik.touched.city && formik.errors.city
+                ? "border border-error text-error"
+                : ""
+            }`}
+          />
+
+          <AutoComplete
+            value={formik.values.location}
+            suggestions={filteredSuggestions}
+            completeMethod={handleSearch}
+            itemTemplate={itemTemplate}
+            onChange={handleChange}
+            field="label"
+            placeholder="Search Location"
+            className="w-full"
           />
         </div>
       </div>
