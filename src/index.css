@@ -8,6 +8,7 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 input[type="number"] {
+  appearance: none;
   -moz-appearance: textfield; /* Firefox */
 }
 
@@ -26,7 +27,7 @@ input[type="number"] {
 } */
 /********************************************* DROPDOWN */
 
-.p-dropdown.p-focus {
+.p-dropdown .p-focus {
   box-shadow: none !important;
   border-color: transparent !important;
 }
@@ -200,4 +201,27 @@ input[type="number"] {
 .p-dialog-content {
   border-radius: 12px !important;
   padding: 40px !important;
+}
+
+/********************************************* Calendar */
+
+/* Base input styling */
+.p-calendar .p-inputtext {
+  background-color: #f7f7f7 !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+/* Input itself focus me aaye to */
+.p-calendar .p-inputtext:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Jab PrimeReact parent ko focus class deta hai */
+.p-calendar.p-focus .p-inputtext {
+  outline: none !important;
+  box-shadow: none !important;
 }

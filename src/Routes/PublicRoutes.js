@@ -1,7 +1,7 @@
-import Products from "../Components/Products/Products";
-import SinglePage from "../Components/SinglePage/SinglePage";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
+import Products from "../Pages/Products/Product";
+import SinglePage from "../Pages/SinglePage/SinglePage";
 
 export const PublicRoutes = [
   {

@@ -16,6 +16,11 @@ const PersonalInfo = ({
   const [visible, setVisible] = useState(
     BusinessDetail?.phoneVerified ? false : true
   );
+  useEffect(() => {
+    if (formik.values.location.value === undefined) {
+      formik.setFieldValue("location", null);
+    }
+  }, []);
   const {
     data: CityData,
     isLoading,
@@ -60,14 +65,13 @@ const PersonalInfo = ({
   };
   const suggestions = allLocations?.suggestions || [];
   const filteredSuggestions = suggestions.map((item) => ({
-    label: item.description, // This is what will be shown in the dropdown
-    value: item.place_id, // This is what will be set as the value
-    data: item, // Keep the original data if needed
+    label: item.description,
+    value: item.place_id,
+    data: item,
   }));
-  console.log("locatoin val", formik.values.location);
   return (
     <div className="flex flex-col w-full max-w-[766px] p-[24px_16px] border border-[#EDEDED] rounded-[12px] bg-white">
-      {visible && (
+      {showOtpScreen && (
         <PhoneDialog
           formik={formik}
           visible={visible}

@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { CameraIcon } from "../../../Utils/Icons";
 
 const ImageUpload = ({ images, setImages }) => {

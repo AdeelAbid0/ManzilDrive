@@ -53,14 +53,3 @@ export default function NotificationProvider() {
     </div>
   );
 }
-// use this to show toast anywhere
-
-// onClick={() =>
-//               dispatch(
-//                 showNotification({
-//                   message:
-//                     "The inventory unit has been successfully added. You can now view or manage it from the inventory dashboard.",
-//                   status: "error",
-//                 })
-//               )
-//             }

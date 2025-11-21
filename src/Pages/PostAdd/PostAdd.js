@@ -19,20 +19,15 @@ import PrimaryButton from "../../Common/Button/Button";
 import { Button } from "primereact/button";
 import { ValidationSchemaPersonalInfo } from "./Form/personalinfo.schema";
 import { initialValuesPersonalInfo } from "./Form/personalinfo.initial";
-import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { showNotification } from "../../slices/notificationSlice";
 
 const PostAdd = () => {
   const dispatch = useDispatch();
   const [personalInfoActive, setPersonalInfoActive] = useState(false);
   const [showOtpScreen, setShowOtpScreen] = useState(false);
-  const [images, setImages] = useState(Array(6).fill(null));
-
-  const userData = useMemo(() => {
-    return JSON.parse(localStorage.getItem("User"));
-  }, []);
-
+  const [images, setImages] = useState([]);
+  const userData = useSelector((state) => state.user.user);
   const businessId = userData?.business?._id;
 
   // ------------------- Formik for Car Detail -------------------
@@ -185,7 +180,6 @@ const PostAdd = () => {
       }
     );
   };
-
   // Verify OTP api
   const { mutate: verifyOTP } = useVerifyPhoneAuth();
   const handleVerifyOTP = () => {
@@ -203,6 +197,7 @@ const PostAdd = () => {
               status: "success",
             })
           );
+
           refetchBusinessDetail();
         },
         onError: (error) => {
@@ -299,9 +294,18 @@ const PostAdd = () => {
               disabled={disablefield}
               loading={BusinessLoading}
               handleClick={() => {
-                personalInfoActive
-                  ? formikPersonalInfo.handleSubmit()
-                  : setPersonalInfoActive(true);
+                if (images?.length < 1) {
+                  dispatch(
+                    showNotification({
+                      message: "Upload at least one image to proceed",
+                      status: "error",
+                    })
+                  );
+                } else {
+                  personalInfoActive
+                    ? formikPersonalInfo.handleSubmit()
+                    : setPersonalInfoActive(true);
+                }
               }}
             />
           </div>

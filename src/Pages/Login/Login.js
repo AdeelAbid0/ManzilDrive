@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { showNotification } from "../../slices/notificationSlice";
 import { useVerifyPhone } from "../Register/hooks/RegisterApi";
 import OTPScreen from "../Register/OTP";
-import { useSendOTP } from "../PostAdd/hooks/PostApi";
+import { setUser } from "../../slices/userSlice";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -52,7 +52,8 @@ const Login = () => {
               status: "success",
             })
           );
-          localStorage.setItem("User", JSON.stringify(res));
+          dispatch(setUser(res));
+          console.log({ res });
           localStorage.setItem("Token", res?.token);
           if (res?.business?.status === "active") {
             navigate("/postadd");
@@ -68,7 +69,7 @@ const Login = () => {
               message:
                 error?.status === "pending"
                   ? "Account not verified"
-                  : "Login error",
+                  : error?.message,
               status: "error",
             })
           );
@@ -97,7 +98,7 @@ const Login = () => {
       { idToken: token },
       {
         onSuccess: (res) => {
-          localStorage.setItem("User", JSON.stringify(res));
+          dispatch(setUser(res));
           localStorage.setItem("Token", res?.token);
           navigate("/postadd");
           dispatch(
@@ -110,7 +111,7 @@ const Login = () => {
         onError: (error) => {
           dispatch(
             showNotification({
-              message: "Login error",
+              message: error?.message,
               status: "error",
             })
           );
@@ -165,7 +166,12 @@ const Login = () => {
           setShowOtp(false);
         },
         onError: (error) => {
-          toast.error(error?.message);
+          dispatch(
+            showNotification({
+              message: error?.message,
+              status: "error",
+            })
+          );
         },
       }
     );

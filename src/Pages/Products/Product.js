@@ -1,67 +1,102 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { InputText } from "primereact/inputtext";
-// import { SearchIcon } from "../../Utils/Icons";
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
-// import Details from "../Details.js/Details";
-import HeroSection from "../HeroSection/HeroSection";
-import ProductsList from "./ProductsLIst/ProductsList";
+import HeroSection from "../../Components/HeroSection/HeroSection";
+import ProductsList from "./Components/ProductsList/ProductsList";
+import { useFormik } from "formik";
+import { initialValues } from "./Form/Poducts.initail";
+import { AutoComplete } from "primereact/autocomplete";
+import {
+  useGetAllActiveByCountryId,
+  useGetAllCars,
+  useGetLocation,
+} from "./hooks/ProductsApi";
+
 const Products = () => {
   const [selectedCity, setSelectedCity] = useState(null);
-  const cities = [
-    { name: "New York", code: "NY" },
-    { name: "Rome", code: "RM" },
-    { name: "London", code: "LDN" },
-    { name: "Istanbul", code: "IST" },
-    { name: "Paris", code: "PRS" },
-  ];
+  const [sessionToken, setSessionToken] = useState("");
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
+
+  // ✅ Cars API
+  const { data: allCarsData, isPending: LoadingCarsData } = useGetAllCars();
+  const {
+    data: CityData,
+    isLoading,
+    error,
+  } = useGetAllActiveByCountryId("665000000000000000000001");
+
   return (
     <div className="flex flex-col items-center h-auto">
       <div className="flex w-full md:flex-col flex-col-reverse">
         <HeroSection />
         <div className="flex justify-center w-full">
           <div className="flex items-center md:w-[90%] w-full h-[98px] md:h-[90px] md:rounded bg-search mt-0 md:mt-[-45px] md:pl-6 pl-3 md:pr-6 pr-3 md:gap-4">
+            {/* Car Make or Model */}
             <div className="flex w-[33%]">
               <InputText
                 placeholder="Car Make or Model"
                 className="font-inter font-normal text-input text-sm w-full h-[42px] rounded md:rounded-tr-[4px] md:rounded-br-[4px] rounded-tr-none rounded-br-none focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
               />
-              {/* <div className="absolute mt-[14px] ml-[27%]">
-              <SearchIcon />
-            </div> */}
             </div>
+
+            {/* City Dropdown */}
             <div className="flex w-[33%]">
               <Dropdown
-                value={selectedCity}
-                onChange={(e) => setSelectedCity(e.value)}
-                options={cities}
+                value={formik.values.city}
+                name="city"
+                options={CityData}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 optionLabel="name"
-                placeholder="Select a City"
+                optionValue="_id"
+                placeholder="City"
+                filter
+                filterPlaceholder="Search Make"
                 className="font-inter items-center md:border-none border border-l-[1px] border-l-[#BFBFBF] font-normal text-input text-sm w-full h-[42px] bg-white md:rounded rounded-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px]"
               />
             </div>
-            <div className="hidden md:flex w-[33%]">
-              <InputText
-                placeholder="Location"
-                className="font-inter font-normal text-input text-sm w-full h-[42px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
+
+            {/* Location Search (Google Places Style) */}
+            {/* <div className="hidden md:flex w-[33%]">
+              <AutoComplete
+                value={formik.values.location}
+                suggestions={filteredSuggestions}
+                completeMethod={handleSearch}
+                itemTemplate={itemTemplate}
+                onChange={handleChange}
+                field="label"
+                placeholder="Search Location"
+                className="w-full"
               />
-            </div>
+            </div> */}
+
+            {/* Search Button */}
             <div className="flex w-[33%]">
               <Button
                 label="Search"
+                onClick={formik.handleSubmit}
                 className="text-white font-inter font-medium text-sm rounded rounded-tl-none rounded-bl-none md:rounded-tl-[4px] md:rounded-bl-[4px] border-primary bg-[#22AB9B] w-full h-[42px] focus:ring-0 focus:outline-none"
               />
             </div>
           </div>
         </div>
       </div>
+
       <div className=" mt-6 md:mt-10">
         <h1 className="font-inter font-medium text-2xl leading-[100%] text-secondary">
           Rental Cars in Rawalpindi
         </h1>
       </div>
+
       <div className="flex w-full justify-center">
-        <ProductsList />
+        <ProductsList allCarsData={allCarsData} />
       </div>
     </div>
   );

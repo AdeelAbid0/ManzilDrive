@@ -1,33 +1,73 @@
 import { ReactComponent as LocationIcon } from "../../assets/SVG/location.svg";
 import { ReactComponent as Avater } from "../../assets/SVG/avatar.svg";
 import { ReactComponent as Disclaimer } from "../../assets/SVG/disclaimer.svg";
+import { ReactComponent as ArrowLeft } from "../../assets/SVG/arrow-left.svg";
+import { ReactComponent as ArrowRight } from "../../assets/SVG/arrow-right.svg";
+import { ReactComponent as CameraIcon } from "../../assets/SVG/camera.svg";
 import PrimaryButton from "../../Common/Button/Button";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 const SinglePage = () => {
   const [showNumber, setShowNumber] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const location = useLocation();
+  const carDetail = location.state;
+  const handleNext = () => {
+    if (currentIndex < carDetail?.photos?.length - 1) {
+      setCurrentIndex((prev) => prev + 1);
+    }
+  };
+  const handlePrevious = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex((prev) => prev - 1);
+    }
+  };
   return (
     <div className="flex w-full flex-col gap-4 font-inter px-4 md:px-[64px] mt-4">
       <div className="flex md:flex-row flex-col w-full justify-center gap-4">
-        <div className="flex flex-col gap-1 md:gap-4 w-full md:w-[63%]">
-          <img
-            src="/Carimage.png"
-            alt="car"
-            className="w-full object-contain"
-          />
+        <div className="flex flex-col gap-1 md:gap-4 w-full md:w-[63%] ">
+          <div className="relative">
+            <img
+              src={`http://localhost:5000/${carDetail?.photos[currentIndex]}`}
+              alt="car"
+              className="w-full object-cover max-h-[400px] rounded-[4px]"
+            />
+            <span
+              className="absolute top-1/2 left-1  cursor-pointer flex justify-center items-center w-10 h-10 bg-white rounded-[4px] shadow-[0px_0px_4px_0px_#00000026]"
+              onClick={handlePrevious}
+            >
+              <ArrowLeft />
+            </span>
+            <span
+              className="absolute top-1/2 right-1 cursor-pointer flex justify-center items-center w-10 h-10 bg-white rounded-[4px]  shadow-[0_0_4px_0_#00000026]"
+              onClick={handleNext}
+            >
+              <ArrowRight />
+            </span>
+            <span className="absolute bottom-1 right-1  bg-[#EDEDED] rounded-[20px] flex justify-center items-center px-[10px] py-[7px] gap-[10px] text-gradient">
+              <CameraIcon />
+              <span className="text-sm font-medium">
+                {currentIndex + 1}/{carDetail?.photos?.length}
+              </span>
+            </span>
+          </div>
           <div className="p-6 bg-white rounded-tl-[4px] rounded-tr-[4px]">
             <h1 className="font-bold text-[20px] text-[#1A1A1A] leading-6">
-              Rs 2500
+              {`RS ${carDetail?.rentPerDay}`}
               <span className="text-[#001326] font-normal text-sm ml-2">
                 per/day
               </span>
             </h1>
             <h2 className="font-semibold text-sm md:text-[16px] text-[#4D4D4D] pt-3 md:pt-2">
-              Suzuki Alto VXR 2023
+              {carDetail?.make?.name}&nbsp;
+              {carDetail?.model?.name}&nbsp;
+              {carDetail?.variant?.name}
             </h2>
             <div className="flex items-start gap-2 pt-3">
               <LocationIcon />
               <p className="text-sm font-normal text-[#666666]">
-                Frequency Plaza Shop # 212, Saddar, Rawalpindi, Punjab 46000
+                {carDetail?.business?.location?.address}
               </p>
             </div>
           </div>
@@ -37,13 +77,26 @@ const SinglePage = () => {
             </h1>
             <div className="flex justify-between mt-6 gap-8">
               <div className="w-full max-w-[40%] font-normal text-[#4D4D4D] text-sm leading-[27px]">
-                <p>Suzuki Alto Automatic</p>
-                <p>Year: 2023</p>
+                <p>
+                  {carDetail?.make?.name}&nbsp;
+                  {carDetail?.model?.name}&nbsp;
+                  {carDetail?.variant?.name}
+                </p>
+                <p>Year: {carDetail?.year}</p>
                 <p>Mileage: 18 km/l (city) | 22 km/l (highway)</p>
-                <p>Transmission: Automatic</p>
-                <p>Seating Capacity: 4</p>
+                <p>
+                  Transmission:
+                  {carDetail?.transmission === "automatic"
+                    ? "Automatic"
+                    : "Manual"}
+                </p>
+                <p>Seating Capacity: {carDetail?.seats}</p>
                 <p>Color: Silver</p>
-                <p>Air Conditioning</p>
+                <p>
+                  {carDetail?.acheater
+                    ? "Air Conditioning (available)"
+                    : "Air Conditioning (Not available)"}
+                </p>
                 <p>Steering: Power-assisted, tilt-adjustable</p>
               </div>
               <div className="w-full max-w-[40%] text-[#4D4D4D] text-sm leading-[27px]">
@@ -61,32 +114,39 @@ const SinglePage = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 w-full md:w-[37%]">
+        <div className="relative flex flex-col gap-4 w-full md:w-[37%]">
           <div className="flex flex-col items-center w-full px-6 py-11 md:py-14 bg-white rounded">
             <Avater />
             <h1 className="!m-0 text-[#001326] text-sm font-semibold leading-[100%] pt-2">
-              Mr XYZ
+              {carDetail?.business?.name}
             </h1>
             <span className="text-[#00132699] font-normal text-sm leading-[100%] pt-4">
-              Member since 2000
+              Member since <span> </span>
+              {new Date(carDetail?.business?.createdAt).toLocaleDateString(
+                "en-US",
+                {
+                  month: "short",
+                  year: "numeric",
+                }
+              )}
             </span>
             <p className="text-[#666666] font-normal text-sm pt-4">
-              Frequency Plaza Shop # 212, Saddar, Rawalpindi, Punjab 46000
+              {carDetail?.business?.location?.address}
             </p>
             <span className="pt-4 text-[#00796B] text-[16px] font-medium underline underline-offset-2">
-              View All Cars
+              {/* send business id to api to get all cars related to that business (carDetail?.business?._id) View All Cars */}
             </span>
             <div className="w-full pt-9">
-              {showNumber ? (
-                <div className="flex w-full items-center p-6 flex-col border border-[#DFE8E5] rounded [box-shadow:0px_1px_3px_0px_#00796B4D,0px_4px_8px_3px_#00796B26]">
+              {showNumber && (
+                <div className="absolute z-[999] top-[30%] left-0 bg-white flex w-full items-center p-6 flex-col border border-[#DFE8E5] rounded [box-shadow:0px_1px_3px_0px_#00796B4D,0px_4px_8px_3px_#00796B26]">
                   <p className="font-semibold text-[16px] text-[#444645] leading-[100%]">
-                    Adeel Abid
+                    {carDetail?.business?.name}
                   </p>
                   <label className="font-normal text-sm text-[#4D5151] leading-[100%] pt-2">
-                    MashaALLAH Rental Car Services
+                    {carDetail?.business?.shopName}
                   </label>
                   <h3 className="font-bold text-[16px] text-[#444645] pt-4">
-                    031234567890
+                    {carDetail?.business?.phoneNumber}
                   </h3>
                   <span className="text-xs font-normal text-[#6A706F] pt-4">
                     Mention Manzil Drive To get Better Deal
@@ -102,16 +162,15 @@ const SinglePage = () => {
                     />
                   </div>
                 </div>
-              ) : (
-                <PrimaryButton
-                  type="primary"
-                  label="Show  Phone number"
-                  className="font-medium text-sm"
-                  handleClick={() => {
-                    setShowNumber(true);
-                  }}
-                />
               )}
+              <PrimaryButton
+                type="primary"
+                label="Show  Phone number"
+                className="font-medium text-sm"
+                handleClick={() => {
+                  setShowNumber(true);
+                }}
+              />
             </div>
           </div>
           <div className="white rounded">

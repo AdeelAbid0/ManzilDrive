@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 const Sidebar = () => {
   const navigate = useNavigate();
   return (
-    <div className="mt-2 h-auto rounded-tr-[4px] w-full bg-white">
+    <div className="mt-[72px] h-[calc(100vh-72px)] rounded-tr-[4px] w-[242px] bg-white fixed">
       <div className="h-full pt-12 ">
         <h1 className="pl-6 font-inter font-normal text-xs leading-[100%] tracking-[1px] text-[#082431]">
           MENU

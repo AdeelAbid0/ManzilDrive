@@ -4,5 +4,5 @@ export const initialValuesPersonalInfo = {
   secondaryNumber: "",
   shopName: "",
   city: "",
-  location: "",
+  location: null,
 };

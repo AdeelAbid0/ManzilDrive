@@ -8,7 +8,15 @@ export const ApiUrl = {
     VerifyPhone: "business/verify-phone",
     SendPhoneVerification: "business/resend-phone-verification",
   },
-
+  Dashboard: {
+    GetAllCars: (page, limit, status, viewAll, businessId) =>
+      `/cars/getAllCarsOfBusiness?page=${page}&limit=${limit}&status=${status}&viewAll=${viewAll}&businessId=${businessId}`,
+    GetAddsCount: (businessId) =>
+      `cars/getBusinessAdsCount?businessId=${businessId}`,
+  },
+  Profile: {
+    UpdateProfile: "business/update",
+  },
   Business: {
     GetBusinessDetail: (businessId) =>
       `business/getBusinessById?id=${businessId}`,
@@ -24,8 +32,11 @@ export const ApiUrl = {
     AddVehicle: "cars/addcar",
     UpdateAvailability: (carId) => `cars/${carId}/availability`,
     ApprovePost: (carId) => `cars/${carId}/approve`,
-    GetAllCars: (page = 1, limit = 5) =>
-      `cars/cars?page=${page}&limit=${limit}`,
+    // could be one of these ['pending','inactive','live']
+    GetAllCars: () => `cars/cars?page`,
+
+    // GetAllCars: (page, limit, make, model, variant, status, year, location) =>
+    //   `cars/cars?page=${page}&limit=${limit}&make=${make}&model=${model}&variant=${variant}&status=${status}&year=${year}&location=${location},`,
     AddPostDuration: "postDuration/car-post-duration",
     LocationSuggestion: (locationInput) =>
       `cars/location-suggestions?locationInput=${locationInput}`,
