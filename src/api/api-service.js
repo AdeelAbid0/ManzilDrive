@@ -54,5 +54,6 @@ export const useClientMutation = ({
         throw error.response?.data || error;
       }
     },
+    timeout: 10000,
   });
 };

@@ -19,9 +19,7 @@ const Products = () => {
 
   const formik = useFormik({
     initialValues: initialValues,
-    onSubmit: (values) => {
-      console.log(values);
-    },
+    onSubmit: (values) => {},
   });
 
   // ✅ Cars API

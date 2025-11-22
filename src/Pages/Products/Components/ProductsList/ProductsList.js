@@ -20,9 +20,7 @@ const ProductsList = ({ allCarsData }) => {
         withoutDriver: false,
       },
     },
-    onSubmit: (values) => {
-      console.log("Selected Filters:", values);
-    },
+    onSubmit: (values) => {},
   });
 
   const { values, handleChange, handleSubmit } = formik;

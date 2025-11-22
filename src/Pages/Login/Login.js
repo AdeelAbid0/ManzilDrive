@@ -53,7 +53,6 @@ const Login = () => {
             })
           );
           dispatch(setUser(res));
-          console.log({ res });
           localStorage.setItem("Token", res?.token);
           if (res?.business?.status === "active") {
             navigate("/postadd");
@@ -120,14 +119,12 @@ const Login = () => {
     );
   };
   const handleSendOTP = () => {
-    console.log("called send otp");
     sendOTP(
       {
         phoneNumber: formik.values.phoneNumber.toString(),
       },
       {
         onSuccess: (res) => {
-          console.log("success res", res);
           setShowOtp(true);
           dispatch(
             showNotification({
@@ -137,7 +134,6 @@ const Login = () => {
           );
         },
         onError: (error) => {
-          console.log("error res", error);
           dispatch(
             showNotification({
               message: "Error while sending OTP",
@@ -156,7 +152,6 @@ const Login = () => {
       },
       {
         onSuccess: (res) => {
-          console.log("otp verified res is", res);
           dispatch(
             showNotification({
               message: "OTP verified successfully",

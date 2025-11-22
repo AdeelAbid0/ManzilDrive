@@ -4,6 +4,7 @@ import { useGetAllActiveByCountryId, useGetLocation } from "../hooks/PostApi";
 import { AutoComplete } from "primereact/autocomplete";
 import { useEffect, useState } from "react";
 import PhoneDialog from "./PhoneDialog";
+import EmailDialog from "./EmailDialog";
 const PersonalInfo = ({
   formik,
   BusinessDetail,
@@ -11,13 +12,24 @@ const PersonalInfo = ({
   handleVerifyOTP,
   showOtpScreen,
   setShowOtpScreen,
+  showEmailDialog,
+  setShowEmailDialog,
+  email,
+  setEmail,
+  emailOTP,
+  setEmailOTP,
+  handleSendEmailVerificationCode,
+  isLoadingEmailVerificationCode,
+  emailOTPScreen,
+  handleVerifyEmailOTP,
+  EmailOTPVerifyLoading,
 }) => {
   const [sessionToken, setSessionToken] = useState("");
   const [visible, setVisible] = useState(
     BusinessDetail?.phoneVerified ? false : true
   );
   useEffect(() => {
-    if (formik.values.location.value === undefined) {
+    if (formik.values?.location?.value === undefined) {
       formik.setFieldValue("location", null);
     }
   }, []);
@@ -32,14 +44,14 @@ const PersonalInfo = ({
     isError: isLocationError,
     refetch: refetchLocation,
   } = useGetLocation({
-    input: formik.values.location || "",
+    input: formik.values?.location || "",
     sessionToken: sessionToken,
   });
   useEffect(() => {
-    if (formik.values.location) {
+    if (formik.values?.location) {
       refetchLocation();
     }
-  }, [formik.values.location]);
+  }, [formik.values?.location]);
   const handleChange = (e) => {
     formik.setFieldValue("location", e.value);
   };
@@ -80,6 +92,21 @@ const PersonalInfo = ({
           handleVerifyOTP={handleVerifyOTP}
           showOtpScreen={showOtpScreen}
           setShowOtpScreen={setShowOtpScreen}
+        />
+      )}
+      {!showOtpScreen && !showEmailDialog && (
+        <EmailDialog
+          showEmailDialog={showEmailDialog}
+          setShowEmailDialog={setShowEmailDialog}
+          email={email}
+          setEmail={setEmail}
+          emailOTP={emailOTP}
+          setEmailOTP={setEmailOTP}
+          handleSendEmailVerificationCode={handleSendEmailVerificationCode}
+          isLoadingEmailVerificationCode={isLoadingEmailVerificationCode}
+          emailOTPScreen={emailOTPScreen}
+          handleVerifyEmailOTP={handleVerifyEmailOTP}
+          EmailOTPVerifyLoading={EmailOTPVerifyLoading}
         />
       )}
       <div className="flex flex-col w-full">

@@ -7,7 +7,9 @@ import {
   useGetAllmodelByMake,
   useGetAllVariantsBymodel,
   useGetBusinessDetail,
+  useSendEmailVerificationCode,
   useSendOTP,
+  useVerifyEmailOtp,
   useVerifyPhoneAuth,
 } from "./hooks/PostApi";
 import CarDetailForm from "./Components/CarDetailForm";
@@ -28,6 +30,12 @@ const PostAdd = () => {
   const [showOtpScreen, setShowOtpScreen] = useState(false);
   const [images, setImages] = useState([]);
   const userData = useSelector((state) => state.user.user);
+  const [showEmailDialog, setShowEmailDialog] = useState(
+    userData?.business?.emailVerified
+  );
+  const [emailOTPScreen, setEmailOTPScreen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [emailOTP, setEmailOTP] = useState("");
   const businessId = userData?.business?._id;
 
   // ------------------- Formik for Car Detail -------------------
@@ -35,7 +43,6 @@ const PostAdd = () => {
     initialValues: initialValues,
     validationSchema: ValidationSchema,
     onSubmit: (values) => {
-      console.log({ values });
     },
   });
 
@@ -153,7 +160,6 @@ const PostAdd = () => {
   // send otp to number api
   const { mutate: sendOTP } = useSendOTP();
   const handleSendOTP = () => {
-    console.log("called send otp");
     sendOTP(
       {
         phoneNumber: formikPersonalInfo.values.phoneNumber.toString(),
@@ -211,7 +217,70 @@ const PostAdd = () => {
       }
     );
   };
+  // send otp to email api
+  const {
+    mutate: SendEmailVerificationCode,
+    isPending: isLoadingEmailVerificationCode,
+  } = useSendEmailVerificationCode();
+  const handleSendEmailVerificationCode = () => {
+    SendEmailVerificationCode(
+      {
+        email: email,
+        businessId: businessId,
+      },
+      {
+        onSuccess: (res) => {
+          setEmailOTPScreen(true);
+          dispatch(
+            showNotification({
+              message: res?.message,
+              status: "success",
+            })
+          );
+        },
+        onError: (error) => {
+          dispatch(
+            showNotification({
+              message: error?.message,
+              status: "error",
+            })
+          );
+        },
+      }
+    );
+  };
+  //verify email api
+  const { mutate: VerifyEmailOTP, isPending: EmailOTPVerifyLoading } =
+    useVerifyEmailOtp();
+  const handleVerifyEmailOTP = () => {
+    VerifyEmailOTP(
+      {
+        email: email,
+        emailCode: emailOTP,
+      },
+      {
+        onSuccess: (res) => {
+          setShowEmailDialog(true);
+          dispatch(
+            showNotification({
+              message: res?.message,
+              status: "success",
+            })
+          );
 
+          refetchBusinessDetail();
+        },
+        onError: (error) => {
+          dispatch(
+            showNotification({
+              message: error?.message,
+              status: "error",
+            })
+          );
+        },
+      }
+    );
+  };
   // ------------------- Effects -------------------
   useEffect(() => {
     if (BusinessDetail?.phoneVerified) {
@@ -249,7 +318,7 @@ const PostAdd = () => {
   // ------------------- RENDER -------------------
   return (
     <div className="flex flex-col justify-center items-center mt-2 w-full mb-8 gap-6">
-      {personalInfoActive ? (
+      {!personalInfoActive ? (
         <div className="h-full w-full md:max-w-[766px] md:w-[64%] md:mt-6 p-4 md:p-0">
           <PersonalInfo
             formik={formikPersonalInfo}
@@ -258,6 +327,18 @@ const PostAdd = () => {
             handleVerifyOTP={handleVerifyOTP}
             showOtpScreen={showOtpScreen}
             setShowOtpScreen={setShowOtpScreen}
+            showEmailDialog={showEmailDialog}
+            setShowEmailDialog={setShowEmailDialog}
+            email={email}
+            setEmail={setEmail}
+            emailOTP={emailOTP}
+            setEmailOTP={setEmailOTP}
+            handleSendEmailVerificationCode={handleSendEmailVerificationCode}
+            isLoadingEmailVerificationCode={isLoadingEmailVerificationCode}
+            emailOTPScreen={emailOTPScreen}
+            setEmailOTPScreen={setEmailOTPScreen}
+            handleVerifyEmailOTP={handleVerifyEmailOTP}
+            EmailOTPVerifyLoading={EmailOTPVerifyLoading}
           />
         </div>
       ) : (
