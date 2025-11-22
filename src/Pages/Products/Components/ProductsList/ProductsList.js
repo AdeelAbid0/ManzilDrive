@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import Details from "../../../../Components/Details.js/Details";
+import Details from "../../../../Components/Details/Details";
 
 const ProductsList = ({ allCarsData }) => {
   // Formik setup

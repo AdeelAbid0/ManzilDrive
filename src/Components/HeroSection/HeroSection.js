@@ -1,5 +1,3 @@
-import React from "react";
-
 const HeroSection = () => {
   return (
     <div className="w-full h-auto bg-hero">

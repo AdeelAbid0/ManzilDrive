@@ -283,19 +283,18 @@ const Login = () => {
                       handleGoogleLogin();
                     }}
                   >
-                    {isGoogleLoginPending ? (
-                      <span className="flex justify-center items-center w-[197px]">
+                    <span className="flex justify-center w-[197px]">
+                      {!isGoogleLoginPending ? (
+                        <div className="flex gap-3">
+                          <GoogleIcon />
+                          <span className="text-[#5D717D] text-base">
+                            Login with Google
+                          </span>
+                        </div>
+                      ) : (
                         <i className="pi pi-spin pi-spinner text-gray-500"></i>
-                      </span>
-                    ) : (
-                      <span className="flex gap-3 w-[197px]">
-                        <GoogleIcon />
-
-                        <span className="text-[#5D717D] text-base">
-                          Login with Google
-                        </span>
-                      </span>
-                    )}
+                      )}
+                    </span>
                   </div>
                 </div>
               </div>
