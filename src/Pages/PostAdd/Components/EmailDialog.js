@@ -31,9 +31,10 @@ const EmailDialog = ({
     <div>
       <Dialog
         header="Header"
-        visible={!showEmailDialog}
+        visible={showEmailDialog}
         style={{ width: "46%" }}
         headerClassName="hidden"
+        onHide={() => setShowEmailDialog(false)}
       >
         {emailOTPScreen ? (
           <div>

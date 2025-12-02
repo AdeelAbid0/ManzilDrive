@@ -13,6 +13,13 @@ export const useGetAllmodelByMake = (makeId) => {
     enabled: !!makeId,
   });
 };
+export const useGetAllVariantsBymodel = (modelId) => {
+  return useClientQuery({
+    queryKeys: ["getAllVariants", modelId],
+    url: ApiUrl.Variant.GetVariantBymodel(modelId),
+    enabled: !!modelId,
+  });
+};
 export const useGetAllActiveByCountryId = (countryId) => {
   return useClientQuery({
     queryKey: ["getAllCity", countryId],
@@ -37,13 +44,6 @@ export const AddVehicle = () => {
   return useClientMutation({
     url: ApiUrl.Vehicle.AddVehicle,
     method: "POST",
-  });
-};
-export const useGetAllVariantsBymodel = (modelId) => {
-  return useClientQuery({
-    queryKeys: ["getAllVariants", modelId],
-    url: ApiUrl.Variant.GetVariantBymodel(modelId),
-    enabled: !!modelId,
   });
 };
 export const useVerifyPhone = () => {

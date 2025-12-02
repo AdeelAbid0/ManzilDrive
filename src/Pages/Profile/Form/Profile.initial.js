@@ -1,5 +1,4 @@
-const user = JSON.parse(localStorage.getItem("User"));
-export const initialValues = {
+export const initialValues = (user) => ({
   name: user?.business?.name || "",
   gender: user?.business?.gender || "",
   phoneNumber: user?.business?.phoneVerified ? user?.business?.phoneNumber : "",
@@ -9,4 +8,4 @@ export const initialValues = {
   shopName: user?.business?.shopName || "",
   userName: user?.business?.userName || "",
   email: user?.business?.email || "",
-};
+});

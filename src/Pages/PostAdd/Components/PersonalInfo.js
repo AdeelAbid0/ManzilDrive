@@ -1,10 +1,11 @@
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
-import { useGetAllActiveByCountryId, useGetLocation } from "../hooks/PostApi";
-import { AutoComplete } from "primereact/autocomplete";
+import { useGetAllActiveByCountryId } from "../hooks/PostApi";
 import { useEffect, useState } from "react";
 import PhoneDialog from "./PhoneDialog";
 import EmailDialog from "./EmailDialog";
+import Location from "../../../Common/LocationInput/Location";
+import { useSelector } from "react-redux";
 const PersonalInfo = ({
   formik,
   BusinessDetail,
@@ -24,66 +25,41 @@ const PersonalInfo = ({
   handleVerifyEmailOTP,
   EmailOTPVerifyLoading,
 }) => {
-  const [sessionToken, setSessionToken] = useState("");
+  const userData = useSelector((state) => state?.user?.user);
   const [visible, setVisible] = useState(
-    BusinessDetail?.phoneVerified ? false : true
+    BusinessDetail?.business?.phoneVerified ? false : true
   );
   useEffect(() => {
     if (formik.values?.location?.value === undefined) {
       formik.setFieldValue("location", null);
     }
   }, []);
+
+  useEffect(() => {
+    if (BusinessDetail?.business?.phoneVerified) {
+      setVisible(false);
+      if (!BusinessDetail?.business?.emailVerified) {
+        setShowEmailDialog(true);
+      }
+    }
+  }, [BusinessDetail, setShowEmailDialog]);
+
   const {
     data: CityData,
     isLoading,
     error,
   } = useGetAllActiveByCountryId("665000000000000000000001");
-  const {
-    data: allLocations,
-    isLoading: isLoadingLocations,
-    isError: isLocationError,
-    refetch: refetchLocation,
-  } = useGetLocation({
-    input: formik.values?.location || "",
-    sessionToken: sessionToken,
-  });
-  useEffect(() => {
-    if (formik.values?.location) {
-      refetchLocation();
-    }
-  }, [formik.values?.location]);
   const handleChange = (e) => {
-    formik.setFieldValue("location", e.value);
+    formik.setFieldValue("location", {
+      value: e.value || e.place_id,
+      label: e.label || e.description,
+    });
   };
 
   // Custom template for dropdown items
-  const itemTemplate = (item) => {
-    return (
-      <div className="flex flex-col p-[8px_12px]">
-        <p className="font-inter text-[14px] font-normal leading-4 ">
-          {item.data.structured_formatting?.main_text || item.label}
-        </p>
-        {item.data.structured_formatting?.secondary_text && (
-          <p className="font-inter text-[12px] font-normal leading-4 ">
-            {item.data.structured_formatting.secondary_text}
-          </p>
-        )}
-      </div>
-    );
-  };
-  const handleSearch = (event) => {
-    formik.setFieldValue("location", event.query);
-    refetchLocation();
-  };
-  const suggestions = allLocations?.suggestions || [];
-  const filteredSuggestions = suggestions.map((item) => ({
-    label: item.description,
-    value: item.place_id,
-    data: item,
-  }));
   return (
     <div className="flex flex-col w-full max-w-[766px] p-[24px_16px] border border-[#EDEDED] rounded-[12px] bg-white">
-      {showOtpScreen && (
+      {visible && (
         <PhoneDialog
           formik={formik}
           visible={visible}
@@ -94,7 +70,7 @@ const PersonalInfo = ({
           setShowOtpScreen={setShowOtpScreen}
         />
       )}
-      {!showOtpScreen && !showEmailDialog && (
+      {!showOtpScreen && showEmailDialog && (
         <EmailDialog
           showEmailDialog={showEmailDialog}
           setShowEmailDialog={setShowEmailDialog}
@@ -184,7 +160,7 @@ const PersonalInfo = ({
           <Dropdown
             value={formik.values.city}
             name="city"
-            options={CityData}
+            options={CityData || []}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             optionLabel="name"
@@ -199,15 +175,11 @@ const PersonalInfo = ({
             }`}
           />
 
-          <AutoComplete
+          <Location
             value={formik.values.location}
-            suggestions={filteredSuggestions}
-            completeMethod={handleSearch}
-            itemTemplate={itemTemplate}
             onChange={handleChange}
-            field="label"
             placeholder="Search Location"
-            className="w-full"
+            className="w-full !bg-[#F7F7F7]"
           />
         </div>
       </div>

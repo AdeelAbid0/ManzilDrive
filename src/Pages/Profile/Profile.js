@@ -1,6 +1,5 @@
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
-import { Button } from "primereact/button";
 import PrimaryButton from "../../Common/Button/Button";
 import { Calendar } from "primereact/calendar";
 import { useFormik } from "formik";
@@ -20,12 +19,10 @@ const BASE_URL_IMG = process.env.REACT_APP_IMG_URL;
 const Profile = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
-
-  // Store real file for API
   const [imageFile, setImageFile] = useState(null);
-  // Store preview URL for frontend
   const [preview, setPreview] = useState(null);
 
+  // API Calls
   const { mutate: updateProfile } = useUpdateProfile();
   const { data: CityData } = useGetAllActiveByCountryId(
     "665000000000000000000001"
@@ -33,12 +30,12 @@ const Profile = () => {
 
   const formik = useFormik({
     enableReinitialize: true,
-    initialValues: initialValues,
+    initialValues: initialValues(user),
     validationSchema: validationSchema,
     onSubmit: (values) => {
       const formData = new FormData();
       formData.append("businessId", user?.business?._id);
-      if (imageFile) formData.append("img", imageFile); // real file here
+      if (imageFile) formData.append("img", imageFile);
       formData.append("name", values.name);
       formData.append("gender", values.gender);
       formData.append("phoneNumber", values.phoneNumber);
@@ -55,7 +52,6 @@ const Profile = () => {
       });
     },
   });
-
   const GenderOptions = [
     { option: "Male", value: "male" },
     { option: "Female", value: "female" },
@@ -64,8 +60,8 @@ const Profile = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setImageFile(file); // store real file
-      setPreview(URL.createObjectURL(file)); // create preview
+      setImageFile(file);
+      setPreview(URL.createObjectURL(file));
     }
   };
 
@@ -133,6 +129,46 @@ const Profile = () => {
             placeholder="Gender"
             className="font-inter font-normal text-input items-center text-sm bg-[#F7F7F7] h-[49px] rounded"
           />
+          <div className="flex gap-1">
+            <div className="font-inter flex justify-center items-center text-input  text-sm bg-[#F7F7F7] w-[59px] h-[50px] border border-[#BFD0CB] rounded">
+              +92
+            </div>
+            <InputText
+              type="number"
+              name="phoneNumber"
+              value={formik.values.phoneNumber}
+              disabled
+              placeholder="Phone Number"
+              className={` font-inter w-full font-normal text-input text-sm bg-[#F7F7F7] h-[49px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3  ${
+                formik.touched.phoneNumber && formik.errors.phoneNumber
+                  ? "border border-error text-error"
+                  : ""
+              }`}
+            />
+          </div>
+          <div className="flex gap-1">
+            <div className="font-inter flex justify-center items-center text-input  text-sm bg-[#F7F7F7] w-[59px] h-[50px] border border-[#BFD0CB] rounded">
+              +92
+            </div>
+            <InputText
+              type="number"
+              name="secondaryNumber"
+              onChange={(e) => {
+                const input = e.target.value;
+                if (/^\d{0,10}$/.test(input)) {
+                  formik.setFieldValue("secondaryNumber", input);
+                }
+              }}
+              value={formik.values.secondaryNumber}
+              placeholder="Secondary Number  or Whatsapp Number"
+              className={`w-full font-inter font-normal text-input text-sm bg-[#F7F7F7] h-[49px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3  ${
+                formik.touched.secondaryNumber && formik.errors.secondaryNumber
+                  ? "border border-error text-error"
+                  : ""
+              }`}
+            />
+          </div>
+
           <div>
             <Calendar
               value={formik.values.dob ? new Date(formik.values.dob) : null}

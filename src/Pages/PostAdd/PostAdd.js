@@ -23,6 +23,7 @@ import { ValidationSchemaPersonalInfo } from "./Form/personalinfo.schema";
 import { initialValuesPersonalInfo } from "./Form/personalinfo.initial";
 import { useDispatch, useSelector } from "react-redux";
 import { showNotification } from "../../slices/notificationSlice";
+import { setUser } from "../../slices/userSlice";
 
 const PostAdd = () => {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const PostAdd = () => {
   const [images, setImages] = useState([]);
   const userData = useSelector((state) => state.user.user);
   const [showEmailDialog, setShowEmailDialog] = useState(
-    userData?.business?.emailVerified
+    !userData?.business?.emailVerified
   );
   const [emailOTPScreen, setEmailOTPScreen] = useState(false);
   const [email, setEmail] = useState("");
@@ -56,16 +57,14 @@ const PostAdd = () => {
       formDataForPersonalInfo.append("city", values.city);
       formDataForPersonalInfo.append("phoneNumber", values.phoneNumber);
       formDataForPersonalInfo.append("sessionToken", "");
-      formDataForPersonalInfo.append("shopName", formik.values.shopName);
-      formDataForPersonalInfo.append(
-        "secondaryNumber",
-        formik.values.secondaryNumber
-      );
+      formDataForPersonalInfo.append("shopName", values.shopName);
+      formDataForPersonalInfo.append("secondaryNumber", values.secondaryNumber);
       formDataForPersonalInfo.append("address", values.location.label);
       formDataForPersonalInfo.append("placeId", values.location.value);
 
       addBusiness(formDataForPersonalInfo, {
         onSuccess: (res) => {
+          dispatch(setUser(res));
           dispatch(
             showNotification({
               message: "Business Updated Successfully",
@@ -137,7 +136,6 @@ const PostAdd = () => {
       });
     },
   });
-
   // ------------------- API HOOKS -------------------
   // Get all makes api
   const { data: makesData } = useGetAllMakes();
@@ -259,7 +257,7 @@ const PostAdd = () => {
       },
       {
         onSuccess: (res) => {
-          setShowEmailDialog(true);
+          setShowEmailDialog(false);
           dispatch(
             showNotification({
               message: res?.message,
@@ -282,16 +280,29 @@ const PostAdd = () => {
   };
   // ------------------- Effects -------------------
   useEffect(() => {
-    if (BusinessDetail?.phoneVerified) {
+    if (BusinessDetail) {
+      if (BusinessDetail?.business?.phoneVerified) {
+        formikPersonalInfo.setFieldValue(
+          "phoneNumber",
+          BusinessDetail?.business?.phoneNumber
+        );
+      }
+      formikPersonalInfo.setFieldValue("name", BusinessDetail?.business?.name);
       formikPersonalInfo.setFieldValue(
-        "phoneNumber",
-        BusinessDetail?.phoneNumber
+        "secondaryNumber",
+        BusinessDetail?.business?.secondaryNumber
       );
-      formikPersonalInfo.setFieldValue("name", BusinessDetail.name);
-      formikPersonalInfo.setFieldValue("city", BusinessDetail?.city?._id);
+      formikPersonalInfo.setFieldValue(
+        "shopName",
+        BusinessDetail?.business?.shopName
+      );
+      formikPersonalInfo.setFieldValue(
+        "city",
+        BusinessDetail?.business?.city?._id
+      );
       formikPersonalInfo.setFieldValue("location", {
-        value: BusinessDetail?.location?.placeId,
-        label: BusinessDetail?.location?.address,
+        value: BusinessDetail?.business?.location?.placeId,
+        label: BusinessDetail?.business?.location?.address,
       });
     }
   }, [BusinessDetail]);
@@ -313,8 +324,9 @@ const PostAdd = () => {
     () => requiredFields.some((field) => !formik.values[field]),
     [formik.values]
   );
-
   // ------------------- RENDER -------------------
+
+  console.log({ formikPersonalInfo });
   return (
     <div className="flex flex-col justify-center items-center mt-2 w-full mb-8 gap-6">
       {personalInfoActive ? (
