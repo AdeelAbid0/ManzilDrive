@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Hambergur, Logo } from "../../Utils/Icons";
 import { Sidebar } from "primereact/sidebar";
 import { Button } from "primereact/button";
@@ -16,6 +16,30 @@ const Header = () => {
   const [openProfile, setOpenProfile] = useState(false);
   const [menu, setMenu] = useState(false);
   const user = useSelector((state) => state.user.user);
+  const profileDropdownRef = useRef(null);
+
+  // Handle click outside to close profile dropdown
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        profileDropdownRef.current &&
+        !profileDropdownRef.current.contains(event.target)
+      ) {
+        const profileIcon = document.querySelector(".profile-icon-container");
+        if (profileIcon && !profileIcon.contains(event.target)) {
+          setOpenProfile(false);
+        }
+      }
+    };
+
+    if (openProfile) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openProfile]);
   return (
     <div className="flex justify-center items-center w-full max-w-[1440px] h-[70px] bg-white fixed z-[999]">
       <div className="flex w-[91.11%] max-w-[1312px] md:gap-10 lg:gap-20">
@@ -39,7 +63,7 @@ const Header = () => {
           <div className="flex items-center gap-3">
             {user ? (
               <div
-                className="flex items-center w-[68px] h-10 gap-1 cursor-pointer"
+                className="flex items-center w-[68px] h-10 gap-1 cursor-pointer profile-icon-container"
                 onClick={() => setOpenProfile((prev) => !prev)}
               >
                 {user?.business?.img ? (
@@ -83,7 +107,10 @@ const Header = () => {
         </div>
       </div>
       {openProfile && (
-        <div className="absolute flex flex-col gap-[2px] top-[68px] right-[64px] z-[999] w-[273px] h-auto border border-[#DCDCDC] shadow-[0px_4px_12px_0px_#00000040] bg-white rounded-lg p-3">
+        <div
+          ref={profileDropdownRef}
+          className="absolute flex flex-col gap-[2px] top-[68px] right-[64px] z-[999] w-[273px] h-auto border border-[#DCDCDC] shadow-[0px_4px_12px_0px_#00000040] bg-white rounded-lg p-3"
+        >
           <div className="flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer">
             <div>
               {user?.business?.img ? (

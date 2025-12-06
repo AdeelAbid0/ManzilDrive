@@ -1,18 +1,20 @@
 import { ReactComponent as LocationIcon } from "../../assets/SVG/location.svg";
-import { ReactComponent as Avater } from "../../assets/SVG/avatar.svg";
+import { ReactComponent as Avatar } from "../../assets/SVG/avatar.svg";
 import { ReactComponent as Disclaimer } from "../../assets/SVG/disclaimer.svg";
 import { ReactComponent as ArrowLeft } from "../../assets/SVG/arrow-left.svg";
 import { ReactComponent as ArrowRight } from "../../assets/SVG/arrow-right.svg";
 import { ReactComponent as CameraIcon } from "../../assets/SVG/camera.svg";
 import PrimaryButton from "../../Common/Button/Button";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 const SinglePage = () => {
+  const navigate = useNavigate();
   const [showNumber, setShowNumber] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const location = useLocation();
   const carDetail = location.state;
+  console.log({ carDetail });
   const handleNext = () => {
     if (currentIndex < carDetail?.photos?.length - 1) {
       setCurrentIndex((prev) => prev + 1);
@@ -116,7 +118,7 @@ const SinglePage = () => {
 
         <div className="relative flex flex-col gap-4 w-full md:w-[37%]">
           <div className="flex flex-col items-center w-full px-6 py-11 md:py-14 bg-white rounded">
-            <Avater />
+            <Avatar />
             <h1 className="!m-0 text-[#001326] text-sm font-semibold leading-[100%] pt-2">
               {carDetail?.business?.name}
             </h1>
@@ -130,11 +132,19 @@ const SinglePage = () => {
                 }
               )}
             </span>
-            <p className="text-[#666666] font-normal text-sm pt-4">
-              {carDetail?.business?.location?.address}
+            <p className="text-[#666666] font-medium text-sm pt-4">
+              {carDetail?.business?.location?.address} Bug here : Not showing
+              location
             </p>
-            <span className="pt-4 text-[#00796B] text-[16px] font-medium underline underline-offset-2">
-              {/* send business id to api to get all cars related to that business (carDetail?.business?._id) View All Cars */}
+            <span
+              className="pt-4 text-[#00796B] text-[16px] font-medium underline underline-offset-2"
+              onClick={() => {
+                navigate(`/detail/${carDetail?.business?._id}`, {
+                  state: carDetail,
+                });
+              }}
+            >
+              (carDetail?.business?._id) View All Cars
             </span>
             <div className="w-full pt-9">
               {showNumber && (

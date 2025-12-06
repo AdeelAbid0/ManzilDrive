@@ -8,7 +8,7 @@ export const useGetAllMakes = () => {
 };
 export const useGetAllmodelByMake = (makeId) => {
   return useClientQuery({
-    queryKey: ["getAllModelsByMake", makeId],
+    queryKeys: ["getAllModelsByMake", makeId],
     url: ApiUrl?.Models?.GetAllModelsByMake(makeId),
     enabled: !!makeId,
   });
@@ -22,7 +22,7 @@ export const useGetAllVariantsBymodel = (modelId) => {
 };
 export const useGetAllActiveByCountryId = (countryId) => {
   return useClientQuery({
-    queryKey: ["getAllCity", countryId],
+    queryKeys: ["getAllCity", countryId],
     url: ApiUrl?.City?.GetAllActiveByCountryId(countryId),
     enabled: !!countryId,
   });

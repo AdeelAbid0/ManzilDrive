@@ -80,7 +80,7 @@ const EmailDialog = ({
             </div>
           </div>
         ) : (
-          <div>
+          <div className="p-6">
             <h1 className="!m-0 font-manrope font-semibold  text-[24px] text-[#3E464C] leading-[36px]">
               Verify Your Email
             </h1>

@@ -40,6 +40,8 @@ export const ApiUrl = {
     // GetAllCars: (page, limit, make, model, variant, status, year, location) =>
     //   `cars/cars?page=${page}&limit=${limit}&make=${make}&model=${model}&variant=${variant}&status=${status}&year=${year}&location=${location},`,
     AddPostDuration: "postDuration/car-post-duration",
+    GetAllCarsByBusiness: (page, limit, status, viewAll, businessId) =>
+      `cars/getAllCarsOfBusiness?page=${page}&limit=${limit}&status=${status}&viewAll=${viewAll}&businessId=${businessId}`,
     LocationSuggestion: (locationInput) =>
       `cars/location-suggestions?locationInput=${locationInput}`,
   },
