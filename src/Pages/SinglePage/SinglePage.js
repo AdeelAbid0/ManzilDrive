@@ -137,14 +137,14 @@ const SinglePage = () => {
               location
             </p>
             <span
-              className="pt-4 text-[#00796B] text-[16px] font-medium underline underline-offset-2"
+              className="pt-4 text-[#00796B] text-[16px] font-medium underline underline-offset-2 cursor-pointer"
               onClick={() => {
-                navigate(`/detail/${carDetail?.business?._id}`, {
+                navigate(`/viewAll`, {
                   state: carDetail,
                 });
               }}
             >
-              (carDetail?.business?._id) View All Cars
+              View All Cars
             </span>
             <div className="w-full pt-9">
               {showNumber && (

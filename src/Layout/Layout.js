@@ -3,6 +3,8 @@ import Footer from "../Components/Footer/Footer";
 import Header from "../Components/Header/Header";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import AppRoutes from "../Routes/AppRoutes";
+import { useEffect, useState } from "react";
+import { PublicRoutes } from "../Routes/PublicRoutes";
 
 const Layout = () => {
   const user = JSON.parse(localStorage.getItem("User"));
@@ -10,8 +12,18 @@ const Layout = () => {
   const location = useLocation();
   const isAuthPage = location.pathname.startsWith("/auth");
   const isHomePage = location.pathname === "/";
-  const showSidebar = user && token && !isAuthPage && !isHomePage;
-
+  const routes = PublicRoutes;
+  const [showSidebar, setShowSidebar] = useState(
+    user && token && !isAuthPage && !isHomePage
+  );
+  useEffect(() => {
+    const routeCheck = routes.find((route) => route.path === location.pathname);
+    if (routeCheck) {
+      setShowSidebar(false);
+    } else {
+      setShowSidebar(true);
+    }
+  }, [location]);
   return (
     <div className="font-inter w-full max-w-[1440px] bg-[#FAFAFA]">
       {!isAuthPage && <Header />}
