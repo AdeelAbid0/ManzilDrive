@@ -1,4 +1,3 @@
-import React from "react";
 import { Logo } from "../../Utils/Icons";
 import "./Loader.css";
 const Loader = ({ size }) => {
