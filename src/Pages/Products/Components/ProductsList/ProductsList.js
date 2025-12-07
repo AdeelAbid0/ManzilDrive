@@ -9,7 +9,6 @@ const ProductsList = ({ allCarsData }) => {
         economy: false,
         luxury: false,
         standard: false,
-        commercial: false,
       },
       transmission: {
         auto: false,
@@ -44,7 +43,7 @@ const ProductsList = ({ allCarsData }) => {
                 Shortcut
               </h2>
               <div className="flex flex-col gap-4 mt-3">
-                {["economy", "luxury", "standard", "commercial"].map((type) => (
+                {["economy", "luxury", "standard"].map((type) => (
                   <div
                     key={type}
                     className="flex gap-2 h-[18px] items-center capitalize"
