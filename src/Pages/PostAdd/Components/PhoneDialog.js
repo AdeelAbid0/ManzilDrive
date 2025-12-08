@@ -36,7 +36,7 @@ const PhoneDialog = ({
         }}
       >
         {showOtpScreen ? (
-          <div>
+          <div className="p-4">
             <h1 className="!m-0 flex w-full justify-center font-manrope font-semibold  text-[24px] text-[#3E464C] leading-[36px]">
               Verify Your Account
             </h1>
@@ -66,7 +66,7 @@ const PhoneDialog = ({
             </div>
           </div>
         ) : (
-          <div>
+          <div className="p-4">
             <h1 className="!m-0 font-manrope font-semibold  text-[24px] text-[#3E464C] leading-[36px]">
               Verify Your Phone Number
             </h1>

@@ -37,7 +37,7 @@ const PostAdd = () => {
   const [emailOTPScreen, setEmailOTPScreen] = useState(false);
   const [email, setEmail] = useState("");
   const [emailOTP, setEmailOTP] = useState("");
-  const businessId = userData?.business?._id;
+  const businessId = userData?.business?.id;
 
   // ------------------- Formik for Car Detail -------------------
   const formik = useFormik({
@@ -220,6 +220,8 @@ const PostAdd = () => {
     isPending: isLoadingEmailVerificationCode,
   } = useSendEmailVerificationCode();
   const handleSendEmailVerificationCode = () => {
+    console.log({ businessId });
+    console.log({ userData });
     SendEmailVerificationCode(
       {
         email: email,

@@ -7,6 +7,7 @@ import { initialValues } from "./Form/Poducts.initail";
 import { useGetAllCars } from "./hooks/ProductsApi";
 import CommonDialog from "../../Common/Dialog/CommonDialog";
 import SearchDialog from "./Components/SearchDialog/SearchDialog";
+import Loader from "../../Components/Loader/Loader";
 
 const Products = () => {
   const [showSearchDialog, setShowSearchDialog] = useState(false);
@@ -45,7 +46,13 @@ const Products = () => {
       </div>
 
       <div className="flex w-full justify-center">
-        <ProductsList allCarsData={allCarsData} />
+        {LoadingCarsData ? (
+          <div className="flex w-full justify-center mt-10">
+            <Loader size={40} />
+          </div>
+        ) : (
+          <ProductsList allCarsData={allCarsData} />
+        )}
       </div>
 
       <CommonDialog

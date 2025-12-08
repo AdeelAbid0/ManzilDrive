@@ -28,7 +28,7 @@ const Layout = () => {
     <div className="font-inter w-full max-w-[1440px] bg-[#FAFAFA]">
       {!isAuthPage && <Header />}
 
-      <div className="flex gap-0 w-full max-w-[1440px] min-h-[calc(100vh-70px)]">
+      <div className="flex gap-0 w-full justify-center max-w-[1440px] min-h-[calc(100vh-70px)]">
         {showSidebar && (
           <div className="hidden h-[100vh] md:block ">
             <Sidebar />
@@ -36,7 +36,7 @@ const Layout = () => {
         )}
 
         <div
-          className={`flex flex-col items-center w-full md::!w-[83%] h-auto pt-[70px] ${
+          className={`flex flex-col items-center justify-center w-full h-auto mt-[70px] ${
             showSidebar && "md:ml-[242px]"
           } `}
         >

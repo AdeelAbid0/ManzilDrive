@@ -26,16 +26,9 @@ const Login = () => {
       handleLogin(values);
     },
   });
-  const {
-    mutate: Login,
-    isPending: isLoginPending,
-    isSuccess: isLoginSuccess,
-  } = useLoginApi();
-  const {
-    mutate: GoogleLogin,
-    isPending: isGoogleLoginPending,
-    isSuccess: isGoogleLoginSuccess,
-  } = useGoogleLoginApi();
+  const { mutate: Login, isPending: isLoginPending } = useLoginApi();
+  const { mutate: GoogleLogin, isPending: isGoogleLoginPending } =
+    useGoogleLoginApi();
   const { mutate: VerifyPhone } = useVerifyPhone();
   const { mutate: sendOTP } = useResendOTP();
 
@@ -174,7 +167,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="w-full !h-[calc(100vh-70px)] bg-primary md:p-0 p-[56px_16px]">
+      <div className="w-full !h-[calc(100vh-70px)] bg-primary md:p-0 p-[56px_16px] rounded-tr-lg rounded-br-lg">
         <div className="flex md:flex-row flex-col  w-full h-full justify-start md:justify-between">
           <div className="flex w-full md:w-[63.2%] justify-center items-center">
             <div className="flex flex-col justify-center w-full md:w-[50%] lg:w-[63.2%]  ">
