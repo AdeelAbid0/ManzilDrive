@@ -1,3 +1,4 @@
+import Pagination from "../../../../Common/Pagination/Pagination";
 import Details from "../../../../Components/Details/Details";
 
 const ProductsList = ({
@@ -5,6 +6,9 @@ const ProductsList = ({
   formik,
   handleSearch,
   LoadingCarsData,
+  page,
+  handlePageChange,
+  totalPages,
 }) => {
   const { values, setFieldValue, handleSubmit } = formik;
 
@@ -20,11 +24,9 @@ const ProductsList = ({
     }
   };
 
-  // Handle form submission
   const handleFormSubmit = (e) => {
     e.preventDefault();
     setFieldValue("page", "1");
-    // Call the handleSearch prop passed from parent
     handleSearch();
   };
 
@@ -121,10 +123,15 @@ const ProductsList = ({
         </div>
 
         {/* Right Side Details */}
-        <div>
+        <div className="flex flex-col gap-4">
           <Details
             allCarsData={allCarsData}
             LoadingCarsData={LoadingCarsData}
+          />
+          <Pagination
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
           />
         </div>
       </form>

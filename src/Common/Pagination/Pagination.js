@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+  console.log({ onPageChange });
   const pageNumbers = useMemo(() => {
     const pages = [];
 
@@ -41,23 +42,28 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   if (totalPages <= 1) return null;
 
   return (
-    <div className="flex items-center justify-center gap-1">
-      <button
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        className="flex items-center justify-center px-3 py-[10px] text-sm rounded-md disabled:opacity-50 disabled:cursor-not-allowed bg-white text-primary border border-gray-200 hover:bg-gray-50"
-      >
-        <ArrowLeft className="w-6 h-4" />
-        Previous
-      </button>
-
-      <div className="flex items-center gap-1 mx-2">
-        {pageNumbers.map((page, index) => (
-          <button
-            key={index}
-            onClick={() => typeof page === "number" && onPageChange(page)}
-            disabled={page === "..."}
-            className={`flex items-center justify-center w-8 h-8 text-sm rounded-md
+    <div className="flex w-full justify-between items-center">
+      <div className="flex items-center">
+        <p className="text-[#5B5F5F] font-medium text-xs leading-4">
+          {currentPage} / {totalPages}
+        </p>
+      </div>
+      <div className="flex items-center justify-center gap-1">
+        <button
+          onClick={() => onPageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="flex items-center justify-center px-3 py-[10px] text-sm rounded-md disabled:opacity-50 disabled:cursor-not-allowed bg-white text-primary border border-gray-200 hover:bg-gray-50"
+        >
+          <ArrowLeft className="w-6 h-4" />
+          Previous
+        </button>
+        <div className="flex items-center gap-1 mx-2">
+          {pageNumbers.map((page, index) => (
+            <button
+              key={index}
+              onClick={() => typeof page === "number" && onPageChange(page)}
+              disabled={page === "..."}
+              className={`flex items-center justify-center w-8 h-8 text-sm rounded-md
               ${page === "..." ? "cursor-default" : "cursor-pointer"}
               ${
                 page === currentPage
@@ -65,19 +71,19 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
                   : "bg-white text-secondary hover:bg-gray-50 border border-gray-200"
               }
             `}
-          >
-            {page}
-          </button>
-        ))}
+            >
+              {page}
+            </button>
+          ))}
+        </div>
+        <button
+          onClick={() => onPageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="flex items-center justify-center px-3 py-[10px] text-sm rounded-md disabled:opacity-50 disabled:cursor-not-allowed bg-white text-primary border border-gray-200 hover:bg-gray-50"
+        >
+          Next <ArrowRight className="w-6 h-4" />
+        </button>
       </div>
-
-      <button
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        className="flex items-center justify-center px-3 py-[10px] text-sm rounded-md disabled:opacity-50 disabled:cursor-not-allowed bg-white text-primary border border-gray-200 hover:bg-gray-50"
-      >
-        Next <ArrowRight className="w-6 h-4" />
-      </button>
     </div>
   );
 };
