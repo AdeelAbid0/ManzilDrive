@@ -34,11 +34,7 @@ export const ApiUrl = {
     AddVehicle: "cars/addcar",
     UpdateAvailability: (carId) => `cars/${carId}/availability`,
     ApprovePost: (carId) => `cars/${carId}/approve`,
-    // could be one of these ['pending','inactive','live']
-    GetAllCars: () => `cars/cars?page`,
-
-    // GetAllCars: (page, limit, make, model, variant, status, year, location) =>
-    //   `cars/cars?page=${page}&limit=${limit}&make=${make}&model=${model}&variant=${variant}&status=${status}&year=${year}&location=${location},`,
+    GetAllCars: () => `cars/cars`,
     AddPostDuration: "postDuration/car-post-duration",
     GetAllCarsByBusiness: (page, limit, status, viewAll, businessId) =>
       `cars/getAllCarsOfBusiness?page=${page}&limit=${limit}&status=${status}&viewAll=${viewAll}&businessId=${businessId}`,

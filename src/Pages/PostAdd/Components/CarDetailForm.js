@@ -110,22 +110,24 @@ const CarDetailForm = ({ formik, data, modelsData, variantData }) => {
             Driver :
           </label>
           <div className="flex gap-4">
-            {["driver", "without driver", "both"].map((option) => (
-              <div key={option} className="flex gap-2 h-7 items-center">
+            {[
+              { value: "withDriver", label: "With Driver" },
+              { value: "withoutDriver", label: "Without Driver" },
+              { value: "both", label: "Both" },
+            ].map(({ value, label }) => (
+              <div key={value} className="flex gap-2 h-7 items-center">
                 <div className="relative flex items-center">
                   <input
                     type="radio"
                     name="availability"
-                    value={option}
-                    checked={formik.values.availability === option}
-                    onChange={() =>
-                      formik.setFieldValue("availability", option)
-                    }
+                    value={value}
+                    checked={formik.values.availability === value}
+                    onChange={() => formik.setFieldValue("availability", value)}
                     className="w-5 h-5 border border-[#666666] accent-primary"
                   />
                 </div>
                 <p className="font-inter font-normal text-[#666666] text-sm leading-[18px]">
-                  {option}
+                  {label}
                 </p>
               </div>
             ))}

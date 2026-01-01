@@ -31,13 +31,14 @@ const PostAdd = () => {
   const [showOtpScreen, setShowOtpScreen] = useState(false);
   const [images, setImages] = useState([]);
   const userData = useSelector((state) => state.user.user);
+  console.log({ userData });
   const [showEmailDialog, setShowEmailDialog] = useState(
     !userData?.business?.emailVerified
   );
   const [emailOTPScreen, setEmailOTPScreen] = useState(false);
   const [email, setEmail] = useState("");
   const [emailOTP, setEmailOTP] = useState("");
-  const businessId = userData?.business?.id;
+  const businessId = userData?.business?._id;
 
   // ------------------- Formik for Car Detail -------------------
   const formik = useFormik({

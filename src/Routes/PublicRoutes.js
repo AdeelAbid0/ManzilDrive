@@ -20,7 +20,7 @@ export const PublicRoutes = [
   {
     id: 3,
     name: "viewAllCars",
-    path: "/viewAll",
+    path: "/viewAll/:id",
     component: AllBusinessCars,
   },
   {

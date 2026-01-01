@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { matchPath, useLocation } from "react-router-dom";
 import Footer from "../Components/Footer/Footer";
 import Header from "../Components/Header/Header";
 import Sidebar from "../Components/Sidebar/Sidebar";
@@ -10,14 +10,19 @@ const Layout = () => {
   const user = JSON.parse(localStorage.getItem("User"));
   const token = localStorage.getItem("Token");
   const location = useLocation();
-  const isAuthPage = location.pathname.startsWith("/auth");
+  const isAuthPage =
+    location.pathname.startsWith("/auth") ||
+    location.pathname === "/login" ||
+    location.pathname === "/register";
   const isHomePage = location.pathname === "/";
   const routes = PublicRoutes;
   const [showSidebar, setShowSidebar] = useState(
     user && token && !isAuthPage && !isHomePage
   );
   useEffect(() => {
-    const routeCheck = routes.find((route) => route.path === location.pathname);
+    const routeCheck = routes.find((route) =>
+      matchPath({ path: route.path, end: true }, location.pathname)
+    );
     if (routeCheck) {
       setShowSidebar(false);
     } else {
@@ -26,7 +31,8 @@ const Layout = () => {
   }, [location]);
   return (
     <div className="font-inter w-full max-w-[1440px] bg-[#FAFAFA]">
-      {!isAuthPage && <Header />}
+      {!isAuthPage && location.pathname !== "/" && <Header />}
+      {location.pathname === "/" && <Header />}
 
       <div className="flex gap-0 w-full justify-center max-w-[1440px] min-h-[calc(100vh-70px)]">
         {showSidebar && (
@@ -36,9 +42,9 @@ const Layout = () => {
         )}
 
         <div
-          className={`flex flex-col items-center justify-center w-full h-auto mt-[70px] ${
-            showSidebar && "md:ml-[242px]"
-          } `}
+          className={`flex flex-col items-center w-full h-auto ${
+            location.pathname === "/login" ? "mt-0" : "mt-[72px]"
+          }  ${showSidebar && "md:ml-[242px]"} `}
         >
           <AppRoutes user={user} />
         </div>

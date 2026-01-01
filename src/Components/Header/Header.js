@@ -111,7 +111,7 @@ const Header = () => {
           ref={profileDropdownRef}
           className="absolute flex flex-col gap-[2px] top-[68px] right-[64px] z-[999] w-[273px] h-auto border border-[#DCDCDC] shadow-[0px_4px_12px_0px_#00000040] bg-white rounded-lg p-3"
         >
-          <div className="flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer">
+          <div className="flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer group">
             <div>
               {user?.business?.img ? (
                 <img
@@ -134,43 +134,47 @@ const Header = () => {
             </div>
           </div>
           <div
-            className="flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer"
+            className="flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer group"
             onClick={() => {
               navigate("/profile");
               setOpenProfile(false);
             }}
           >
-            <div>
-              <ProfileIcon />
+            <div className="group-hover:text-[#00796B]">
+              <ProfileIcon className="w-5 h-5 text-[#788C98]" />
             </div>
-            <p className="!m-0 text-sm font-normal text-[#788C98]">Profile</p>
+            <p className="!m-0 text-sm font-normal text-[#788C98] group-hover:text-[#00796B]">
+              Profile
+            </p>
           </div>
-          <div className="flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer">
-            <div>
-              <ProfileIcon />
+          <div className="flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer group">
+            <div className="group-hover:text-[#00796B]">
+              <ProfileIcon className="w-5 h-5 text-[#788C98]" />
             </div>
-            <p className="!m-0 text-sm font-normal text-[#788C98]">My Adds</p>
+            <p className="!m-0 text-sm font-normal text-[#788C98] group-hover:text-[#00796B]">
+              My Adds
+            </p>
           </div>
-          <div className="flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer">
-            <div>
-              <ProfileIcon />
+          <div className="flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer group">
+            <div className="group-hover:text-[#00796B]">
+              <ProfileIcon className="w-5 h-5 text-[#788C98]" />
             </div>
-            <p className="!m-0 text-sm font-normal text-[#788C98]">
+            <p className="!m-0 text-sm font-normal text-[#788C98] group-hover:text-[#00796B]">
               Change Password
             </p>
           </div>
-          <div className="flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer">
-            <div>
-              <LogoutIcon />
+          <div
+            className="flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer group"
+            onClick={() => {
+              setOpenProfile((prev) => !prev);
+              dispatch(clearUser());
+              navigate("/");
+            }}
+          >
+            <div className="group-hover:text-[#00796B]">
+              <LogoutIcon className="w-5 h-5 text-[#788C98]" />
             </div>
-            <p
-              className="!m-0 text-sm font-normal text-[#788C98]"
-              onClick={() => {
-                setOpenProfile((prev) => !prev);
-                dispatch(clearUser());
-                navigate("/");
-              }}
-            >
+            <p className="!m-0 text-sm font-normal text-[#788C98] group-hover:text-[#00796B]">
               Logout
             </p>
           </div>

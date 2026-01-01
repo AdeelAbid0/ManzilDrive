@@ -14,6 +14,7 @@ import { useGetAddsCount, useGetAllCars } from "./hooks/DashboardApi";
 import { useSelector } from "react-redux";
 import Loader from "../../Components/Loader/Loader";
 import Pagination from "../../Common/Pagination/Pagination";
+import QRDialog from "./Components/QRDialog";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -26,10 +27,11 @@ const Dashboard = () => {
     expired: false,
   });
   const [page, setPage] = useState(1);
-  const [limit] = useState(10); // Set fixed limit to 5 items per page
+  const [limit] = useState(10); // Set fixed limit to 10 items per page
   const [status, setStatus] = useState("all");
   const [viewAll, setViewAll] = useState(true);
   const [filteredCarsData, setFilteredCarsData] = useState(null);
+  const [showQrDialog, setShowQrDialog] = useState(false);
   const BASE_URL_IMG = process.env.REACT_APP_IMG_URL;
 
   // ✅ Fetch data from API
@@ -114,22 +116,18 @@ const Dashboard = () => {
     },
   ];
 
-  // Handle page change
   const handlePageChange = (newPage) => {
     setPage(newPage);
-    // Scroll to top of the table when page changes
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Reset to first page when filters change
   useEffect(() => {
     setPage(1);
   }, [status, viewAll]);
 
   return (
     <>
-      <div className="flex flex-col m-6">
-        {/* ✅ Stats cards */}
+      <div className="flex w-full flex-col m-6">
         <div className="flex gap-6">
           {stats.map((stat, index) => (
             <div
@@ -154,8 +152,6 @@ const Dashboard = () => {
             </div>
           ))}
         </div>
-
-        {/* ✅ Buttons */}
         <div className="flex flex-col h-[66px] w-[1094px] mt-8 gap-4">
           <div className="h-[17px]">
             <h1 className="font-archive font-semibold text-base text-[#4D4D4D]">
@@ -189,15 +185,23 @@ const Dashboard = () => {
                 />
               ))}
             </div>
-            <Button
-              label="Post ADD"
-              onClick={() => navigate("/postadd")}
-              className="text-white font-medium text-sm border rounded border-primary w-[106px] h-[33px] bg-primary focus:ring-0 focus:outline-none"
-            />
+            <div className="flex gap-2">
+              <Button
+                label="Post ADD"
+                onClick={() => navigate("/postadd")}
+                className="text-white font-medium text-sm border rounded border-primary w-[106px] h-[33px] bg-primary focus:ring-0 focus:outline-none"
+              />
+              <Button
+                type="default"
+                label="Share Profile"
+                onClick={() => {
+                  setShowQrDialog(true);
+                }}
+                className="text-primary font-medium text-sm border rounded border-primary w-[106px] h-[33px] focus:ring-0 focus:outline-none"
+              />
+            </div>
           </div>
         </div>
-
-        {/* ✅ Data Table */}
         <div className="mt-6 dashboard">
           {CarsDataLoading ? (
             <div className="flex w-full justify-center mt-5">
@@ -295,7 +299,6 @@ const Dashboard = () => {
             </div>
           )}
         </div>
-        {/* Pagination - Only show if there are items and more than one page */}
         {filteredCarsData?.length > 0 && AllCarsData?.totalPages > 1 && (
           <div className="mt-6 flex justify-end">
             <Pagination
@@ -304,6 +307,13 @@ const Dashboard = () => {
               onPageChange={handlePageChange}
             />
           </div>
+        )}
+        {showQrDialog && (
+          <QRDialog
+            showQrDialog={showQrDialog}
+            setShowQrDialog={setShowQrDialog}
+            user={user}
+          />
         )}
       </div>
     </>

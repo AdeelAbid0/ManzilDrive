@@ -1,5 +1,4 @@
 import { useFormik } from "formik";
-import { searchDialogInitialValues } from "../../Form/searchDialog.initial";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import PrimaryButton from "../../../../Common/Button/Button";
@@ -10,13 +9,7 @@ import {
   useGetAllVariantsBymodel,
 } from "../../../PostAdd/hooks/PostApi";
 import { useGetAllActiveByCountryId } from "../../hooks/ProductsApi";
-const SearchDialog = () => {
-  const formik = useFormik({
-    initialValues: searchDialogInitialValues,
-    onSubmit: (values) => {
-      console.log(values);
-    },
-  });
+const SearchDialog = ({ formik, handleSearch, setShowSearchDialog }) => {
   // ------------------- API HOOKS -------------------
   // Get all makes api
   const { data: makesData } = useGetAllMakes();
@@ -35,9 +28,7 @@ const SearchDialog = () => {
     isLoading,
     error,
   } = useGetAllActiveByCountryId("665000000000000000000001");
-  const handleSearch = () => {
-    console.log("handle search", formik.values);
-  };
+
   const handleChange = (e) => {
     formik.setFieldValue("location", e.value);
   };
@@ -124,7 +115,10 @@ const SearchDialog = () => {
       <PrimaryButton
         type="submit"
         label="Search"
-        handleClick={handleSearch}
+        handleClick={() => {
+          setShowSearchDialog(false);
+          handleSearch();
+        }}
         loading={""}
         className={"mt-8 "}
       />

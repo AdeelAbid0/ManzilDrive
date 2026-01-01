@@ -139,7 +139,7 @@ const SinglePage = () => {
             <span
               className="pt-4 text-[#00796B] text-[16px] font-medium underline underline-offset-2 cursor-pointer"
               onClick={() => {
-                navigate(`/viewAll`, {
+                navigate(`/viewAll/${carDetail?.business?._id}`, {
                   state: carDetail,
                 });
               }}

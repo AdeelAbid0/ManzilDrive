@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { InputText } from "primereact/inputtext";
 import HeroSection from "../../Components/HeroSection/HeroSection";
 import ProductsList from "./Components/ProductsList/ProductsList";
@@ -11,19 +11,60 @@ import Loader from "../../Components/Loader/Loader";
 
 const Products = () => {
   const [showSearchDialog, setShowSearchDialog] = useState(false);
+  const [allCarsData, setAllCarsData] = useState([]);
   const formik = useFormik({
-    initialValues: initialValues,
-    onSubmit: (values) => {},
+    initialValues: {
+      ...initialValues,
+    },
+    onSubmit: (values) => {
+      getAllActiveAdds(values);
+    },
   });
 
-  // ✅ Cars API
-  const { data: allCarsData, isPending: LoadingCarsData } = useGetAllCars();
+  const { mutate: getAllCarsData, isPending: LoadingCarsData } =
+    useGetAllCars();
+
   const handleChange = (e) => {
     formik.setFieldValue("location", e.value);
   };
 
+  const getAllActiveAdds = () => {
+    // Prepare filters
+    const filters = {
+      page: formik.values.page,
+      limit: formik.values.limit,
+      make: formik.values.make,
+      model: formik.values.model,
+      variant: formik.values.variant,
+      status: formik.values.status,
+      year: formik.values.year,
+      location: formik.values.location,
+      // Send as arrays directly
+      transmission: Array.isArray(formik.values.transmission)
+        ? formik.values.transmission
+        : [],
+      availability: Array.isArray(formik.values.availability)
+        ? formik.values.availability
+        : [],
+      category: Array.isArray(formik.values.category)
+        ? formik.values.category
+        : [],
+    };
+    getAllCarsData(filters, {
+      onSuccess: (res) => {
+        console.log({ res });
+        setAllCarsData(res?.cars);
+      },
+      onError: (error) => {
+        console.error("Error fetching cars:", error);
+      },
+    });
+  };
+  useEffect(() => {
+    formik.submitForm();
+  }, []);
   return (
-    <div className="flex flex-col items-center h-auto">
+    <div className="flex flex-col items-center h-full">
       <div className="flex w-full md:flex-col flex-col-reverse">
         <HeroSection />
         <div className="flex justify-center w-full">
@@ -46,13 +87,12 @@ const Products = () => {
       </div>
 
       <div className="flex w-full justify-center">
-        {LoadingCarsData ? (
-          <div className="flex w-full justify-center mt-10">
-            <Loader size={40} />
-          </div>
-        ) : (
-          <ProductsList allCarsData={allCarsData} />
-        )}
+        <ProductsList
+          allCarsData={allCarsData}
+          formik={formik}
+          handleSearch={getAllActiveAdds}
+          LoadingCarsData={LoadingCarsData}
+        />
       </div>
 
       <CommonDialog
@@ -63,7 +103,11 @@ const Products = () => {
         className={"!max-w-[450px] !w-[30%]"}
       >
         <div className="max-h-[90vh] overflow-y-auto p-6">
-          <SearchDialog />
+          <SearchDialog
+            formik={formik}
+            handleSearch={getAllActiveAdds}
+            setShowSearchDialog={setShowSearchDialog}
+          />
         </div>
       </CommonDialog>
     </div>
