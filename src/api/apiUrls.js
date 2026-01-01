@@ -9,6 +9,7 @@ export const ApiUrl = {
     SendPhoneVerification: "business/resend-phone-verification",
     VerifyEmail: "business/sendEmailVerficationCode",
     verifyEmailOtp: "business/verfiyPhoneUserEmailVerificationCode",
+    ResetPassword: "/auth/reset-password",
   },
   Dashboard: {
     GetAllCars: (page, limit, status, viewAll, businessId) =>

@@ -251,7 +251,10 @@ const Login = () => {
                   </div>
                 </form>
                 <div className="flex items-start w-full h-[28px] mt-2">
-                  <p className="font-inter font-medium text-xs leading-4 text-[#174473]">
+                  <p
+                    className="font-inter font-medium text-xs leading-4 text-[#174473] cursor-pointer"
+                    onClick={() => navigate("/forget-password")}
+                  >
                     Forgot Your Password ?
                   </p>
                 </div>

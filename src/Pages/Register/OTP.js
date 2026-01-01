@@ -34,7 +34,7 @@ const OTPScreen = ({ setTokens, token, handleVerifyPhone }) => {
         <PrimaryButton
           type="submit"
           label="Verify"
-          handleClick={handleVerifyPhone}
+          onClick={handleVerifyPhone}
         />
       </div>
       <p className="flex gap-[6px] text-[#174473] text-xs font-normal leading-4">

@@ -3,6 +3,7 @@ import Register from "../Pages/Register/Register";
 import Products from "../Pages/Products/Product";
 import SinglePage from "../Pages/SinglePage/SinglePage";
 import AllBusinessCars from "../Pages/AllBusinessCars/AllBusinessCars";
+import ForgetPassword from "../Pages/ForgetPassword/ForgetPassword";
 
 export const PublicRoutes = [
   {
@@ -34,5 +35,11 @@ export const PublicRoutes = [
     name: "login",
     path: "/login",
     component: Login,
+  },
+  {
+    id: 6,
+    name: "forgetpassword",
+    path: "/forget-password",
+    component: ForgetPassword,
   },
 ];
