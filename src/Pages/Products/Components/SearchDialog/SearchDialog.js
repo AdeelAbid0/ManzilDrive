@@ -32,6 +32,7 @@ const SearchDialog = ({ formik, handleSearch, setShowSearchDialog }) => {
   const handleChange = (e) => {
     formik.setFieldValue("location", e.value);
   };
+
   return (
     <div className="flex flex-col mt-4">
       <div className="flex flex-col items-center w-full justify-center gap-3 mb-8 text-center">
@@ -115,7 +116,7 @@ const SearchDialog = ({ formik, handleSearch, setShowSearchDialog }) => {
       <PrimaryButton
         type="submit"
         label="Search"
-        handleClick={() => {
+        onClick={() => {
           setShowSearchDialog(false);
           handleSearch();
         }}

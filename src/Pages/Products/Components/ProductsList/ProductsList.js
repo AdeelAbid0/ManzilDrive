@@ -123,7 +123,7 @@ const ProductsList = ({
         </div>
 
         {/* Right Side Details */}
-        <div className="flex flex-col gap-4">
+        <div className="flex w-full md:w-[70%] flex-col gap-4 mx-3 md:mx-0">
           <Details
             allCarsData={allCarsData}
             LoadingCarsData={LoadingCarsData}

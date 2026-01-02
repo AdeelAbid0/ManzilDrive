@@ -42,8 +42,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   if (totalPages <= 1) return null;
 
   return (
-    <div className="flex w-full justify-between items-center">
-      <div className="flex items-center">
+    <div className="flex w-full justify-center md:justify-between items-center">
+      <div className="md:flex hidden items-center">
         <p className="text-[#5B5F5F] font-medium text-xs leading-4">
           {currentPage} / {totalPages}
         </p>

@@ -8,7 +8,6 @@ import { useGetAllCars } from "./hooks/ProductsApi";
 import CommonDialog from "../../Common/Dialog/CommonDialog";
 import SearchDialog from "./Components/SearchDialog/SearchDialog";
 import { ReactComponent as SearchIcon } from "../../assets/SVG/search.svg";
-import Pagination from "../../Common/Pagination/Pagination";
 
 const Products = () => {
   const [showSearchDialog, setShowSearchDialog] = useState(false);
@@ -68,9 +67,8 @@ const Products = () => {
   useEffect(() => {
     formik.submitForm();
   }, []);
-  console.log("total page", allCarsData);
   return (
-    <div className="flex flex-col items-center h-full">
+    <div className="flex w-full flex-col items-center h-full bg-[#EDEDED]">
       <div className="flex w-full md:flex-col flex-col-reverse">
         <HeroSection />
         <div className="flex justify-center w-full">
@@ -78,21 +76,15 @@ const Products = () => {
             <div className="flex w-full">
               <InputText
                 onClick={() => setShowSearchDialog(true)}
-                placeholder="Search for vehicle here"
-                className="font-inter font-normal text-input text-sm w-full h-[42px] rounded md:rounded-tr-[4px] md:rounded-br-[4px] rounded-tr-none rounded-br-none focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
+                placeholder="Find cars near you"
+                className="!font-inter font-normal text-input text-sm w-full h-[44px] rounded-[4px] md:rounded-br-[4px]  focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
               />
             </div>
-            <div className="absolute right-[25px] flex justify-center items-center w-10 h-10 bg-primary rounded-tr-md rounded-br-md">
+            <div className="absolute right-[14px] md:right-[25px] flex justify-center items-center w-10 h-[42px] bg-primary rounded-tr-md rounded-br-md">
               <SearchIcon />
             </div>
           </div>
         </div>
-      </div>
-
-      <div className=" mt-6 md:mt-10">
-        <h1 className="font-inter font-medium text-2xl leading-[100%] text-secondary">
-          Rental Cars in Rawalpindi
-        </h1>
       </div>
 
       <div className="flex flex-col gap-4 w-full items-center">
@@ -112,7 +104,9 @@ const Products = () => {
         onClose={() => {
           setShowSearchDialog(false);
         }}
-        className={"!max-w-[450px] !w-[30%]"}
+        className={
+          "md:!max-w-[450px] md:!w-[30%] !w-full !max-w-full mx-1 md:mx-0"
+        }
       >
         <div className="max-h-[90vh] overflow-y-auto p-6">
           <SearchDialog

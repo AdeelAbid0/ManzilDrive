@@ -13,7 +13,8 @@ const Layout = () => {
   const isAuthPage =
     location.pathname.startsWith("/auth") ||
     location.pathname === "/login" ||
-    location.pathname === "/register";
+    location.pathname === "/register" ||
+    location.pathname === "/forget-password";
   const isHomePage = location.pathname === "/";
   const routes = PublicRoutes;
   const [showSidebar, setShowSidebar] = useState(
@@ -30,7 +31,7 @@ const Layout = () => {
     }
   }, [location]);
   return (
-    <div className="font-inter w-full max-w-[1440px] bg-[#FAFAFA]">
+    <div className="font-inter w-full max-w-[1440px] bg-[#EDEDED]">
       {!isAuthPage && location.pathname !== "/" && <Header />}
       {location.pathname === "/" && <Header />}
 
@@ -43,7 +44,7 @@ const Layout = () => {
 
         <div
           className={`flex flex-col items-center w-full h-auto ${
-            location.pathname === "/login" ? "mt-0" : "mt-[72px]"
+            isAuthPage ? "mt-0" : "mt-[72px]"
           }  ${showSidebar && "md:ml-[242px]"} `}
         >
           <AppRoutes user={user} />

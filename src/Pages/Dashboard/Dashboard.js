@@ -126,7 +126,7 @@ const Dashboard = () => {
   }, [status, viewAll]);
 
   return (
-    <>
+    <div>
       <div className="flex w-full flex-col m-6">
         <div className="flex gap-6">
           {stats.map((stat, index) => (
@@ -316,7 +316,7 @@ const Dashboard = () => {
           />
         )}
       </div>
-    </>
+    </div>
   );
 };
 

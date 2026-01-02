@@ -61,7 +61,7 @@ const PhoneDialog = ({
                 label="Verify"
                 className="!w-[160px]"
                 disabled={!formik.values.phoneNumber}
-                handleClick={handleVerifyOTP}
+                onClick={handleVerifyOTP}
               />
             </div>
           </div>
@@ -103,7 +103,7 @@ const PhoneDialog = ({
                 label="Verify"
                 className="!w-[160px]"
                 disabled={!formik.values.phoneNumber}
-                handleClick={handleSendOTP}
+                onClick={handleSendOTP}
               />
             </div>
           </div>

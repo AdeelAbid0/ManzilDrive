@@ -223,10 +223,7 @@ const Profile = () => {
             className="font-inter font-normal text-input text-sm bg-[#F7F7F7] h-[49px] rounded pl-3"
           />
 
-          <PrimaryButton
-            label="Save changes"
-            handleClick={handleUpdateProfile}
-          />
+          <PrimaryButton label="Save changes" onClick={handleUpdateProfile} />
         </div>
       </div>
     </div>

@@ -170,7 +170,7 @@ const QRDialog = ({ showQrDialog, setShowQrDialog, user }) => {
             <PrimaryButton
               label={"Download PDF"}
               className={"flex !w-full"}
-              handleClick={handleDownloadPDF} // Changed from handleClick to onClick
+              onClick={handleDownloadPDF} // Changed from handleClick to onClick
             />
           </div>
         </div>

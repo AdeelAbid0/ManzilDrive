@@ -16,30 +16,10 @@ const Details = ({ allCarsData, LoadingCarsData }) => {
   const navigate = useNavigate();
   return (
     <div className="flex flex-col gap-1 items-center">
-      <div className="flex justify-between w-[94%] mt-2 md:mt-0 xl:w-[996px] items-center h-12 pl-3 pr-3 rounded bg-white">
-        <div>
-          <p className="w-full font-inter font-semibold text-base text-secondary leading-[22px]">
-            {allCarsData?.cars?.lenngth} Cars available around Rawalpindi,
-            Saddar
-            <span className="font-inter font-semibold text-sm leading-[18px] underline underline-offset-4 text-primary ml-[20px]">
-              Change
-            </span>
-          </p>
-        </div>
-        <div className="hidden md:flex items-center gap-3">
-          <p className="font-inter font-medium text-sm leading-[100%] text-[#00132699]">
-            Sort By :
-          </p>
-          <span className="flex items-center pl-1 pr-1 gap-[14px] h-6 w-[54px] border border-#E6E6E6 rounded-sm">
-            <Grid />
-            <List />
-          </span>
-        </div>
-      </div>
-      <div className="w-[94%]  xl:w-[996px] flex flex-col gap-[2px] rounded bg-white px-4 min-h-[50vh]">
+      <div className=" w-full  flex flex-col gap-[2px] rounded min-h-[50vh]">
         {allCarsData?.length < 1 && (
           <div>
-            <h1>NO car availability</h1>
+            <h1>No car available</h1>
           </div>
         )}
 
@@ -50,20 +30,20 @@ const Details = ({ allCarsData, LoadingCarsData }) => {
         ) : (
           allCarsData?.map((items) => {
             return (
-              <div className="flex w-auto items-center flex-col md:flex-row h-auto md:h-[192px] mt-[2px] gap-4">
-                <div className="w-[310px] h-[200px] md:w-[280px] md:h-40 rounded">
+              <div className="flex w-full  md:items-center flex-col md:flex-row h-auto md:h-[192px] mt-[2px] gap-4 py-4 px-4 bg-white rounded">
+                <div className="w-full h-[200px] md:w-[280px] md:h-40 rounded">
                   <img
-                    className="w-[310px] md:h-40 h-[200px] object-contain"
+                    className=" relative w-full md:h-40 h-[200px] object-contain rounded z-10"
                     src={`http://localhost:5000/${items?.photos[0]}`}
                     alt="Car-Image"
                   />
                 </div>
-                <div className="md:h-auto min-h-[210px] w-[88%] ">
+                <div className="md:h-auto min-h-[210px] w-full ">
                   <div className="flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center h-[50px] w-full md:mt-[27px] ">
-                    <div className="flex gap-3">
+                    <div className="flex w-full md:justify-start gap-3 justify-between">
                       <h1 className="font-inter font-semibold md:font-bold text-base md:text-xl leading-[22px] md:leading-6 text-secondary">
                         {items?.make?.name}&nbsp;
-                        {items?.model?.name}&nbsp;
+                        {/* {items?.model?.name}&nbsp; */}
                         {items?.variant?.name}
                       </h1>
                       <span className="flex items-center w-[81px] h-[23px] gap-[10px] rounded-[1px] bg-[#00796B1A]">
@@ -75,16 +55,16 @@ const Details = ({ allCarsData, LoadingCarsData }) => {
                         </span>
                       </span>
                     </div>
-                    <div className="flex mt-2 md:mt-0 md:flex-col w-full md:w-[99px] h-[50px]">
+                    <div className="flex shrink-0 mt-2 md:mt-0 md:flex-col w-full md:w-[99px] h-[50px]">
                       <h1 className="font-inter font-semibold md:font-bold text-lg md:text-2xl leading-6 md:leading-8 text-end text-secondary">
                         {`Rs ${items?.rentPerDay}`}
                       </h1>
-                      <label className="font-inter ml-[4px] md:ml-0 mt-2 md:mt-0 font-medium text-xs leading-4 text-end text-[#6383A6]">
+                      <label className="font-inter ml-[4px] md:ml-0 mt-[6px] md:mt-0 font-medium text-xs leading-4 text-end text-[#6383A6]">
                         Per day
                       </label>
                     </div>
                   </div>
-                  <div className="flex mt-4 h-4 gap-6">
+                  <div className="flex mt-4 h-4 gap-3 md:gap-6">
                     <div className="flex gap-[2px] w-[34px]">
                       <span>
                         <Passengers />

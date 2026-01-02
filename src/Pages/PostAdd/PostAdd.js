@@ -388,7 +388,7 @@ const PostAdd = () => {
               label={personalInfoActive ? "Post Now" : "Next"}
               disabled={disablefield}
               loading={BusinessLoading}
-              handleClick={() => {
+              onClick={() => {
                 if (images?.length < 1) {
                   dispatch(
                     showNotification({

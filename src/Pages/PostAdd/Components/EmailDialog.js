@@ -75,7 +75,7 @@ const EmailDialog = ({
                 className="!w-[160px]"
                 disabled={!emailOTP}
                 loading={EmailOTPVerifyLoading}
-                handleClick={handleVerifyEmailOTP}
+                onClick={handleVerifyEmailOTP}
               />
             </div>
           </div>
@@ -106,7 +106,7 @@ const EmailDialog = ({
                 label="Verify"
                 loading={isLoadingEmailVerificationCode}
                 disabled={!isEmailValid}
-                handleClick={handleSendEmailVerificationCode}
+                onClick={handleSendEmailVerificationCode}
                 className="!w-[160px]"
               />
             </div>

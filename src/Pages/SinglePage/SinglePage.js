@@ -14,7 +14,6 @@ const SinglePage = () => {
 
   const location = useLocation();
   const carDetail = location.state;
-  console.log({ carDetail });
   const handleNext = () => {
     if (currentIndex < carDetail?.photos?.length - 1) {
       setCurrentIndex((prev) => prev + 1);
@@ -148,7 +147,7 @@ const SinglePage = () => {
             </span>
             <div className="w-full pt-9">
               {showNumber && (
-                <div className="absolute z-[999] top-[30%] left-0 bg-white flex w-full items-center p-6 flex-col border border-[#DFE8E5] rounded [box-shadow:0px_1px_3px_0px_#00796B4D,0px_4px_8px_3px_#00796B26]">
+                <div className="absolute z-[998] top-[30%] left-0 bg-white flex w-full items-center p-6 flex-col border border-[#DFE8E5] rounded [box-shadow:0px_1px_3px_0px_#00796B4D,0px_4px_8px_3px_#00796B26]">
                   <p className="font-semibold text-[16px] text-[#444645] leading-[100%]">
                     {carDetail?.business?.name}
                   </p>
@@ -166,7 +165,7 @@ const SinglePage = () => {
                       type="primary"
                       label="Close"
                       className="font-medium text-sm"
-                      handleClick={() => {
+                      onClick={() => {
                         setShowNumber(false);
                       }}
                     />
@@ -175,9 +174,9 @@ const SinglePage = () => {
               )}
               <PrimaryButton
                 type="primary"
-                label="Show  Phone number"
+                label="Show Phone number"
                 className="font-medium text-sm"
-                handleClick={() => {
+                onClick={() => {
                   setShowNumber(true);
                 }}
               />
