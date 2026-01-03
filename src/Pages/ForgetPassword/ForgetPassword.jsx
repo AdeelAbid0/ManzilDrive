@@ -59,7 +59,6 @@ const ForgetPassword = () => {
       },
       {
         onSuccess: (res) => {
-          console.log({ res });
           setShowOtp(false);
           setShowPasswordScreen(true);
           dispatch(
@@ -80,7 +79,6 @@ const ForgetPassword = () => {
       }
     );
   };
-  console.log({ showOtp, showPasswordScreen });
   return (
     <div className="w-full !h-[100vh] bg-primary md:p-0 p-[56px_16px] md:rounded-tr-lg md:rounded-br-lg">
       <div className="flex md:flex-row flex-col  w-full h-full justify-start md:justify-between">

@@ -18,7 +18,6 @@ const ResetPassword = ({ phoneNumber }) => {
         formik.setFieldError("confirmPassword", "Passwords must match");
         return;
       }
-      console.log(values);
     },
   });
   const { mutate: ResetPassword, isPending: Loading } = useResetPassword();

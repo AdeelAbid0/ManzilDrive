@@ -14,7 +14,6 @@ import CarCard from "../../Components/CarCard/CarCard";
 const AllBusinessCars = () => {
   const location = useLocation();
   const carDetail = location.state;
-  console.log({ carDetail });
   const { id } = useParams();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);

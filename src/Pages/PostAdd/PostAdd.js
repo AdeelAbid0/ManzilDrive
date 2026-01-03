@@ -31,7 +31,6 @@ const PostAdd = () => {
   const [showOtpScreen, setShowOtpScreen] = useState(false);
   const [images, setImages] = useState([]);
   const userData = useSelector((state) => state.user.user);
-  console.log({ userData });
   const [showEmailDialog, setShowEmailDialog] = useState(
     !userData?.business?.emailVerified
   );
@@ -221,8 +220,6 @@ const PostAdd = () => {
     isPending: isLoadingEmailVerificationCode,
   } = useSendEmailVerificationCode();
   const handleSendEmailVerificationCode = () => {
-    console.log({ businessId });
-    console.log({ userData });
     SendEmailVerificationCode(
       {
         email: email,
@@ -329,7 +326,6 @@ const PostAdd = () => {
   );
   // ------------------- RENDER -------------------
 
-  console.log({ formikPersonalInfo });
   return (
     <div className="flex flex-col justify-center items-center mt-2 w-full mb-8 gap-6">
       {personalInfoActive ? (

@@ -2,7 +2,6 @@ import { useMemo } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-  console.log({ onPageChange });
   const pageNumbers = useMemo(() => {
     const pages = [];
 
