@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import { Hambergur, Logo } from "../../Utils/Icons";
-import { Sidebar } from "primereact/sidebar";
 import { Button } from "primereact/button";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as AvatarIcon } from "../../assets/SVG/avatar.svg";
@@ -19,7 +18,6 @@ const Header = () => {
   const user = useSelector((state) => state.user.user);
   const profileDropdownRef = useRef(null);
 
-  // Handle click outside to close profile dropdown
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -181,24 +179,7 @@ const Header = () => {
           </div>
         </div>
       )}
-      {menu && (
-        // <Sidebar
-        //   showCloseIcon={false}
-        //   visible={menu}
-        //   onHide={() => setMenu(false)}
-        //   position="right"
-        //   className="w-[200px]"
-        // >
-        //   <div>
-        //     <ul className="flex flex-col gap-8 list-none text-primary font-inter ">
-        //       <li>Car Rental</li>
-        //       <li>Events</li>
-        //       <li>Tour</li>
-        //     </ul>
-        //   </div>
-        // </Sidebar>
-        <SideMenu setMenu={setMenu} />
-      )}
+      {menu && <SideMenu setMenu={setMenu} />}
     </div>
   );
 };
