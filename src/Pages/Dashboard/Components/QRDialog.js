@@ -127,7 +127,7 @@ const QRDialog = ({ showQrDialog, setShowQrDialog, user }) => {
         onClose={() => {
           setShowQrDialog(false);
         }}
-        className="max-w-[360px] w-full"
+        className="md:max-w-[360px] !w-full md:px-0 px-4"
       >
         <div className="flex flex-col gap-6 w-full items-center p-10 ">
           <div className="flex w-full flex-col gap-3 items-center">

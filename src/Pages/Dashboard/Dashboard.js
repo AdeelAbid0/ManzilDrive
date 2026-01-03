@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import Loader from "../../Components/Loader/Loader";
 import Pagination from "../../Common/Pagination/Pagination";
 import QRDialog from "./Components/QRDialog";
+import CarCard from "../../Components/CarCard/CarCard";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -124,136 +125,177 @@ const Dashboard = () => {
   useEffect(() => {
     setPage(1);
   }, [status, viewAll]);
-
+  const handleEdit = () => {
+    console.log("handle edit called");
+  };
+  const handleRemoveAdd = () => {
+    console.log("handle removeadd called");
+  };
   return (
-    <div>
-      <div className="flex w-full flex-col m-6">
-        <div className="flex gap-6">
-          {stats.map((stat, index) => (
-            <div
-              key={index}
-              className="flex flex-col w-[255.5px] h-[116px] border border-[#E3E8EA] rounded-lg gap-4 pt-4 pl-6"
-            >
-              <div className="flex items-center gap-2 w-[207.5px]">
-                <stat.icon />
-                <p className="font-inter font-medium text-[10px] text-[#808080] leading-[14px]">
-                  {stat.label}
-                </p>
-              </div>
-              <div className="flex flex-col w-[207.5px] h-12">
-                <h1 className="font-archivo font-bold text-[32px] h-[35px] leading-[100%] text-[#44505A]">
-                  {stat.value}
-                </h1>
-                <p className="font-inter font-medium text-[11px] text-[#778C99] leading-[100%] h-[79px] flex items-center">
-                  <span className="text-[#32B550] mr-[2px]">{stat.change}</span>
-                  Last week
-                </p>
-              </div>
+    <div className="flex w-full items-center h-full flex-col m-6">
+      <div className="flex w-full justify-center md:justify-start px-1 md:px-10 md:flex-nowrap flex-wrap gap-2 md:gap-6">
+        {stats.map((stat, index) => (
+          <div
+            key={index}
+            className="flex flex-col w-[24%] min-w-[170px] h-[116px] border border-[#E3E8EA] bg-white rounded-lg gap-4 pt-4 md:pl-6 pl-4"
+          >
+            <div className="flex items-center gap-2 w-full">
+              <stat.icon />
+              <p className="font-inter font-medium text-[10px] text-[#808080] leading-[14px]">
+                {stat.label}
+              </p>
             </div>
-          ))}
-        </div>
-        <div className="flex flex-col h-[66px] w-[1094px] mt-8 gap-4">
-          <div className="h-[17px]">
-            <h1 className="font-archive font-semibold text-base text-[#4D4D4D]">
-              My Adds
-            </h1>
+            <div className="flex flex-col w-full h-12">
+              <h1 className="font-archivo font-bold text-[32px] h-[35px] leading-[100%] text-[#44505A]">
+                {stat.value}
+              </h1>
+              <p className="font-inter font-medium text-[11px] text-[#778C99] leading-[100%] h-[79px] flex items-center">
+                <span className="text-[#32B550] mr-[2px]">{stat.change}</span>
+                Last week
+              </p>
+            </div>
           </div>
-          <div className="flex justify-between">
-            <div className="flex gap-4">
-              {addTabs.map((btn) => (
-                <Button
-                  key={btn.key}
-                  label={btn.label}
-                  onClick={() => {
-                    const newStatus = {
-                      viewAll: false,
-                      active: false,
-                      inactive: false,
-                      pending: false,
-                      expired: false,
-                      [btn.key]: true,
-                    };
-                    setAddStatus(newStatus);
-                    setStatus(btn.statusValue);
-                    setViewAll(btn.viewAllFlag);
-                  }}
-                  className={`font-medium text-xs border rounded-2xl w-[100px] h-[32px] focus:ring-0 focus:outline-none ${
-                    AddStatus[btn.key]
-                      ? "bg-[#00796B] text-white border-[#00796B]"
-                      : "bg-white text-primary border-primary"
-                  }`}
-                />
-              ))}
-            </div>
-            <div className="flex gap-2">
-              <Button
-                label="Post ADD"
-                onClick={() => navigate("/postadd")}
-                className="text-white font-medium text-sm border rounded border-primary w-[106px] h-[33px] bg-primary focus:ring-0 focus:outline-none"
+        ))}
+        <div className="md:hidden flex w-full justify-between items-center h-[17px] px-4 mt-12">
+          <h1 className="font-archive font-semibold text-base text-[#4D4D4D]">
+            My Adds
+          </h1>
+          <div className="flex justify-center items-center w-[105px] h-9 text-primary border border-primary rounded">
+            <p>Filters</p>
+          </div>
+        </div>
+        <div className="md:hidden flex gap-2 w-full px-4 mt-4">
+          <Button
+            label="Post ADD"
+            onClick={() => navigate("/postadd")}
+            className="text-white font-medium text-sm border rounded border-primary w-full h-[33px] bg-primary focus:ring-0 focus:outline-none"
+          />
+          <Button
+            type="default"
+            label="Share Profile"
+            onClick={() => {
+              setShowQrDialog(true);
+            }}
+            className="text-primary font-medium text-sm border rounded border-primary w-full h-[33px] focus:ring-0 focus:outline-none"
+          />
+        </div>
+        <div className="md:hidden w-full block px-4">
+          {filteredCarsData?.map((items) => {
+            return (
+              <CarCard
+                items={items}
+                handleEdit={handleEdit}
+                handleRemoveAdd={handleRemoveAdd}
+                isDashboard={true}
               />
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Show datatable on desktop */}
+      <div className="hidden md:flex flex-col h-[66px] w-[1094px] mt-8 gap-4">
+        <div className="h-[17px]">
+          <h1 className="font-archive font-semibold text-base text-[#4D4D4D]">
+            My Adds
+          </h1>
+        </div>
+        <div className="flex justify-between">
+          <div className="flex gap-4">
+            {addTabs.map((btn) => (
               <Button
-                type="default"
-                label="Share Profile"
+                key={btn.key}
+                label={btn.label}
                 onClick={() => {
-                  setShowQrDialog(true);
+                  const newStatus = {
+                    viewAll: false,
+                    active: false,
+                    inactive: false,
+                    pending: false,
+                    expired: false,
+                    [btn.key]: true,
+                  };
+                  setAddStatus(newStatus);
+                  setStatus(btn.statusValue);
+                  setViewAll(btn.viewAllFlag);
                 }}
-                className="text-primary font-medium text-sm border rounded border-primary w-[106px] h-[33px] focus:ring-0 focus:outline-none"
+                className={`font-medium text-xs border rounded-2xl w-[100px] h-[32px] focus:ring-0 focus:outline-none ${
+                  AddStatus[btn.key]
+                    ? "bg-[#00796B] text-white border-[#00796B]"
+                    : "bg-white text-primary border-primary"
+                }`}
               />
-            </div>
+            ))}
+          </div>
+          <div className="flex gap-2">
+            <Button
+              label="Post ADD"
+              onClick={() => navigate("/postadd")}
+              className="text-white font-medium text-sm border rounded border-primary w-[106px] h-[33px] bg-primary focus:ring-0 focus:outline-none"
+            />
+            <Button
+              type="default"
+              label="Share Profile"
+              onClick={() => {
+                setShowQrDialog(true);
+              }}
+              className="text-primary font-medium text-sm border rounded border-primary w-[106px] h-[33px] focus:ring-0 focus:outline-none"
+            />
           </div>
         </div>
-        <div className="mt-6 dashboard">
-          {CarsDataLoading ? (
-            <div className="flex w-full justify-center mt-5">
-              <Loader />
-            </div>
-          ) : CarsDataError ? (
-            <p>Error loading data</p>
-          ) : (
-            <div className="w-full">
-              <DataTable
-                value={filteredCarsData ?? AllCarsData?.cars ?? []}
-                rows={limit}
-                paginator={false}
-                className="w-full"
-              >
-                <Column
-                  header="Car"
-                  body={(rowData) => {
-                    return (
-                      <div className="flex items-center gap-4">
-                        <img
-                          src={`${BASE_URL_IMG}/${rowData?.photos[0]}`}
-                          alt="img"
-                          className="w-10 h-10 rounded-[2px] object-cover transition-all duration-300"
-                        />
-                        <p className="text-sm text-[#666666] font-normal">
-                          {rowData?.make?.name} {rowData?.variant?.name}
-                        </p>
-                      </div>
-                    );
-                  }}
-                  headerClassName="bg-blue-600 text-white text-center py-2"
-                />
-                <Column
-                  field="rentPerDay"
-                  header="Rent"
-                  headerClassName="bg-blue-600 text-white text-center py-2"
-                />
-                <Column
-                  header="Status"
-                  body={(rowData) => {
-                    return (
-                      <div
-                        className={`flex w-[104px] h-5 rounded-[4px] items-center justify-center ${
-                          rowData?.status === "pending"
-                            ? "bg-[#8D58031A]"
-                            : rowData?.status === "live"
-                            ? "bg-[#00796B1A]"
-                            : rowData?.status === "inactive"
-                            ? "bg-[#F55A5A1A]"
-                            : ""
-                        }
+      </div>
+      <div className="mt-6 dashboard hidden md:block">
+        {CarsDataLoading ? (
+          <div className="flex w-full justify-center mt-5">
+            <Loader />
+          </div>
+        ) : CarsDataError ? (
+          <p>Error loading data</p>
+        ) : (
+          <div className="w-full">
+            <DataTable
+              value={filteredCarsData ?? AllCarsData?.cars ?? []}
+              rows={limit}
+              paginator={false}
+              className="w-full"
+            >
+              <Column
+                header="Car"
+                body={(rowData) => {
+                  return (
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={`${BASE_URL_IMG}/${rowData?.photos[0]}`}
+                        alt="img"
+                        className="w-10 h-10 rounded-[2px] object-cover transition-all duration-300"
+                      />
+                      <p className="text-sm text-[#666666] font-normal">
+                        {rowData?.make?.name} {rowData?.variant?.name}
+                      </p>
+                    </div>
+                  );
+                }}
+                headerClassName="bg-blue-600 text-white text-center py-2"
+              />
+              <Column
+                field="rentPerDay"
+                header="Rent"
+                headerClassName="bg-blue-600 text-white text-center py-2"
+              />
+              <Column
+                header="Status"
+                body={(rowData) => {
+                  return (
+                    <div
+                      className={`flex w-[104px] h-5 rounded-[4px] items-center justify-center ${
+                        rowData?.status === "pending"
+                          ? "bg-[#8D58031A]"
+                          : rowData?.status === "live"
+                          ? "bg-[#00796B1A]"
+                          : rowData?.status === "inactive"
+                          ? "bg-[#F55A5A1A]"
+                          : ""
+                      }
                       ${
                         rowData?.status === "pending"
                           ? "text-[#8D5803]"
@@ -263,59 +305,56 @@ const Dashboard = () => {
                           ? "text-[#F55A5A]"
                           : ""
                       }`}
-                      >
-                        <p className="!m-0 text-sm tracking-[0.5px] font-normal">
-                          {rowData?.status}
-                        </p>
-                      </div>
-                    );
-                  }}
-                  headerClassName="bg-blue-600 text-white text-center "
-                />
-                <Column
-                  header="Actions"
-                  body={(rowData) => {
-                    return (
-                      <div
-                        className={`flex items-center justify-center rounded-[4px] py-[6px] ${
-                          rowData?.status === "inactive"
-                            ? "bg-[#00796B]"
-                            : "bg-[#001F3F]"
-                        }`}
-                      >
-                        <p className="text-white text-sm font-normal">
-                          {rowData?.status === "inactive"
-                            ? "Available"
-                            : "Unavailable"}
-                        </p>
-                      </div>
-                    );
-                  }}
-                  headerClassName="bg-blue-600 text-white text-center py-2"
-                />
-              </DataTable>
-
-              {/* Pagination */}
-            </div>
-          )}
-        </div>
-        {filteredCarsData?.length > 0 && AllCarsData?.totalPages > 1 && (
-          <div className="mt-6 flex justify-end">
-            <Pagination
-              currentPage={page}
-              totalPages={AllCarsData.totalPages}
-              onPageChange={handlePageChange}
-            />
+                    >
+                      <p className="!m-0 text-sm tracking-[0.5px] font-normal">
+                        {rowData?.status}
+                      </p>
+                    </div>
+                  );
+                }}
+                headerClassName="bg-blue-600 text-white text-center "
+              />
+              <Column
+                header="Actions"
+                body={(rowData) => {
+                  return (
+                    <div
+                      className={`flex items-center justify-center rounded-[4px] py-[6px] ${
+                        rowData?.status === "inactive"
+                          ? "bg-[#00796B]"
+                          : "bg-[#001F3F]"
+                      }`}
+                    >
+                      <p className="text-white text-sm font-normal">
+                        {rowData?.status === "inactive"
+                          ? "Available"
+                          : "Unavailable"}
+                      </p>
+                    </div>
+                  );
+                }}
+                headerClassName="bg-blue-600 text-white text-center py-2"
+              />
+            </DataTable>
           </div>
         )}
-        {showQrDialog && (
-          <QRDialog
-            showQrDialog={showQrDialog}
-            setShowQrDialog={setShowQrDialog}
-            user={user}
-          />
-        )}
       </div>
+      {filteredCarsData?.length > 0 && AllCarsData?.totalPages > 1 && (
+        <div className="mt-6 flex w-full px-14">
+          <Pagination
+            currentPage={page}
+            totalPages={AllCarsData.totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      )}
+      {showQrDialog && (
+        <QRDialog
+          showQrDialog={showQrDialog}
+          setShowQrDialog={setShowQrDialog}
+          user={user}
+        />
+      )}
     </div>
   );
 };

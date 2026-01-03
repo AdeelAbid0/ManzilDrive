@@ -101,7 +101,7 @@ const ForgetPassword = () => {
             </div>
           </div>
         </div>
-        <div className=" flex flex-col justify-start md:justify-center items-center w-full  md:w-[50%] lg:w-[38%] h-auto md:h-full bg-white rounded-lg z-0 ">
+        <div className=" flex flex-col justify-start md:justify-center items-center w-full  md:w-[50%] lg:w-[38%] h-auto md:h-full bg-white rounded-lg z-0 p-6 ">
           {showOtp ? (
             <OTPScreen handleVerifyPhone={handleVerifyPhone} />
           ) : showPasswordScreen ? (

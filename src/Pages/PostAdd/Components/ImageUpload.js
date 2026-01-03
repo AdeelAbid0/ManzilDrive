@@ -29,41 +29,38 @@ const ImageUpload = ({ images, setImages }) => {
         Upload Photos
       </h1>
 
-      {[0, 1].map((row) => (
-        <div key={row} className="flex gap-3">
-          {[0, 1, 2].map((col) => {
-            const index = row * 3 + col;
-            const preview = getPreviewURL(images[index]);
-            return (
-              <div key={index} className="relative group w-[33%]">
-                <div className="flex items-center justify-center rounded h-[120px] bg-[#F5F5F5] cursor-pointer overflow-hidden">
-                  {preview ? (
-                    <>
-                      <img
-                        src={preview}
-                        alt="Uploaded"
-                        className="w-full h-full object-contain group-hover:brightness-50 transition-all duration-300"
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <CameraIcon className="text-white" />
-                      </div>
-                    </>
-                  ) : (
-                    <CameraIcon />
-                  )}
-                </div>
-                <input
-                  type="file"
-                  multiple
-                  accept="image/*"
-                  onChange={(e) => handleImageUpload(index, e)}
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                />
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+        {Array.from({ length: 6 }).map((_, index) => {
+          const preview = getPreviewURL(images[index]);
+          return (
+            <div key={index} className="relative group aspect-square">
+              <div className="flex items-center justify-center w-full h-full rounded bg-[#F5F5F5] cursor-pointer overflow-hidden">
+                {preview ? (
+                  <>
+                    <img
+                      src={preview}
+                      alt="Uploaded"
+                      className="w-full h-full object-contain group-hover:brightness-50 transition-all duration-300"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <CameraIcon className="text-white" />
+                    </div>
+                  </>
+                ) : (
+                  <CameraIcon />
+                )}
               </div>
-            );
-          })}
-        </div>
-      ))}
+              <input
+                type="file"
+                multiple
+                accept="image/*"
+                onChange={(e) => handleImageUpload(index, e)}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

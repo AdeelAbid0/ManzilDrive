@@ -109,13 +109,16 @@ const CarDetailForm = ({ formik, data, modelsData, variantData }) => {
           <label className="font-inter font-medium text-xs text-[#808080] leading-4">
             Driver :
           </label>
-          <div className="flex gap-4">
+          <div className="flex gap-4 w-full shrink-0 flex-wrap">
             {[
               { value: "withDriver", label: "With Driver" },
               { value: "withoutDriver", label: "Without Driver" },
               { value: "both", label: "Both" },
             ].map(({ value, label }) => (
-              <div key={value} className="flex gap-2 h-7 items-center">
+              <div
+                key={value}
+                className="flex gap-2 h-7 items-center shrink-0 flex-wrap"
+              >
                 <div className="relative flex items-center">
                   <input
                     type="radio"
@@ -139,7 +142,10 @@ const CarDetailForm = ({ formik, data, modelsData, variantData }) => {
           </label>
           <div className="flex gap-4">
             {["automatic", "manual"].map((option) => (
-              <div key={option} className="flex gap-2 h-7 items-center">
+              <div
+                key={option}
+                className="flex gap-2 h-7 items-center shrink-0 flex-wrap"
+              >
                 <input
                   type="radio"
                   name="transmission"
@@ -161,7 +167,10 @@ const CarDetailForm = ({ formik, data, modelsData, variantData }) => {
           </label>
           <div className="flex gap-4">
             {["AC / Heater installed", "None"].map((option) => (
-              <div key={option} className="flex gap-2 h-7 items-center">
+              <div
+                key={option}
+                className="flex gap-2 h-7 items-center shrink-0 flex-wrap"
+              >
                 <div className="relative flex items-center">
                   <input
                     type="radio"
@@ -183,9 +192,12 @@ const CarDetailForm = ({ formik, data, modelsData, variantData }) => {
           <label className="font-inter font-medium text-xs text-[#808080] leading-4">
             Seats :
           </label>
-          <div className="flex gap-4 mt-2">
+          <div className="flex gap-4 mt-2 w-full shrink-0 flex-wrap">
             {["2", "4", "7"].map((option) => (
-              <div key={option} className="flex gap-2 h-7 items-center">
+              <div
+                key={option}
+                className="flex gap-2 h-7 items-center shrink-0 flex-wrap"
+              >
                 <div className="relative flex items-center">
                   <input
                     type="radio"

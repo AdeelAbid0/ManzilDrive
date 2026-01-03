@@ -9,6 +9,7 @@ import { ReactComponent as ProfileIcon } from "../../assets/SVG/profile-icon.svg
 import { ReactComponent as LogoutIcon } from "../../assets/SVG/logout.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUser } from "../../slices/userSlice";
+import SideMenu from "../SideMenu/SideMenu";
 const BASE_URL_IMG = process.env.REACT_APP_IMG_URL;
 const Header = () => {
   const dispatch = useDispatch();
@@ -54,12 +55,12 @@ const Header = () => {
             Manzil Drive
           </h1>
         </div>
-        <div className="hidden md:flex justify-between w-[81.9%]">
-          <div className="flex text-primary font-inter list-none items-center gap-8 min-w-[236px] w-[21.95%]">
+        <div className="hidden md:flex justify-end w-[81.9%]">
+          {/* <div className="flex text-primary font-inter list-none items-center gap-8 min-w-[236px] w-[21.95%]">
             <li>Car Rental</li>
             <li>Events</li>
             <li>Tour</li>
-          </div>
+          </div> */}
           <div className="flex items-center gap-3">
             {user ? (
               <div
@@ -181,20 +182,22 @@ const Header = () => {
         </div>
       )}
       {menu && (
-        <Sidebar
-          showCloseIcon={false}
-          visible={menu}
-          onHide={() => setMenu(false)}
-          className="w-[200px]"
-        >
-          <div>
-            <ul className="flex flex-col gap-8 list-none text-primary font-inter ">
-              <li>Car Rental</li>
-              <li>Events</li>
-              <li>Tour</li>
-            </ul>
-          </div>
-        </Sidebar>
+        // <Sidebar
+        //   showCloseIcon={false}
+        //   visible={menu}
+        //   onHide={() => setMenu(false)}
+        //   position="right"
+        //   className="w-[200px]"
+        // >
+        //   <div>
+        //     <ul className="flex flex-col gap-8 list-none text-primary font-inter ">
+        //       <li>Car Rental</li>
+        //       <li>Events</li>
+        //       <li>Tour</li>
+        //     </ul>
+        //   </div>
+        // </Sidebar>
+        <SideMenu setMenu={setMenu} />
       )}
     </div>
   );

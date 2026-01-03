@@ -68,9 +68,9 @@ const Profile = () => {
   const handleUpdateProfile = () => formik.handleSubmit();
 
   return (
-    <div className="flex flex-col gap-2 !w-[64%]">
+    <div className="flex flex-col gap-2 w-full md:px-0 px-4 md:!w-[64%]">
       {/* Avatar */}
-      <div className="flex items-center gap-4 p-4 bg-white mt-10 rounded-xl">
+      <div className="flex items-center gap-4 p-4 bg-white mt-6 md:mt-10 rounded-xl">
         <div className="relative w-20 h-20 group">
           <label
             htmlFor="avatarUpload"
