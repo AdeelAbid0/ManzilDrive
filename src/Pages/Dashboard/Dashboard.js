@@ -11,6 +11,7 @@ import {
   ExpireAdds,
 } from "../../Utils/Icons";
 import { useGetAddsCount, useGetAllCars } from "./hooks/DashboardApi";
+import { ReactComponent as ArrowDownIcon } from "../../assets/SVG/arrow-down.svg";
 import { useSelector } from "react-redux";
 import Loader from "../../Components/Loader/Loader";
 import Pagination from "../../Common/Pagination/Pagination";
@@ -33,7 +34,25 @@ const Dashboard = () => {
   const [viewAll, setViewAll] = useState(true);
   const [filteredCarsData, setFilteredCarsData] = useState(null);
   const [showQrDialog, setShowQrDialog] = useState(false);
+  const [showTabDropdown, setShowTabDropdown] = useState(false);
+  const [selectedTab, setSelectedTab] = useState("View All");
   const BASE_URL_IMG = process.env.REACT_APP_IMG_URL;
+
+  const handleTabSelect = (tab) => {
+    const newStatus = {
+      viewAll: false,
+      active: false,
+      inactive: false,
+      pending: false,
+      expired: false,
+      [tab.key]: true,
+    };
+    setAddStatus(newStatus);
+    setStatus(tab.statusValue);
+    setViewAll(tab.viewAllFlag);
+    setSelectedTab(tab.label);
+    setShowTabDropdown(false);
+  };
 
   // ✅ Fetch data from API
   const { data: AddsCount, isPending: LoadingAddsData } = useGetAddsCount(
@@ -132,8 +151,8 @@ const Dashboard = () => {
     console.log("handle removeadd called");
   };
   return (
-    <div className="flex w-full items-center h-full flex-col m-6">
-      <div className="flex w-full justify-center md:justify-start px-1 md:px-10 md:flex-nowrap flex-wrap gap-2 md:gap-6">
+    <div className="flex w-full items-center h-full flex-col my-4">
+      <div className="flex w-full justify-center md:justify-start px-1 md:flex-nowrap flex-wrap gap-2 md:gap-6">
         {stats.map((stat, index) => (
           <div
             key={index}
@@ -156,13 +175,38 @@ const Dashboard = () => {
             </div>
           </div>
         ))}
-        <div className="md:hidden flex w-full justify-between items-center h-[17px] px-4 mt-12">
-          <h1 className="font-archive font-semibold text-base text-[#4D4D4D]">
-            My Adds
-          </h1>
-          <div className="flex justify-center items-center w-[105px] h-9 text-primary border border-primary rounded">
-            <p>Filters</p>
+        <div className="md:hidden flex flex-col w-full px-4 mt-6">
+          <div className="flex w-full justify-between items-center h-[17px] mb-2">
+            <h1 className="w-full font-archive font-semibold text-base text-[#4D4D4D]">
+              My Adds
+            </h1>
+            <div
+              className="relative flex justify-center items-centerw w-full min-w-[105px] h-9 text-primary border border-primary rounded cursor-pointer"
+              onClick={() => setShowTabDropdown(!showTabDropdown)}
+            >
+              <p className="flex items-center justify-between w-full px-3 text-primary">
+                {selectedTab} <ArrowDownIcon className="text-primary" />
+              </p>
+              {showTabDropdown && (
+                <div className="absolute top-full right-0 mt-1 w-full bg-white border border-[#E3E8EA] rounded shadow-lg z-50">
+                  {addTabs.map((tab) => (
+                    <div
+                      key={tab.key}
+                      className={`px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer ${
+                        selectedTab === tab.label
+                          ? "bg-gray-100 text-primary"
+                          : "text-gray-700"
+                      }`}
+                      onClick={() => handleTabSelect(tab)}
+                    >
+                      {tab.label}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
+          <div className="w-full h-px bg-[#E3E8EA] my-3"></div>
         </div>
         <div className="md:hidden flex gap-2 w-full px-4 mt-4">
           <Button

@@ -20,6 +20,7 @@ const EmailDialog = ({
 }) => {
   const [timeLeft, setTimeLeft] = useState(120);
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
   useEffect(() => {
     if (timeLeft <= 0) return;
     const interval = setInterval(() => {
@@ -27,37 +28,46 @@ const EmailDialog = ({
     }, 1000);
     return () => clearInterval(interval);
   }, [timeLeft]);
+
   return (
     <div>
       <Dialog
         header="Header"
         visible={showEmailDialog}
         style={{ width: "46%" }}
+        className="md:w-[46%] w-full mx-4 md:mx-0"
         headerClassName="hidden"
         onHide={() => setShowEmailDialog(false)}
+        modal
+        resizable={false}
+        draggable={false}
+        blockScroll
+        breakpoints={{ "960px": "75vw", "640px": "90vw" }}
+        contentStyle={{ padding: 0 }}
       >
         {emailOTPScreen ? (
-          <div>
-            <h1 className="!m-0 flex w-full justify-center font-manrope font-semibold  text-[24px] text-[#3E464C] leading-[36px]">
+          <div className="p-4 md:p-6">
+            <h1 className="!m-0 flex w-full justify-center font-manrope font-semibold text-[20px] md:text-[24px] text-[#3E464C] leading-[30px] md:leading-[36px]">
               Verify Your Account
             </h1>
-            <p className="!m-0 w-full text-center pt-3 font-inter font-normal text-[16px] text-[#505F6A] leading-[22px]">
+            <p className="!m-0 w-full text-center pt-3 font-inter font-normal text-[14px] md:text-[16px] text-[#505F6A] leading-[20px] md:leading-[22px]">
               Please enter the 4-digit code sent to your email address to
               confirm your identity and complete your registration.
             </p>
-            <div className="flex w-full justify-center items-center gap-6 mt-10">
+            <div className="flex w-full justify-center items-center gap-4 md:gap-6 mt-8 md:mt-10">
               <InputOtp
                 value={emailOTP}
                 onChange={(e) => {
                   setEmailOTP(e.value);
                 }}
+                className="w-full md:w-auto"
               />
-              <p className="text-[#303F3C] font-medium text-xs">
+              <p className="text-[#303F3C] font-medium text-xs whitespace-nowrap">
                 {formatTime(timeLeft)}
               </p>
             </div>
-            <div className="flex w-full justify-center mt-5">
-              <p className="flex gap-[6px] text-[#174473] text-xs font-normal leading-4">
+            <div className="flex w-full justify-center mt-4 md:mt-5">
+              <p className="flex flex-wrap justify-center gap-[6px] text-[#174473] text-xs font-normal leading-4">
                 Didn't Get the Code?
                 <span
                   className="font-semibold text-[#00796B] text-xs underline underline-offset-2 cursor-pointer leading-4"
@@ -68,11 +78,11 @@ const EmailDialog = ({
               </p>
             </div>
 
-            <div className="mt-9 flex w-full justify-end ">
+            <div className="mt-8 md:mt-9 flex w-full justify-end">
               <PrimaryButton
                 type="button"
                 label="Verify"
-                className="!w-[160px]"
+                className="!w-full md:!w-[160px]"
                 disabled={!emailOTP}
                 loading={EmailOTPVerifyLoading}
                 onClick={handleVerifyEmailOTP}
@@ -80,11 +90,11 @@ const EmailDialog = ({
             </div>
           </div>
         ) : (
-          <div className="p-6">
-            <h1 className="!m-0 font-manrope font-semibold  text-[24px] text-[#3E464C] leading-[36px]">
+          <div className="p-4 md:p-6">
+            <h1 className="!m-0 font-manrope font-semibold text-[20px] md:text-[24px] text-[#3E464C] leading-[30px] md:leading-[36px]">
               Verify Your Email
             </h1>
-            <p className="!m-0 pt-3 font-inter font-normal text-[16px] text-[#505F6A] leading-[22px]">
+            <p className="!m-0 pt-3 font-inter font-normal text-[14px] md:text-[16px] text-[#505F6A] leading-[20px] md:leading-[22px]">
               Verify your email to see all features and get a higher limit for
               your car ads.
             </p>
@@ -95,19 +105,17 @@ const EmailDialog = ({
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
-                className={` font-inter w-full font-normal text-input text-sm bg-[#F7F7F7] h-[49px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3
-              
-            `}
+                className={`font-inter w-full font-normal text-input text-sm bg-[#F7F7F7] h-[49px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3`}
               />
             </div>
-            <div className="mt-9 flex w-full justify-end ">
+            <div className="mt-8 md:mt-9 flex w-full justify-end">
               <PrimaryButton
                 type="button"
                 label="Verify"
                 loading={isLoadingEmailVerificationCode}
                 disabled={!isEmailValid}
                 onClick={handleSendEmailVerificationCode}
-                className="!w-[160px]"
+                className="!w-full md:!w-[160px]"
               />
             </div>
           </div>
