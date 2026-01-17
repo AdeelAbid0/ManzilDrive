@@ -56,7 +56,7 @@ const Dashboard = () => {
 
   // ✅ Fetch data from API
   const { data: AddsCount, isPending: LoadingAddsData } = useGetAddsCount(
-    user?.business?._id
+    user?.business?._id,
   );
   const {
     data: AllCarsData,
@@ -85,7 +85,7 @@ const Dashboard = () => {
     }
 
     const filteredData = AllCarsData.cars.filter(
-      (item) => item?.status === currentStatus
+      (item) => item?.status === currentStatus,
     );
     setFilteredCarsData(filteredData);
   }, [AddStatus, AllCarsData]);
@@ -335,19 +335,19 @@ const Dashboard = () => {
                         rowData?.status === "pending"
                           ? "bg-[#8D58031A]"
                           : rowData?.status === "live"
-                          ? "bg-[#00796B1A]"
-                          : rowData?.status === "inactive"
-                          ? "bg-[#F55A5A1A]"
-                          : ""
+                            ? "bg-[#00796B1A]"
+                            : rowData?.status === "inactive"
+                              ? "bg-[#F55A5A1A]"
+                              : ""
                       }
                       ${
                         rowData?.status === "pending"
                           ? "text-[#8D5803]"
                           : rowData?.status === "live"
-                          ? "text-[#00796B]"
-                          : rowData?.status === "inactive"
-                          ? "text-[#F55A5A]"
-                          : ""
+                            ? "text-[#00796B]"
+                            : rowData?.status === "inactive"
+                              ? "text-[#F55A5A]"
+                              : ""
                       }`}
                     >
                       <p className="!m-0 text-sm tracking-[0.5px] font-normal">

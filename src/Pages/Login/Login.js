@@ -43,7 +43,7 @@ const Login = () => {
             showNotification({
               message: "Login success",
               status: "success",
-            })
+            }),
           );
           dispatch(setUser(res));
           localStorage.setItem("Token", res?.token);
@@ -63,10 +63,10 @@ const Login = () => {
                   ? "Account not verified"
                   : error?.message,
               status: "error",
-            })
+            }),
           );
         },
-      }
+      },
     );
   };
   const handleGoogleLogin = async () => {
@@ -80,7 +80,7 @@ const Login = () => {
         showNotification({
           message: "Google login error",
           status: "error",
-        })
+        }),
       );
     }
   };
@@ -97,7 +97,7 @@ const Login = () => {
             showNotification({
               message: "Login success",
               status: "success",
-            })
+            }),
           );
         },
         onError: (error) => {
@@ -105,10 +105,10 @@ const Login = () => {
             showNotification({
               message: error?.message,
               status: "error",
-            })
+            }),
           );
         },
-      }
+      },
     );
   };
   const handleSendOTP = () => {
@@ -123,7 +123,7 @@ const Login = () => {
             showNotification({
               message: "OTP sent successfully",
               status: "success",
-            })
+            }),
           );
         },
         onError: (error) => {
@@ -131,10 +131,10 @@ const Login = () => {
             showNotification({
               message: "Error while sending OTP",
               status: "error",
-            })
+            }),
           );
         },
-      }
+      },
     );
   };
   const handleVerifyPhone = () => {
@@ -149,7 +149,7 @@ const Login = () => {
             showNotification({
               message: "OTP verified successfully",
               status: "success",
-            })
+            }),
           );
           setShowOtp(false);
         },
@@ -158,10 +158,10 @@ const Login = () => {
             showNotification({
               message: error?.message,
               status: "error",
-            })
+            }),
           );
         },
-      }
+      },
     );
   };
 

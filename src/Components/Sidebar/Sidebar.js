@@ -1,10 +1,5 @@
 import { NavLink } from "react-router-dom";
-import {
-  CarRentalIcon,
-  DashboardIcon,
-  MessagesIcon,
-  SettingsIcon,
-} from "../../Utils/Icons";
+import { DashboardIcon } from "../../Utils/Icons";
 
 const Sidebar = () => {
   return (
@@ -38,78 +33,6 @@ const Sidebar = () => {
               </>
             )}
           </NavLink>
-
-          {/* <NavLink
-            to="/car-rental"
-            className={({ isActive }) =>
-              `flex items-center pl-6 h-[36px] gap-2 mt-4 hover:bg-[#00796B1A] hover:cursor-pointer group ${
-                isActive ? "bg-[#00796B1A] font-medium" : ""
-              }`
-            }
-          >
-            {({ isActive }) => (
-              <>
-                <span>
-                  <CarRentalIcon isActive={isActive} />
-                </span>
-                <p
-                  className={`font-inter text-sm text-primary leading-5 tracking-[.5px] group-hover:font-medium ${
-                    isActive ? "font-medium" : "font-normal"
-                  }`}
-                >
-                  Car Rental
-                </p>
-              </>
-            )}
-          </NavLink>
-
-          <NavLink
-            to="/messages"
-            className={({ isActive }) =>
-              `flex items-center pl-6 h-[36px] gap-2 mt-4 hover:bg-[#00796B1A] hover:cursor-pointer group ${
-                isActive ? "bg-[#00796B1A] font-medium" : ""
-              }`
-            }
-          >
-            {({ isActive }) => (
-              <>
-                <span>
-                  <MessagesIcon isActive={isActive} />
-                </span>
-                <p
-                  className={`font-inter text-sm text-primary leading-5 tracking-[.5px] group-hover:font-medium ${
-                    isActive ? "font-medium" : "font-normal"
-                  }`}
-                >
-                  Messages
-                </p>
-              </>
-            )}
-          </NavLink>
-
-          <NavLink
-            to="/settings"
-            className={({ isActive }) =>
-              `flex items-center pl-6 h-[36px] gap-2 mt-4 hover:bg-[#00796B1A] hover:cursor-pointer group ${
-                isActive ? "bg-[#00796B1A] font-medium" : ""
-              }`
-            }
-          >
-            {({ isActive }) => (
-              <>
-                <span>
-                  <SettingsIcon isActive={isActive} />
-                </span>
-                <p
-                  className={`font-inter text-sm text-primary leading-5 tracking-[.5px] group-hover:font-medium ${
-                    isActive ? "font-medium" : "font-normal"
-                  }`}
-                >
-                  Settings
-                </p>
-              </>
-            )}
-          </NavLink> */}
         </div>
       </div>
     </div>
