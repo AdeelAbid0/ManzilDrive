@@ -1,10 +1,10 @@
 import { matchPath, useLocation } from "react-router-dom";
 import Footer from "../Components/Footer/Footer";
-import Header from "../Components/Header/Header";
-import Sidebar from "../Components/Sidebar/Sidebar";
 import AppRoutes from "../Routes/AppRoutes";
 import { useEffect, useState } from "react";
 import { PublicRoutes } from "../Routes/PublicRoutes";
+import Header from "./Header";
+import Sidebar from "./Sidebar";
 
 const Layout = () => {
   const user = JSON.parse(localStorage.getItem("User"));
@@ -18,11 +18,11 @@ const Layout = () => {
   const isHomePage = location.pathname === "/";
   const routes = PublicRoutes;
   const [showSidebar, setShowSidebar] = useState(
-    user && token && !isAuthPage && !isHomePage
+    user && token && !isAuthPage && !isHomePage,
   );
   useEffect(() => {
     const routeCheck = routes.find((route) =>
-      matchPath({ path: route.path, end: true }, location.pathname)
+      matchPath({ path: route.path, end: true }, location.pathname),
     );
     if (routeCheck) {
       setShowSidebar(false);

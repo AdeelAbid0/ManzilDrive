@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ReactComponent as AvatarIcon } from "../../assets/SVG/avatar.svg";
-import { ReactComponent as ProfileIcon } from "../../assets/SVG/profile-icon.svg";
-import { ReactComponent as LogoutIcon } from "../../assets/SVG/logout.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUser } from "../../slices/userSlice";
 import { Button } from "primereact/button";
+import {
+  sidebarNavItems,
+  profileNavItems,
+  authNavItems,
+} from "../../config/navigation";
 
 const SideMenu = ({ setMenu }) => {
   const BASE_URL_IMG = process.env.REACT_APP_IMG_URL;
@@ -34,20 +37,6 @@ const SideMenu = ({ setMenu }) => {
   const handleNavClick = () => {
     handleClose();
   };
-
-  useEffect(() => {
-    const handleEscKey = (event) => {
-      if (event.key === "Escape") {
-        handleClose();
-      }
-    };
-
-    document.addEventListener("keydown", handleEscKey);
-
-    return () => {
-      document.removeEventListener("keydown", handleEscKey);
-    };
-  }, [setMenu]);
 
   const handleOverlayClick = (e) => {
     e.preventDefault();
@@ -111,123 +100,73 @@ const SideMenu = ({ setMenu }) => {
                 </p>
               </div>
             </div>
-            <NavLink
-              to="/dashboard"
-              onClick={handleNavClick}
-              className={({ isActive }) =>
-                `flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer group ${
-                  isActive ? "text-primary" : "text-[#788C98]"
-                }`
-              }
-            >
-              <p className="!m-0 text-sm font-normal group-hover:text-[#00796B]">
-                Dashboard
-              </p>
-            </NavLink>
+            {/* Sidebar Navigation Items */}
+            {sidebarNavItems.map((item) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                onClick={handleNavClick}
+                className={({ isActive }) =>
+                  `flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer group ${
+                    isActive ? "text-primary" : "text-[#788C98]"
+                  }`
+                }
+              >
+                <div className="group-hover:text-[#00796B]">
+                  <item.icon className="w-5 h-5" />
+                </div>
+                <p className="!m-0 text-sm font-normal group-hover:text-[#00796B]">
+                  {item.title}
+                </p>
+              </NavLink>
+            ))}
 
             <p className="text-sm font-normal text-[#788C98] group-hover:text-[#00796B] mt-6">
               Personal
             </p>
-            <NavLink
-              to="/profile"
-              onClick={handleNavClick}
-              className={({ isActive }) =>
-                `flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer group ${
-                  isActive ? "text-primary" : "text-[#788C98]"
-                }`
-              }
-            >
+
+            {/* Profile Navigation Items */}
+            {profileNavItems.map((item) => (
               <div
-                className={`group-hover:text-[#00796B] ${
-                  window.location.pathname === "/profile"
-                    ? "text-primary"
-                    : "text-[#788C98]"
-                }`}
+                key={item.path}
+                className="flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer group"
+                onClick={() => {
+                  if (item.isLogout) {
+                    handleNavClick();
+                    dispatch(clearUser());
+                    navigate("/");
+                  } else {
+                    handleNavClick();
+                    navigate(item.path);
+                  }
+                }}
               >
-                <ProfileIcon className="w-5 h-5" />
+                <div className="group-hover:text-[#00796B]">
+                  <item.icon className="w-5 h-5 text-[#788C98]" />
+                </div>
+                <p className="!m-0 text-sm font-normal text-[#788C98] group-hover:text-[#00796B]">
+                  {item.title}
+                </p>
               </div>
-              <p className="!m-0 text-sm font-normal group-hover:text-[#00796B]">
-                Profile
-              </p>
-            </NavLink>
-            <NavLink
-              to="/my-ads"
-              onClick={handleNavClick}
-              className={({ isActive }) =>
-                `flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer group ${
-                  isActive ? "text-primary" : "text-[#788C98]"
-                }`
-              }
-            >
-              <div
-                className={`group-hover:text-[#00796B] ${
-                  window.location.pathname === "/my-ads"
-                    ? "text-primary"
-                    : "text-[#788C98]"
-                }`}
-              >
-                <ProfileIcon className="w-5 h-5" />
-              </div>
-              <p className="!m-0 text-sm font-normal group-hover:text-[#00796B]">
-                My Adds
-              </p>
-            </NavLink>
-            <NavLink
-              to="/change-password"
-              onClick={handleNavClick}
-              className={({ isActive }) =>
-                `flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer group ${
-                  isActive ? "text-primary" : "text-[#788C98]"
-                }`
-              }
-            >
-              <div
-                className={`group-hover:text-[#00796B] ${
-                  window.location.pathname === "/change-password"
-                    ? "text-primary"
-                    : "text-[#788C98]"
-                }`}
-              >
-                <ProfileIcon className="w-5 h-5" />
-              </div>
-              <p className="!m-0 text-sm font-normal group-hover:text-[#00796B]">
-                Change Password
-              </p>
-            </NavLink>
-            <div
-              className="flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer group"
-              onClick={() => {
-                handleNavClick();
-                dispatch(clearUser());
-                navigate("/");
-              }}
-            >
-              <div className="group-hover:text-[#00796B]">
-                <LogoutIcon className="w-5 h-5 text-[#788C98]" />
-              </div>
-              <p className="!m-0 text-sm font-normal text-[#788C98] group-hover:text-[#00796B]">
-                Logout
-              </p>
-            </div>
+            ))}
           </div>
         ) : (
           <div className="flex w-full flex-col gap-3 p-3">
-            <Button
-              label={"Login"}
-              onClick={() => {
-                handleNavClick();
-                navigate("/login");
-              }}
-              className="w-full text-primary font-inter font-medium text-sm border rounded border-primary h-[46px]"
-            />
-            <Button
-              label="Register"
-              onClick={() => {
-                handleNavClick();
-                navigate("/register");
-              }}
-              className="w-fulltext-white font-medium text-sm border rounded border-primary text-white h-[46px] bg-primary"
-            />
+            {authNavItems.map((item) => (
+              <Button
+                key={item.path}
+                label={item.title}
+                onClick={() => {
+                  handleNavClick();
+                  navigate(item.path);
+                }}
+                className={`w-full font-inter font-medium text-sm border rounded h-[46px] ${
+                  item.variant === "primary"
+                    ? "bg-primary text-white border-primary"
+                    : "text-primary border-primary bg-white"
+                }`}
+              />
+            ))}
           </div>
         )}
       </div>

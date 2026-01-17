@@ -1,14 +1,13 @@
 import { useState, useRef, useEffect } from "react";
-import { Hambergur, Logo } from "../../Utils/Icons";
+import { Hambergur, Logo } from "../Utils/Icons";
 import { Button } from "primereact/button";
 import { useNavigate } from "react-router-dom";
-import { ReactComponent as AvatarIcon } from "../../assets/SVG/avatar.svg";
-import { ReactComponent as ArorwDownIcon } from "../../assets/SVG/arrow-down.svg";
-import { ReactComponent as ProfileIcon } from "../../assets/SVG/profile-icon.svg";
-import { ReactComponent as LogoutIcon } from "../../assets/SVG/logout.svg";
+import { ReactComponent as AvatarIcon } from "../assets/SVG/avatar.svg";
+import { ReactComponent as ArorwDownIcon } from "../assets/SVG/arrow-down.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { clearUser } from "../../slices/userSlice";
-import SideMenu from "../SideMenu/SideMenu";
+import { clearUser } from "../slices/userSlice";
+import SideMenu from "../Components/SideMenu/SideMenu";
+import { profileNavItems } from "../config/navigation";
 const BASE_URL_IMG = process.env.REACT_APP_IMG_URL;
 const Header = () => {
   const dispatch = useDispatch();
@@ -54,11 +53,6 @@ const Header = () => {
           </h1>
         </div>
         <div className="hidden md:flex justify-end w-[81.9%]">
-          {/* <div className="flex text-primary font-inter list-none items-center gap-8 min-w-[236px] w-[21.95%]">
-            <li>Car Rental</li>
-            <li>Events</li>
-            <li>Tour</li>
-          </div> */}
           <div className="flex items-center gap-3">
             {user ? (
               <div
@@ -132,51 +126,41 @@ const Header = () => {
               </p>
             </div>
           </div>
-          <div
-            className="flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer group"
-            onClick={() => {
-              navigate("/profile");
-              setOpenProfile(false);
-            }}
-          >
-            <div className="group-hover:text-[#00796B]">
-              <ProfileIcon className="w-5 h-5 text-[#788C98]" />
-            </div>
-            <p className="!m-0 text-sm font-normal text-[#788C98] group-hover:text-[#00796B]">
-              Profile
-            </p>
-          </div>
-          <div className="flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer group">
-            <div className="group-hover:text-[#00796B]">
-              <ProfileIcon className="w-5 h-5 text-[#788C98]" />
-            </div>
-            <p className="!m-0 text-sm font-normal text-[#788C98] group-hover:text-[#00796B]">
-              My Adds
-            </p>
-          </div>
-          <div className="flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer group">
-            <div className="group-hover:text-[#00796B]">
-              <ProfileIcon className="w-5 h-5 text-[#788C98]" />
-            </div>
-            <p className="!m-0 text-sm font-normal text-[#788C98] group-hover:text-[#00796B]">
-              Change Password
-            </p>
-          </div>
-          <div
-            className="flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer group"
-            onClick={() => {
-              setOpenProfile((prev) => !prev);
-              dispatch(clearUser());
-              navigate("/");
-            }}
-          >
-            <div className="group-hover:text-[#00796B]">
-              <LogoutIcon className="w-5 h-5 text-[#788C98]" />
-            </div>
-            <p className="!m-0 text-sm font-normal text-[#788C98] group-hover:text-[#00796B]">
-              Logout
-            </p>
-          </div>
+          {profileNavItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = window.location.pathname === item.path;
+            return (
+              <div
+                key={item.path}
+                className="flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer group"
+                onClick={() => {
+                  if (item.isLogout) {
+                    setOpenProfile(false);
+                    dispatch(clearUser());
+                    navigate("/");
+                  } else {
+                    navigate(item.path);
+                    setOpenProfile(false);
+                  }
+                }}
+              >
+                <div
+                  className={`group-hover:text-[#00796B] ${isActive ? "text-primary" : ""}`}
+                >
+                  <Icon
+                    className={`w-5 h-5 ${isActive ? "text-primary" : "text-[#788C98]"}`}
+                  />
+                </div>
+                <p
+                  className={`!m-0 text-sm font-normal group-hover:text-[#00796B] ${
+                    isActive ? "text-primary font-medium" : "text-[#788C98]"
+                  }`}
+                >
+                  {item.title}
+                </p>
+              </div>
+            );
+          })}
         </div>
       )}
       {menu && <SideMenu setMenu={setMenu} />}
