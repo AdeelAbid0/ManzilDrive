@@ -1,0 +1,107 @@
+.dashboardadmin {
+  width: 1102px;
+}
+.dashboardadmin .p-datatable-thead {
+  height: 13px !important;
+  width: 1094px !important;
+  gap: 98px !important;
+  justify-content: space-between !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  display: flex !important;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.dashboardadmin .p-datatable .p-datatable-tbody {
+  background-color: none !important;
+}
+.dashboardadmin .p-datatable {
+  overflow-x: hidden;
+}
+
+.dashboardadmin .p-datatable .p-datatable-tbody > tr {
+  justify-content: space-between !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  width: 1084px !important;
+  height: 52px !important;
+  display: flex !important;
+  padding-left: 8px;
+  padding-right: 8px;
+  width: inherit;
+  background-color: #f8f9fa !important;
+  border-bottom: solid #e1e4f3 1px;
+  gap: 88px !important;
+}
+.dashboardadmin .p-datatable .p-datatable-tbody > tr:hover {
+  cursor: pointer;
+  background-color: #f0f2fe !important;
+  border: none;
+  border-bottom: solid #e1e4f3 1px;
+}
+.dashboardadmin .p-datatable .p-datatable-tbody > tr > td {
+  border: none !important;
+  padding: 0px !important;
+}
+.dashboardadmin .p-datatable .p-datatable-tbody > tr:nth-of-type(1) {
+  margin-top: 24px !important;
+}
+
+.dashboardadmin .p-datatable .p-datatable-wrapper {
+  overflow-y: hidden;
+}
+.dashboardadmin .p-datatable-tbody > tr > td {
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  overflow: hidden !important;
+  border: none !important;
+  margin: 0px !important;
+  line-height: 18px !important;
+  color: #72728f !important;
+}
+
+.dashboardadmin .p-datatable-thead > tr {
+  justify-content: space-between !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  height: 13px !important;
+  display: flex !important;
+  width: inherit;
+  background-color: transparent !important;
+}
+
+.dashboardadmin .p-datatable-thead > tr > th {
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  padding: 0px !important;
+  margin: 0px !important;
+  line-height: 13px !important;
+  background-color: inherit !important;
+  color: #4d4d4d !important;
+  letter-spacing: 0.5px;
+}
+
+.dashboardadmin .p-datatable-thead > tr > th:nth-of-type(1),
+.dashboardadmin tbody > tr > td:nth-of-type(1) {
+  width: 200px !important;
+}
+.dashboardadmin .p-datatable-thead > tr > th:nth-of-type(2),
+.dashboardadmin tbody > tr > td:nth-of-type(2) {
+  width: 240px !important;
+}
+.dashboardadmin .p-datatable-thead > tr > th:nth-of-type(3),
+.dashboardadmin tbody > tr > td:nth-of-type(3) {
+  width: 130px !important;
+}
+.dashboardadmin .p-datatable-thead > tr > th:nth-of-type(4),
+.dashboardadmin tbody > tr > td:nth-of-type(4) {
+  width: 303px !important;
+}
+.dashboardadmin .p-datatable-thead > tr > th:nth-of-type(5),
+.dashboardadmin tbody > tr > td:nth-of-type(5) {
+  width: 38px !important;
+}
+.dashboardadmin .p-datatable-thead > tr > th:nth-of-type(6),
+.dashboardadmin tbody > tr > td:nth-of-type(6) {
+  width: 46px !important;
+}

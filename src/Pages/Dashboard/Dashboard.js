@@ -151,7 +151,7 @@ const Dashboard = () => {
     console.log("handle removeadd called");
   };
   return (
-    <div className="flex w-full items-center h-full flex-col my-4">
+    <div className=" flex w-full items-center h-full flex-col my-4">
       <div className="flex w-full justify-center md:justify-start px-1 md:flex-nowrap flex-wrap gap-2 md:gap-6">
         {stats.map((stat, index) => (
           <div

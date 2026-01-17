@@ -31,7 +31,7 @@ const Layout = () => {
     }
   }, [location]);
   return (
-    <div className="font-inter w-full max-w-[1440px] bg-[#EDEDED]">
+    <div className="font-inter w-full max-w-[1440px] bg-[#FAFAFA]">
       {!isAuthPage && location.pathname !== "/" && <Header />}
       {location.pathname === "/" && <Header />}
 
