@@ -79,4 +79,9 @@ export const ApiUrl = {
     GetVariantBymodel: (modelId) =>
       `car-makemodel/variantby-model?modelId=${modelId}`,
   },
+
+  // Admin side Apis
+  AdminDashboard: {
+    GetAllBusinesses: () => "business/adminGetAllBusinesses",
+  },
 };

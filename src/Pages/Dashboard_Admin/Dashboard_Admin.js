@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
-import { useNavigate } from "react-router-dom";
 import "./Dashboard-admin.css";
 import {
   ActiveAdds,
@@ -10,70 +9,32 @@ import {
   DailyBooking,
   ExpireAdds,
 } from "../../Utils/Icons";
-import { useGetAddsCount, useGetAllCars } from "./hooks/DashboardApi";
+import { useGetAllBusinesses } from "./hooks/DashboardApi";
 import { ReactComponent as SearchIcon } from "../../assets/SVG/search.svg";
 import { ReactComponent as FilterIcon } from "../../assets/SVG/filter.svg";
+import { ReactComponent as Action } from "../../assets/SVG/action.svg";
 import { useSelector } from "react-redux";
 import Loader from "../../Components/Loader/Loader";
 import Pagination from "../../Common/Pagination/Pagination";
-import QRDialog from "./Components/QRDialog";
 import CommonInput from "../../Common/InputText/InputText";
 
 const Dashboard_Admin = () => {
-  const navigate = useNavigate();
   const user = useSelector((state) => state.user.user);
-  const [AddStatus, setAddStatus] = useState({
-    viewAll: true,
-    active: false,
-    inactive: false,
-    pending: false,
-    expired: false,
-  });
   const [page, setPage] = useState(1);
   const [limit] = useState(10); // Set fixed limit to 10 items per page
-  const [status, setStatus] = useState("all");
-  const [viewAll, setViewAll] = useState(true);
   const [filteredCarsData, setFilteredCarsData] = useState(null);
-  const [showQrDialog, setShowQrDialog] = useState(false);
-  const BASE_URL_IMG = process.env.REACT_APP_IMG_URL;
 
-  // ✅ Fetch data from API
-  const { data: AddsCount, isPending: LoadingAddsData } = useGetAddsCount(
-    user?.business?._id,
-  );
+  // const { data: AddsCount, isPending: LoadingAddsData } = useGetAddsCount(
+  //   user?.business?._id,
+  // );
   const {
-    data: AllCarsData,
-    isLoading: CarsDataLoading,
-    error: CarsDataError,
-  } = useGetAllCars(page, limit, status, viewAll, user?.business?._id);
-
-  const statusMap = {
-    viewAll: "all",
-    active: "active",
-    inactive: "inactive",
-    pending: "pending",
-    expired: "expired",
-  };
-
-  // Update filtered data when API data or filter changes
-  useEffect(() => {
-    if (!AllCarsData?.cars) return;
-
-    const activeKey = Object.keys(AddStatus).find((key) => AddStatus[key]);
-    const currentStatus = statusMap[activeKey];
-
-    if (!activeKey || activeKey === "viewAll" || !currentStatus) {
-      setFilteredCarsData(AllCarsData.cars);
-      return;
-    }
-
-    const filteredData = AllCarsData.cars.filter(
-      (item) => item?.status === currentStatus,
-    );
-    setFilteredCarsData(filteredData);
-  }, [AddStatus, AllCarsData]);
-
-  // ✅ Sample stats (replace with dynamic data if API provides)
+    data: AllBusinsses,
+    isLoading: DashboardDataLoading,
+    error: DashboardDataError,
+  } = useGetAllBusinesses();
+  console.log({ AllBusinsses });
+  console.log({ DashboardDataLoading });
+  console.log({ DashboardDataError });
   const stats = [
     { icon: DailyBooking, label: "DAILY BOOKING", value: 10, change: "+10%" },
     { icon: ActiveAdds, label: "ACTIVE ADDS", value: 10, change: "+10%" },
@@ -90,10 +51,6 @@ const Dashboard_Admin = () => {
     setPage(newPage);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-
-  useEffect(() => {
-    setPage(1);
-  }, [status, viewAll]);
   const dummyCarsData = [
     {
       id: 1,
@@ -162,11 +119,11 @@ const Dashboard_Admin = () => {
         </div>
       </div>
       <div className="mt-6 dashboardadmin hidden md:block">
-        {CarsDataLoading ? (
+        {DashboardDataLoading ? (
           <div className="flex w-full justify-center mt-5">
             <Loader />
           </div>
-        ) : CarsDataError ? (
+        ) : DashboardDataError ? (
           <p>Error loading data</p>
         ) : (
           <div className="w-full">
@@ -183,7 +140,7 @@ const Dashboard_Admin = () => {
                     {rowData?.user?.name || "N/A"}
                   </p>
                 )}
-                headerClassName="bg-blue-600 text-white text-start py-2"
+                headerClassName="bg-blue-600 text-start py-2"
               />
               <Column
                 header="Email"
@@ -226,15 +183,8 @@ const Dashboard_Admin = () => {
               <Column
                 header="Action"
                 body={(rowData) => (
-                  <div className="flex items-center justify-center gap-2">
-                    <Button
-                      icon="pi pi-eye"
-                      className="p-button-rounded p-button-text p-button-sm"
-                      tooltip="View Details"
-                      onClick={() => {
-                        // Handle view action
-                      }}
-                    />
+                  <div className="flex pl-3 items-center justify-center gap-2">
+                    <Action />
                   </div>
                 )}
                 headerClassName="bg-blue-600 text-white text-start py-2"
@@ -251,13 +201,6 @@ const Dashboard_Admin = () => {
             onPageChange={handlePageChange}
           />
         </div>
-      )}
-      {showQrDialog && (
-        <QRDialog
-          showQrDialog={showQrDialog}
-          setShowQrDialog={setShowQrDialog}
-          user={user}
-        />
       )}
     </div>
   );

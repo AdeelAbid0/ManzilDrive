@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 const Sidebar = () => {
   const user = useSelector((state) => state.user.user);
   const role = user?.business?.role;
-  console.log({ role });
   return (
     <div className="mt-[72px] h-[calc(100vh-72px)] rounded-tr-[4px] w-[242px] bg-white fixed">
       <div className="h-full pt-12">
