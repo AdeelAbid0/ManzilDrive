@@ -22,11 +22,6 @@ export const sidebarNavItemsAdmin = [
     icon: DashboardIcon,
   },
   {
-    title: "Categories",
-    path: "/categories",
-    icon: DashboardIcon,
-  },
-  {
     title: "Boost Adds",
     path: "/boost-adds",
     icon: DashboardIcon,

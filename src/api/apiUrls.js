@@ -82,6 +82,7 @@ export const ApiUrl = {
 
   // Admin side Apis
   AdminDashboard: {
-    GetAllBusinesses: () => "business/adminGetAllBusinesses",
+    GetAllBusinesses: (page, limit) =>
+      `business/adminGetAllBusinesses?page=${page}&limit=${limit}`,
   },
 };

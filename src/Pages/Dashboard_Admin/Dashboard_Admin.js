@@ -31,10 +31,8 @@ const Dashboard_Admin = () => {
     data: AllBusinsses,
     isLoading: DashboardDataLoading,
     error: DashboardDataError,
-  } = useGetAllBusinesses();
+  } = useGetAllBusinesses(page, limit);
   console.log({ AllBusinsses });
-  console.log({ DashboardDataLoading });
-  console.log({ DashboardDataError });
   const stats = [
     { icon: DailyBooking, label: "DAILY BOOKING", value: 10, change: "+10%" },
     { icon: ActiveAdds, label: "ACTIVE ADDS", value: 10, change: "+10%" },

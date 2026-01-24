@@ -1,20 +1,12 @@
 import { useClientQuery } from "../../../api/api-service";
 import { ApiUrl } from "../../../api/apiUrls";
-export const useGetAllBusinesses = () =>
-  // page,
-  // limit,
-  // status,
-  // viewAll,
-  // businessId,
-  {
-    return useClientQuery({
-      // queryKeys: ["GetAllCars", { page, limit, status, viewAll, businessId }],
-      // queryKeys: ["GetAllBUsinesses", {}],
-      // url: ApiUrl.Dashboard.GetAllCars(page, limit, status, viewAll, businessId),
-      url: ApiUrl.AdminDashboard.GetAllBusinesses,
-      enabled: true,
-    });
-  };
+export const useGetAllBusinesses = (page = 1, limit = 10) => {
+  return useClientQuery({
+    queryKeys: ["GetAllBusinesses", { page, limit }],
+    url: ApiUrl.AdminDashboard.GetAllBusinesses(page, limit),
+    enabled: true,
+  });
+};
 // export const useGetAddsCount = (businessId) => {
 //   return useClientQuery({
 //     queryKeys: ["GetAddsCount", { businessId }],
