@@ -3,13 +3,6 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import "./Addlist.css";
-import {
-  ActiveAdds,
-  AddImpression,
-  DailyBooking,
-  ExpireAdds,
-} from "../../Utils/Icons";
-import { useGetAddsCount, useGetAllCars } from "./hooks/DashboardApi";
 import { ReactComponent as SearchIcon } from "../../assets/SVG/search.svg";
 import { ReactComponent as FilterIcon } from "../../assets/SVG/filter.svg";
 import { ReactComponent as Action } from "../../assets/SVG/action.svg";
@@ -17,6 +10,7 @@ import { useSelector } from "react-redux";
 import Loader from "../../Components/Loader/Loader";
 import Pagination from "../../Common/Pagination/Pagination";
 import CommonInput from "../../Common/InputText/InputText";
+import { useGetAllAdds } from "./hooks/AddListApi";
 
 const AddList = () => {
   const user = useSelector((state) => state.user.user);
@@ -35,14 +29,14 @@ const AddList = () => {
   const [showQrDialog, setShowQrDialog] = useState(false);
   const BASE_URL_IMG = process.env.REACT_APP_IMG_URL;
 
-  const { data: AddsCount, isPending: LoadingAddsData } = useGetAddsCount(
-    user?.business?._id,
-  );
+  // const { data: AddsCount, isPending: LoadingAddsData } = useGetAddsCount(
+  //   user?.business?._id,
+  // );
   const {
-    data: AllCarsData,
-    isLoading: CarsDataLoading,
-    error: CarsDataError,
-  } = useGetAllCars(page, limit, status, viewAll, user?.business?._id);
+    data: AddAddsData,
+    isLoading: AddsDataLoading,
+    error: AddsDataErorr,
+  } = useGetAllAdds(page, limit, status);
 
   const statusMap = {
     viewAll: "all",
@@ -53,21 +47,21 @@ const AddList = () => {
   };
 
   useEffect(() => {
-    if (!AllCarsData?.cars) return;
+    if (!AddAddsData?.cars) return;
 
     const activeKey = Object.keys(AddStatus).find((key) => AddStatus[key]);
     const currentStatus = statusMap[activeKey];
 
     if (!activeKey || activeKey === "viewAll" || !currentStatus) {
-      setFilteredCarsData(AllCarsData.cars);
+      setFilteredCarsData(AddAddsData.cars);
       return;
     }
 
-    const filteredData = AllCarsData.cars.filter(
+    const filteredData = AddAddsData.cars.filter(
       (item) => item?.status === currentStatus,
     );
     setFilteredCarsData(filteredData);
-  }, [AddStatus, AllCarsData]);
+  }, [AddStatus, AddAddsData]);
 
   const handlePageChange = (newPage) => {
     setPage(newPage);
@@ -111,11 +105,11 @@ const AddList = () => {
         </div>
       </div>
       <div className="mt-6 addlist hidden md:block">
-        {CarsDataLoading ? (
+        {AddsDataLoading ? (
           <div className="flex w-full justify-center mt-5">
             <Loader />
           </div>
-        ) : CarsDataError ? (
+        ) : AddsDataErorr ? (
           <p>Error loading data</p>
         ) : (
           <div className="w-full">
@@ -177,11 +171,11 @@ const AddList = () => {
           </div>
         )}
       </div>
-      {filteredCarsData?.length > 0 && AllCarsData?.totalPages > 1 && (
+      {filteredCarsData?.length > 0 && AddAddsData?.totalPages > 1 && (
         <div className="mt-6 flex w-full px-14">
           <Pagination
             currentPage={page}
-            totalPages={AllCarsData.totalPages}
+            totalPages={AddAddsData.totalPages}
             onPageChange={handlePageChange}
           />
         </div>
