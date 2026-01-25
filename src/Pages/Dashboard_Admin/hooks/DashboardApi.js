@@ -7,10 +7,9 @@ export const useGetAllBusinesses = (page = 1, limit = 10) => {
     enabled: true,
   });
 };
-// export const useGetAddsCount = (businessId) => {
-//   return useClientQuery({
-//     queryKeys: ["GetAddsCount", { businessId }],
-//     url: ApiUrl.Dashboard.GetAddsCount(businessId),
-//     enabled: !!businessId,
-//   });
-// };
+export const useGetAddsCount = () => {
+  return useClientQuery({
+    url: ApiUrl.AdminDashboard.GetAddsCount(),
+    enabled: true,
+  });
+};

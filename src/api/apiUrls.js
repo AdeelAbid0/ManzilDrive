@@ -84,5 +84,6 @@ export const ApiUrl = {
   AdminDashboard: {
     GetAllBusinesses: (page, limit) =>
       `business/adminGetAllBusinesses?page=${page}&limit=${limit}`,
+    GetAddsCount: () => "cars/getAdminCarStatusCount",
   },
 };

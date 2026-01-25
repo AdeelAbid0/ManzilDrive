@@ -11,7 +11,7 @@ const Sidebar = () => {
         <h1 className="pl-6 font-inter font-normal text-xs leading-[100%] tracking-[1px] text-[#082431]">
           MENU
         </h1>
-        {!role === "customer" ? (
+        {role === "customer" ? (
           <div className="flex flex-col gap-2">
             {sidebarNavItems.map((item) => {
               const Icon = item.icon;
