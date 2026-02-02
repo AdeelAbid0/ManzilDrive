@@ -5,10 +5,8 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import axios from "axios";
 import { isEmpty } from "lodash";
 import api from "./AxiosInceptor";
-const BASE_URL = process.env.REACT_APP_API_URL;
 
 export const useClientQuery = ({
   queryKeys = [],

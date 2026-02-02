@@ -28,7 +28,7 @@ const PhoneDialog = ({
       <Dialog
         header="Header"
         visible={visible}
-        style={{ width: "46%" }}
+        className="w-[90%] md:w-[46%]"
         headerClassName="hidden"
         onHide={() => {
           // if (!visible) return;

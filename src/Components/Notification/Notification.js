@@ -18,12 +18,12 @@ export default function NotificationProvider() {
   }, [notifications, dispatch]);
 
   return (
-    <div className="fixed top-4 right-4 flex flex-col gap-3 z-[9999]">
+    <div className="fixed md:top-4 md:right-4 top-0  right-0 flex flex-col gap-3 z-[9999]">
       {notifications.map((n) => (
         <div
           key={n.id}
           className={`
-            relative min-w-[400px] px-4 py-3 rounded-lg bg-white shadow-md 
+            relative min-w-[343px] !w-full md:min-w-[400px] px-4 py-3 rounded-lg bg-white shadow-md 
             transform transition-all duration-300 ease-in-out
             animate-slide-in
           `}
