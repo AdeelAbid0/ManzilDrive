@@ -86,6 +86,10 @@ export const ApiUrl = {
       `business/adminGetAllBusinesses?page=${page}&limit=${limit}`,
     GetAddsCount: () => "cars/getAdminCarStatusCount",
 
+    //Businesses
+    ApproveBusiness: () => "business/approve",
+    RejectBusiness: () => "business/rejectBusiness",
+
     // Adds list
     GetAllAdds: (page, limit, status, isDeleted) =>
       `cars/getAdminAllCars?page=${page}&limit=${limit}&status=${status}&isDeleted=${isDeleted}`,
