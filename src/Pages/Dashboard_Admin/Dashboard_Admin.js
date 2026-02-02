@@ -255,15 +255,6 @@ const Dashboard_Admin = () => {
           </div>
         )}
       </div>
-      {/* {filteredCarsData?.length > 0 && AllCarsData?.totalPages > 1 && (
-        <div className="mt-6 flex w-full px-14">
-          <Pagination
-            currentPage={page}
-            totalPages={AllCarsData.totalPages}
-            onPageChange={handlePageChange}
-          />
-        </div>
-      )} */}
     </div>
   );
 };
