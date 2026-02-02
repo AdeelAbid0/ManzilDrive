@@ -7,7 +7,7 @@ export const ApiUrl = {
     ResendEmailVerification: "business/resend-email-verification",
     VerifyPhone: "business/verify-phone",
     SendPhoneVerification: "business/resend-phone-verification",
-    VerifyEmail: "business/sendEmailVerficationCode",
+    // VerifyEmail: "business/sendEmailVerficationCode",
     verifyEmailOtp: "business/verfiyPhoneUserEmailVerificationCode",
     ResetPassword: "/auth/reset-password",
   },
