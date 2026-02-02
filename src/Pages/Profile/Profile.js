@@ -14,7 +14,7 @@ import moment from "moment/moment";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../slices/userSlice";
 
-const BASE_URL_IMG = process.env.REACT_APP_IMG_URL;
+const BASE_URL_IMG = process.env.REACT_APP_API_URL;
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ const Profile = () => {
   // API Calls
   const { mutate: updateProfile } = useUpdateProfile();
   const { data: CityData } = useGetAllActiveByCountryId(
-    "665000000000000000000001"
+    "665000000000000000000001",
   );
 
   const formik = useFormik({

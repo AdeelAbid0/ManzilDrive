@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearUser } from "../slices/userSlice";
 import SideMenu from "../Components/SideMenu/SideMenu";
 import { profileNavItems } from "../config/navigation";
-const BASE_URL_IMG = process.env.REACT_APP_IMG_URL;
+const BASE_URL_IMG = process.env.REACT_APP_API_URL;
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();

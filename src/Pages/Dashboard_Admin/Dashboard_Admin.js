@@ -87,13 +87,14 @@ const Dashboard_Admin = () => {
   };
 
   const handleReject = () => {
-    RejectBusiness;
-    (({ businessId: selectedRow?._id }),
+    RejectBusiness(
+      { businessId: selectedRow?._id },
       {
         onSuccess: (res) => {
           console.log({ res });
         },
-      });
+      },
+    );
     op.current.hide();
   };
 
@@ -254,7 +255,7 @@ const Dashboard_Admin = () => {
           </div>
         )}
       </div>
-      {filteredCarsData?.length > 0 && AllCarsData?.totalPages > 1 && (
+      {/* {filteredCarsData?.length > 0 && AllCarsData?.totalPages > 1 && (
         <div className="mt-6 flex w-full px-14">
           <Pagination
             currentPage={page}
@@ -262,7 +263,7 @@ const Dashboard_Admin = () => {
             onPageChange={handlePageChange}
           />
         </div>
-      )}
+      )} */}
     </div>
   );
 };

@@ -36,7 +36,7 @@ const Dashboard = () => {
   const [showQrDialog, setShowQrDialog] = useState(false);
   const [showTabDropdown, setShowTabDropdown] = useState(false);
   const [selectedTab, setSelectedTab] = useState("View All");
-  const BASE_URL_IMG = process.env.REACT_APP_IMG_URL;
+  const BASE_URL_IMG = process.env.REACT_APP_API_URL;
 
   const handleTabSelect = (tab) => {
     const newStatus = {

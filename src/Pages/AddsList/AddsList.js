@@ -27,7 +27,7 @@ const AddList = () => {
   const [viewAll, setViewAll] = useState(true);
   const [filteredCarsData, setFilteredCarsData] = useState(null);
   const [showQrDialog, setShowQrDialog] = useState(false);
-  const BASE_URL_IMG = process.env.REACT_APP_IMG_URL;
+  const BASE_URL_IMG = process.env.REACT_APP_API_URL;
 
   // const { data: AddsCount, isPending: LoadingAddsData } = useGetAddsCount(
   //   user?.business?._id,

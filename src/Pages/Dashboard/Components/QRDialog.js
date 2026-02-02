@@ -6,7 +6,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
 const QRDialog = ({ showQrDialog, setShowQrDialog, user }) => {
-  const BASE_URL_IMG = process.env.REACT_APP_IMG_URL;
+  const BASE_URL_IMG = process.env.REACT_APP_API_URL;
   const businessUrl = `${BASE_URL_IMG}/business/${user?.business?._id}`;
 
   const handleDownloadPDF = async () => {
@@ -97,7 +97,7 @@ const QRDialog = ({ showQrDialog, setShowQrDialog, user }) => {
         imgX,
         imgY,
         imgWidth * ratio,
-        imgHeight * ratio
+        imgHeight * ratio,
       );
 
       // Save the PDF

@@ -11,7 +11,7 @@ import {
 } from "../../config/navigation";
 
 const SideMenu = ({ setMenu }) => {
-  const BASE_URL_IMG = process.env.REACT_APP_IMG_URL;
+  const BASE_URL_IMG = process.env.REACT_APP_API_URL;
   const [isClosing, setIsClosing] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const user = useSelector((state) => state.user.user);
