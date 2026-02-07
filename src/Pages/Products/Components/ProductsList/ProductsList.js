@@ -17,7 +17,7 @@ const ProductsList = ({
     if (currentValues.includes(value)) {
       setFieldValue(
         field,
-        currentValues.filter((item) => item !== value)
+        currentValues.filter((item) => item !== value),
       );
     } else {
       setFieldValue(field, [...currentValues, value]);
@@ -34,7 +34,7 @@ const ProductsList = ({
     <div className="flex w-full justify-center">
       <form
         onSubmit={handleFormSubmit}
-        className="flex w-full justify-center gap-4 mt-6"
+        className="flex w-full justify-center gap-4 mt-6 pb-6"
       >
         {/* Sidebar Filters */}
         <div className="hidden md:flex h-[480px] w-[13%] max-w-[180px] bg-white">

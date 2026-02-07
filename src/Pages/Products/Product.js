@@ -72,15 +72,15 @@ const Products = () => {
       <div className="flex w-full md:flex-col flex-col-reverse">
         <HeroSection />
         <div className="flex justify-center w-full">
-          <div className="flex items-center md:w-[90%] w-full h-[98px] md:h-[90px] md:rounded bg-search mt-0 md:mt-[-45px] md:pl-6 pl-3 md:pr-6 pr-3 relative">
+          <div className="flex items-center md:max-w-[424px] md:w-[90%] w-full md:rounded bg-search mt-0 md:mt-[-45px] px-3 py-3 relative">
             <div className="flex w-full">
               <InputText
                 onClick={() => setShowSearchDialog(true)}
                 placeholder="Find cars near you"
-                className="!font-inter font-normal text-input text-sm w-full h-[44px] rounded-[4px] md:rounded-br-[4px]  focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
+                className="!font-inter font-normal text-input text-sm w-full h-[44px] shadow-inner rounded-[4px] md:rounded-br-[4px]  focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
               />
             </div>
-            <div className="absolute right-[14px] md:right-[25px] flex justify-center items-center w-10 h-[42px] bg-primary rounded-tr-md rounded-br-md">
+            <div className="absolute right-[14px] md:right-[14px] flex justify-center items-center w-10 h-[42px] bg-primary rounded-tr-md rounded-br-md">
               <SearchIcon />
             </div>
           </div>

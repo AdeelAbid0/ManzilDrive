@@ -13,9 +13,6 @@ import {
 import moment from "moment/moment";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../slices/userSlice";
-
-const BASE_URL_IMG = process.env.REACT_APP_API_URL;
-
 const Profile = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
@@ -77,7 +74,7 @@ const Profile = () => {
             className="cursor-pointer block w-full h-full"
           >
             <img
-              src={preview || `${BASE_URL_IMG}/${user?.business?.img}`}
+              src={preview || user?.business?.img}
               alt="avatar"
               className="w-20 h-20 rounded-xl object-cover transition-all duration-300"
             />

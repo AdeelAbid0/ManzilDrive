@@ -39,8 +39,8 @@ const Header = () => {
     };
   }, [openProfile]);
   return (
-    <div className="flex justify-center items-center w-full max-w-[1440px] h-[70px] bg-white fixed z-[999]">
-      <div className="flex w-[91.11%] max-w-[1312px] md:gap-10 lg:gap-20">
+    <div className="flex justify-center items-center w-full h-[70px] bg-white fixed z-[999]">
+      <div className="flex w-[91.11%]  md:gap-10 lg:gap-20">
         <div
           className="flex items-center  w-[11.96%] min-w-[156px] gap-[8px] cursor-pointer"
           onClick={() => {
@@ -61,7 +61,7 @@ const Header = () => {
               >
                 {user?.business?.img ? (
                   <img
-                    src={`${BASE_URL_IMG}/${user?.business?.img}`}
+                    src={user?.business?.img}
                     className="w-10 h-10 rounded-full object-cover"
                   />
                 ) : (
@@ -108,7 +108,7 @@ const Header = () => {
             <div>
               {user?.business?.img ? (
                 <img
-                  src={`${BASE_URL_IMG}/${user?.business?.img}`}
+                  src={user?.business?.img}
                   className="w-10 h-10 rounded-[4px] object-cover"
                 />
               ) : (

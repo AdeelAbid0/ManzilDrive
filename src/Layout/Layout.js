@@ -31,11 +31,11 @@ const Layout = () => {
     }
   }, [location]);
   return (
-    <div className="font-inter w-full max-w-[1440px] bg-[#FAFAFA]">
+    <div className="font-inter w-full  bg-[#FAFAFA]">
       {!isAuthPage && location.pathname !== "/" && <Header />}
       {location.pathname === "/" && <Header />}
 
-      <div className="flex gap-0 w-full justify-center max-w-[1440px] min-h-[calc(100vh-70px)]">
+      <div className="flex gap-0 w-full justify-center  min-h-[calc(100vh-70px)]">
         {showSidebar && (
           <div className="hidden h-[100vh] md:block ">
             <Sidebar />

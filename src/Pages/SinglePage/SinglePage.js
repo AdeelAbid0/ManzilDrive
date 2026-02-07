@@ -30,7 +30,7 @@ const SinglePage = () => {
         <div className="flex flex-col gap-1 md:gap-4 w-full md:w-[63%] ">
           <div className="relative">
             <img
-              src={`http://localhost:5000/${carDetail?.photos[currentIndex]}`}
+              src={carDetail?.photos[currentIndex]}
               alt="car"
               className="w-full object-cover max-h-[400px] rounded-[4px]"
             />
@@ -128,7 +128,7 @@ const SinglePage = () => {
                 {
                   month: "short",
                   year: "numeric",
-                }
+                },
               )}
             </span>
             <p className="text-[#666666] font-medium text-sm pt-4">

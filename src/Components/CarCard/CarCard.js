@@ -12,7 +12,6 @@ import { ReactComponent as EditIcon } from "../../assets/SVG/edit.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/SVG/delete.svg";
 const CarCard = ({ items, isDashboard, handleRemoveAdd, handleEdit }) => {
   console.log({ items });
-  const BASE_URL_IMG = process.env.REACT_APP_API_URL;
   const location = useLocation();
   const showDetailBtn =
     location.pathname.startsWith("/viewAll/") ||
@@ -24,7 +23,7 @@ const CarCard = ({ items, isDashboard, handleRemoveAdd, handleEdit }) => {
       <div className="w-full h-auto md:w-[280px] md:h-auto rounded">
         <img
           className="relative w-full h-auto md:max-h-40 object-contain rounded z-10"
-          src={`${BASE_URL_IMG}/${items?.photos?.[0]}`}
+          src={items?.photos?.[0]}
           alt="Car-Image"
         />
       </div>

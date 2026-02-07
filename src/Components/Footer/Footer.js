@@ -1,12 +1,11 @@
-import React from "react";
 import { LogoFooter } from "../../Utils/Icons";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 
 const Footer = () => {
   return (
-    <div className="flex w-full md:flex-row flex-col min-h-[272px] h-auto bg-hero gap-[8%] pt-8 md:pt-12 mt-10 lg:mt-20">
-      <div className="flex flex-col md:w-[19.44%]  h-[110px] ml-4 md:ml-16 xl:ml-[130px] gap-4 mb-8">
+    <div className="flex w-full md:flex-row flex-col min-h-[272px] h-auto bg-hero gap-[8%] pt-8 md:pt-12">
+      <div className="flex flex-col md:w-[19.44%]  h-[110px] ml-4 md:ml-[64px]  gap-4 mb-8">
         <div className="flex items-center w-[157px] h-10 gap-2">
           <LogoFooter />
           <h1 className="font-inter font-bold text-lg leading-[100%] text-white">

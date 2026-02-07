@@ -81,7 +81,7 @@ const SideMenu = ({ setMenu }) => {
               <div>
                 {user?.business?.img ? (
                   <img
-                    src={`${BASE_URL_IMG}/${user?.business?.img}`}
+                    src={user?.business?.img}
                     className="w-10 h-10 rounded-[4px] object-cover"
                     alt="Profile"
                   />

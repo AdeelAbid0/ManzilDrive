@@ -308,7 +308,7 @@ const Dashboard = () => {
                   return (
                     <div className="flex items-center gap-4">
                       <img
-                        src={`${BASE_URL_IMG}/${rowData?.photos[0]}`}
+                        src={rowData?.photos[0]}
                         alt="img"
                         className="w-10 h-10 rounded-[2px] object-cover transition-all duration-300"
                       />

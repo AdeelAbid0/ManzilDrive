@@ -31,10 +31,7 @@ const AllBusinessCars = () => {
         <div className="w-full md:w-[22%]">
           <div className="flex flex-col items-center w-full px-6 py-11 md:py-14 bg-white rounded">
             {/* <Avatar /> */}
-            <img
-              src={`${BASE_URL_IMG}/${businessData?.img}`}
-              alt="profile image"
-            />
+            <img src={businessData?.img} alt="profile image" />
             <h1 className="!m-0 text-[#001326] text-sm font-semibold leading-[100%] pt-2">
               {businessData?.name || businessData?.shopName}
             </h1>
