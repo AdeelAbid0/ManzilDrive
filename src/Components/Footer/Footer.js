@@ -4,9 +4,9 @@ import { Button } from "primereact/button";
 
 const Footer = () => {
   return (
-    <div className="w-full bg-hero">
+    <div className="flex justify-center w-full bg-hero">
       <div className="flex w-full md:flex-row flex-col min-h-[272px] md:justify-between h-auto gap-[8%] pt-8 md:pt-12 max-w-[91.11%]">
-        <div className="flex flex-col md:w-[19.44%]  h-[110px] ml-4 md:ml-[64px]  gap-4 mb-8">
+        <div className="flex flex-col md:w-[19.44%]  h-[110px]  gap-4 mb-8">
           <div className="flex items-center w-[157px] h-10 gap-2">
             <LogoFooter />
             <h1 className="font-inter font-bold text-lg leading-[100%] text-white">
