@@ -44,7 +44,7 @@ const Header = () => {
         <div
           className="flex items-center  w-[11.96%] min-w-[156px] gap-[8px] cursor-pointer"
           onClick={() => {
-            navigate("/");
+            navigate("/landing");
           }}
         >
           <Logo />

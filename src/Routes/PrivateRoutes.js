@@ -4,6 +4,7 @@ import Categories from "../Pages/Categories/Categories";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import Dashboard_Admin from "../Pages/Dashboard_Admin/Dashboard_Admin";
 import PostAdd from "../Pages/PostAdd/PostAdd";
+import Products from "../Pages/Products/Product";
 import Profile from "../Pages/Profile/Profile";
 
 export const PrivateRoutes = [
@@ -49,5 +50,11 @@ export const PrivateRoutes = [
     name: "boost-adds",
     path: "/boost-adds",
     component: BoostAdds,
+  },
+  {
+    id: 8,
+    name: "landing",
+    path: "/landing",
+    component: Products,
   },
 ];

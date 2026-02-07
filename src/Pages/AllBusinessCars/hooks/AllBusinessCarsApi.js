@@ -6,7 +6,7 @@ export const useGetAllBusinessCars = (
   limit,
   status,
   viewAll,
-  businessId
+  businessId,
 ) => {
   return useClientQuery({
     queryKey: ["cars", page, limit, status, viewAll, businessId],
@@ -15,7 +15,7 @@ export const useGetAllBusinessCars = (
       limit,
       status,
       viewAll,
-      businessId
+      businessId,
     ),
     enabled: !!businessId,
   });

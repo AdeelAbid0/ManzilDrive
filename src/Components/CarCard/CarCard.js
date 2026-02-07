@@ -11,6 +11,8 @@ import {
 import { ReactComponent as EditIcon } from "../../assets/SVG/edit.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/SVG/delete.svg";
 const CarCard = ({ items, isDashboard, handleRemoveAdd, handleEdit }) => {
+  console.log({ items });
+  const BASE_URL_IMG = process.env.REACT_APP_API_URL;
   const location = useLocation();
   const showDetailBtn =
     location.pathname.startsWith("/viewAll/") ||
@@ -22,16 +24,13 @@ const CarCard = ({ items, isDashboard, handleRemoveAdd, handleEdit }) => {
       <div className="w-full h-auto md:w-[280px] md:h-auto rounded">
         <img
           className="relative w-full h-auto md:max-h-40 object-contain rounded z-10"
-          src={`http://localhost:5000/${items?.photos?.[0]}`}
+          src={`${BASE_URL_IMG}/${items?.photos?.[0]}`}
           alt="Car-Image"
-          onError={(e) => {
-            e.target.src = "https://via.placeholder.com/400x300?text=Car+Image";
-          }}
         />
       </div>
 
       <div className="h-auto w-full">
-        <div className="flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center w-full md:mt-[27px]">
+        <div className="flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center w-full">
           <div className="flex w-full md:justify-start gap-3 justify-between">
             <h1 className="font-inter font-semibold md:font-bold text-base md:text-xl leading-[22px] md:leading-6 text-secondary">
               {items?.make?.name || "Make"}&nbsp;
