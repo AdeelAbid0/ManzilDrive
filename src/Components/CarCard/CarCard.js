@@ -25,11 +25,14 @@ const CarCard = ({ items, isDashboard, handleRemoveAdd, handleEdit }) => {
           className="relative w-full h-auto md:max-h-40 object-contain rounded z-10"
           src={items?.photos?.[0]}
           alt="Car-Image"
+          onError={(e) => {
+            e.target.src = "https://via.placeholder.com/400x300?text=Car+Image";
+          }}
         />
       </div>
 
       <div className="h-auto w-full">
-        <div className="flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center w-full">
+        <div className="flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center w-full md:mt-[27px]">
           <div className="flex w-full md:justify-start gap-3 justify-between">
             <h1 className="font-inter font-semibold md:font-bold text-base md:text-xl leading-[22px] md:leading-6 text-secondary">
               {items?.make?.name || "Make"}&nbsp;

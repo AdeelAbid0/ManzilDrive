@@ -35,7 +35,7 @@ const Layout = () => {
       {!isAuthPage && location.pathname !== "/" && <Header />}
       {location.pathname === "/" && <Header />}
 
-      <div className="flex gap-0 w-full justify-center  min-h-[calc(100vh-70px)]">
+      <div className="flex gap-0 w-full justify-center min-h-[calc(100vh-70px)]">
         {showSidebar && (
           <div className="hidden h-[100vh] md:block ">
             <Sidebar />
@@ -43,7 +43,7 @@ const Layout = () => {
         )}
 
         <div
-          className={`flex flex-col items-center w-full h-auto ${
+          className={`flex flex- max-w-[1440px] items-center justify-center w-full h-auto ${
             isAuthPage ? "mt-0" : "mt-[72px]"
           }  ${showSidebar && "md:ml-[242px]"} `}
         >

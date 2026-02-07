@@ -4,8 +4,8 @@ import Categories from "../Pages/Categories/Categories";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import Dashboard_Admin from "../Pages/Dashboard_Admin/Dashboard_Admin";
 import PostAdd from "../Pages/PostAdd/PostAdd";
-import Products from "../Pages/Products/Product";
 import Profile from "../Pages/Profile/Profile";
+import Products from "../Pages/Products/Product";
 
 export const PrivateRoutes = [
   {
@@ -54,7 +54,7 @@ export const PrivateRoutes = [
   {
     id: 8,
     name: "landing",
-    path: "/landing",
+    path: "/landing-page",
     component: Products,
   },
 ];

@@ -39,12 +39,12 @@ const Header = () => {
     };
   }, [openProfile]);
   return (
-    <div className="flex justify-center items-center w-full h-[70px] bg-white fixed z-[999]">
+    <div className="flex justify-center items-center w-full h-[70px]  fixed z-[999] bg-[#FFFFFF]">
       <div className="flex w-[91.11%]  md:gap-10 lg:gap-20">
         <div
           className="flex items-center  w-[11.96%] min-w-[156px] gap-[8px] cursor-pointer"
           onClick={() => {
-            navigate("/landing");
+            navigate("/landing-page");
           }}
         >
           <Logo />

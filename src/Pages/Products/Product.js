@@ -81,7 +81,7 @@ const Products = () => {
               />
             </div>
             <div className="absolute right-[14px] md:right-[14px] flex justify-center items-center w-10 h-[42px] bg-primary rounded-tr-md rounded-br-md">
-              <SearchIcon />
+              <SearchIcon className="text-white" />
             </div>
           </div>
         </div>

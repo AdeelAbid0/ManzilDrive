@@ -3,7 +3,7 @@ import Layout from "./Layout/Layout";
 
 const App = () => {
   return (
-    <div className="flex ">
+    <div className="flex justify-start">
       <NotificationProvider />
       <Layout />
     </div>

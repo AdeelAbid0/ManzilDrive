@@ -189,7 +189,7 @@ const SinglePage = () => {
       </div>
 
       {/* Disclaimer Section */}
-      <div className="bg-[#B3261E08] border-l-[6px] border-[#B3261E] rounded-l-[6px]">
+      <div className="bg-[#B3261E08] border-l-[6px] border-[#B3261E] rounded-l-[6px] mb-6">
         <div className="p-4">
           <h1 className="flex items-center gap-1 font-semibold text-[20px] text-[#B3261E]">
             <span>
