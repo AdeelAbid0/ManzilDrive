@@ -32,7 +32,6 @@ const Layout = () => {
       setShowSidebar(false);
     }
   }, [location, user, token, isAuthPage, isHomePage]);
-  console.log({ showSidebar });
   return (
     <div className="font-inter w-full  bg-[#FAFAFA]">
       {!isAuthPage && location.pathname !== "/" && <Header />}

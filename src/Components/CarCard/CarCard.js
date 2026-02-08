@@ -11,7 +11,6 @@ import {
 import { ReactComponent as EditIcon } from "../../assets/SVG/edit.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/SVG/delete.svg";
 const CarCard = ({ items, isDashboard, handleRemoveAdd, handleEdit }) => {
-  console.log({ items });
   const location = useLocation();
   const showDetailBtn =
     location.pathname.startsWith("/viewAll/") ||
