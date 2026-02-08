@@ -12,7 +12,7 @@ const AppRoutes = ({ user }) => {
           path={route.path}
           element={
             route.path === "/" && user ? (
-              <Navigate to="/dashboard" replace /> // Logged-in users go to dashboard
+              <Navigate to="/landing-page" replace /> // Logged-in users go to dashboard
             ) : (
               <route.component />
             )

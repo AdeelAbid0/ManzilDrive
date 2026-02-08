@@ -115,7 +115,7 @@ const ProductsList = ({
             {/* APPLY FILTERS BUTTON */}
             <button
               type="submit"
-              className="mt-6 bg-primaryblue text-white text-sm py-2 rounded-md font-medium hover:bg-blue-600 w-full"
+              className="mt-6 bg-primary text-white text-sm py-2 rounded-md font-medium hover:bg-primary/50 h-[40px] w-full"
             >
               Apply Filters
             </button>

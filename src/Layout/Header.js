@@ -137,7 +137,7 @@ const Header = () => {
                   if (item.isLogout) {
                     setOpenProfile(false);
                     dispatch(clearUser());
-                    navigate("/");
+                    navigate("/landing-page");
                   } else {
                     navigate(item.path);
                     setOpenProfile(false);

@@ -24,12 +24,15 @@ const Layout = () => {
     const routeCheck = routes.find((route) =>
       matchPath({ path: route.path, end: true }, location.pathname),
     );
-    if (routeCheck) {
+    if (routeCheck && (!user || !token)) {
       setShowSidebar(false);
-    } else {
+    } else if (user && token && !isAuthPage && !isHomePage) {
       setShowSidebar(true);
+    } else {
+      setShowSidebar(false);
     }
-  }, [location]);
+  }, [location, user, token, isAuthPage, isHomePage]);
+  console.log({ showSidebar });
   return (
     <div className="font-inter w-full  bg-[#FAFAFA]">
       {!isAuthPage && location.pathname !== "/" && <Header />}
