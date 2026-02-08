@@ -45,7 +45,7 @@ const Header = () => {
         <div
           className="flex items-center  w-[11.96%] min-w-[156px] gap-[8px] cursor-pointer"
           onClick={() => {
-            navigate("/");
+            navigate("/landing-page");
           }}
         >
           <Logo />
@@ -136,7 +136,7 @@ const Header = () => {
                 to={item.path}
                 onClick={() => setOpenProfile(false)}
                 className={({ isActive }) =>
-                  `flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer group ${
+                  `flex gap-3 p-3 border-b border-[#EFEFEF] items-center cursor-pointer group ${
                     isActive ? "text-primary" : "text-[#788C98]"
                   }`
                 }
