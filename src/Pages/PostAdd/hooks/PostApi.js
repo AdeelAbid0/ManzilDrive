@@ -73,7 +73,7 @@ export const useSendOTP = () => {
 };
 export const useSendEmailVerificationCode = () => {
   return useClientMutation({
-    url: ApiUrl.Auth.VerifyEmail,
+    url: ApiUrl.Auth.sendEmailVerficationCode,
     method: "POST",
   });
 };
