@@ -80,7 +80,7 @@ const Products = () => {
                 className="!font-inter font-normal text-input text-sm w-full h-[44px] shadow-inner rounded-[4px] md:rounded-br-[4px]  focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
               />
             </div>
-            <div className="absolute right-[14px] md:right-[14px] flex justify-center items-center w-10 h-[42px] bg-primary rounded-tr-md rounded-br-md">
+            <div className="absolute right-[14px] md:right-[14px] flex justify-center items-center w-10 h-[40px] bg-primary rounded-tr-md rounded-br-md">
               <SearchIcon className="text-white" />
             </div>
           </div>

@@ -9,7 +9,7 @@ export const PublicRoutes = [
   {
     id: 1,
     name: "landing",
-    path: "/landing-page",
+    path: "/",
     component: Products,
   },
   {

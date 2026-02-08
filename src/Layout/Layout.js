@@ -15,7 +15,7 @@ const Layout = () => {
     location.pathname === "/login" ||
     location.pathname === "/register" ||
     location.pathname === "/forget-password";
-  const isHomePage = location.pathname === "/";
+  const isHomePage = location.pathname === "/landing-page";
   const routes = PublicRoutes;
   const [showSidebar, setShowSidebar] = useState(
     user && token && !isAuthPage && !isHomePage,
@@ -45,7 +45,7 @@ const Layout = () => {
         )}
 
         <div
-          className={`flex flex- max-w-[1440px] items-center justify-center w-full h-auto ${
+          className={`flex max-w-[1440px] justify-center w-full h-auto ${
             isAuthPage ? "mt-0" : "mt-[72px]"
           }  ${showSidebar && "md:ml-[242px]"} `}
         >

@@ -32,7 +32,7 @@ const PostAdd = () => {
   const [images, setImages] = useState([]);
   const userData = useSelector((state) => state.user.user);
   const [showEmailDialog, setShowEmailDialog] = useState(
-    !userData?.business?.emailVerified
+    !userData?.business?.emailVerified,
   );
   const [emailOTPScreen, setEmailOTPScreen] = useState(false);
   const [email, setEmail] = useState("");
@@ -69,7 +69,7 @@ const PostAdd = () => {
             showNotification({
               message: "Business Updated Successfully",
               status: "success",
-            })
+            }),
           );
 
           const formDataForAddVehicle = new FormData();
@@ -80,23 +80,23 @@ const PostAdd = () => {
           formDataForAddVehicle.append("year", formik.values.year);
           formDataForAddVehicle.append(
             "rentPerDay",
-            formik?.values?.rentPerDay
+            formik?.values?.rentPerDay,
           );
           formDataForAddVehicle.append(
             "description",
-            formik?.values?.description
+            formik?.values?.description,
           );
           formDataForAddVehicle.append(
             "availability",
-            formik?.values?.availability
+            formik?.values?.availability,
           );
           formDataForAddVehicle.append(
             "transmission",
-            formik?.values?.transmission
+            formik?.values?.transmission,
           );
           formDataForAddVehicle.append(
             "acheater",
-            formik?.values?.acheater === "AC / Heater installed" ? true : false
+            formik?.values?.acheater === "AC / Heater installed" ? true : false,
           );
           formDataForAddVehicle.append("seats", formik?.values?.seats);
           images.forEach((file) => {
@@ -109,7 +109,7 @@ const PostAdd = () => {
                 showNotification({
                   message: "Post Added Successfully",
                   status: "success",
-                })
+                }),
               );
               formik.resetForm();
               setPersonalInfoActive(false);
@@ -120,7 +120,7 @@ const PostAdd = () => {
                 showNotification({
                   message: "Post Added Error",
                   status: "error",
-                })
+                }),
               );
             },
           });
@@ -130,7 +130,7 @@ const PostAdd = () => {
             showNotification({
               message: "Failed to update business information",
               status: "succerroress",
-            })
+            }),
           );
         },
       });
@@ -169,7 +169,7 @@ const PostAdd = () => {
             showNotification({
               message: "OTP sent successfully",
               status: "success",
-            })
+            }),
           );
         },
         onError: (error) => {
@@ -177,10 +177,10 @@ const PostAdd = () => {
             showNotification({
               message: "Error while sending OTP",
               status: "error",
-            })
+            }),
           );
         },
-      }
+      },
     );
   };
   // Verify OTP api
@@ -198,7 +198,7 @@ const PostAdd = () => {
             showNotification({
               message: "OTP verified successfully",
               status: "success",
-            })
+            }),
           );
 
           refetchBusinessDetail();
@@ -208,10 +208,10 @@ const PostAdd = () => {
             showNotification({
               message: "OTP verify error",
               status: "error",
-            })
+            }),
           );
         },
-      }
+      },
     );
   };
   // send otp to email api
@@ -232,7 +232,7 @@ const PostAdd = () => {
             showNotification({
               message: res?.message,
               status: "success",
-            })
+            }),
           );
         },
         onError: (error) => {
@@ -240,10 +240,10 @@ const PostAdd = () => {
             showNotification({
               message: error?.message,
               status: "error",
-            })
+            }),
           );
         },
-      }
+      },
     );
   };
   //verify email api
@@ -262,7 +262,7 @@ const PostAdd = () => {
             showNotification({
               message: res?.message,
               status: "success",
-            })
+            }),
           );
 
           refetchBusinessDetail();
@@ -272,10 +272,10 @@ const PostAdd = () => {
             showNotification({
               message: error?.message,
               status: "error",
-            })
+            }),
           );
         },
-      }
+      },
     );
   };
   // ------------------- Effects -------------------
@@ -284,21 +284,21 @@ const PostAdd = () => {
       if (BusinessDetail?.business?.phoneVerified) {
         formikPersonalInfo.setFieldValue(
           "phoneNumber",
-          BusinessDetail?.business?.phoneNumber
+          BusinessDetail?.business?.phoneNumber,
         );
       }
       formikPersonalInfo.setFieldValue("name", BusinessDetail?.business?.name);
       formikPersonalInfo.setFieldValue(
         "secondaryNumber",
-        BusinessDetail?.business?.secondaryNumber
+        BusinessDetail?.business?.secondaryNumber,
       );
       formikPersonalInfo.setFieldValue(
         "shopName",
-        BusinessDetail?.business?.shopName
+        BusinessDetail?.business?.shopName,
       );
       formikPersonalInfo.setFieldValue(
         "city",
-        BusinessDetail?.business?.city?._id
+        BusinessDetail?.business?.city?._id,
       );
       formikPersonalInfo.setFieldValue("location", {
         value: BusinessDetail?.business?.location?.placeId,
@@ -322,14 +322,14 @@ const PostAdd = () => {
   ];
   const disablefield = useMemo(
     () => requiredFields.some((field) => !formik.values[field]),
-    [formik.values]
+    [formik.values],
   );
   // ------------------- RENDER -------------------
 
   return (
-    <div className="flex flex-col justify-center items-center mt-2 w-full mb-8 gap-6">
+    <div className="flex flex-col items-center mt-2 w-full mb-8 gap-6">
       {personalInfoActive ? (
-        <div className="h-full w-full md:max-w-[766px] md:w-[64%] md:mt-6 p-4 md:p-0">
+        <div className="w-full md:max-w-[766px] md:w-[64%] md:mt-6 p-4 md:p-0">
           <PersonalInfo
             formik={formikPersonalInfo}
             BusinessDetail={BusinessDetail}
@@ -390,7 +390,7 @@ const PostAdd = () => {
                     showNotification({
                       message: "Upload at least one image to proceed",
                       status: "error",
-                    })
+                    }),
                   );
                 } else {
                   personalInfoActive

@@ -1,17 +1,18 @@
 import { useState, useRef, useEffect } from "react";
 import { Hambergur, Logo } from "../Utils/Icons";
 import { Button } from "primereact/button";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { ReactComponent as AvatarIcon } from "../assets/SVG/avatar.svg";
 import { ReactComponent as ArorwDownIcon } from "../assets/SVG/arrow-down.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUser } from "../slices/userSlice";
 import SideMenu from "../Components/SideMenu/SideMenu";
-import { profileNavItems } from "../config/navigation";
+import { profileNavItems, sidebarNavItems } from "../config/navigation";
 const BASE_URL_IMG = process.env.REACT_APP_API_URL;
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const [openProfile, setOpenProfile] = useState(false);
   const [menu, setMenu] = useState(false);
   const user = useSelector((state) => state.user.user);
@@ -44,7 +45,7 @@ const Header = () => {
         <div
           className="flex items-center  w-[11.96%] min-w-[156px] gap-[8px] cursor-pointer"
           onClick={() => {
-            navigate("/landing-page");
+            navigate("/");
           }}
         >
           <Logo />
@@ -126,6 +127,29 @@ const Header = () => {
               </p>
             </div>
           </div>
+          <div
+            className={`${location.pathname === "/landing-page" ? "block" : "hidden"}`}
+          >
+            {sidebarNavItems.map((item) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                onClick={() => setOpenProfile(false)}
+                className={({ isActive }) =>
+                  `flex gap-3 p-3 border-b border-[#EFEFEF] cursor-pointer group ${
+                    isActive ? "text-primary" : "text-[#788C98]"
+                  }`
+                }
+              >
+                <div className="group-hover:text-[#00796B]">
+                  <item.icon className="w-5 h-5" />
+                </div>
+                <p className="!m-0 text-sm font-normal group-hover:text-[#00796B]">
+                  {item.title}
+                </p>
+              </NavLink>
+            ))}
+          </div>
           {profileNavItems.map((item) => {
             const Icon = item.icon;
             const isActive = window.location.pathname === item.path;
@@ -137,7 +161,7 @@ const Header = () => {
                   if (item.isLogout) {
                     setOpenProfile(false);
                     dispatch(clearUser());
-                    navigate("/landing-page");
+                    navigate("/");
                   } else {
                     navigate(item.path);
                     setOpenProfile(false);

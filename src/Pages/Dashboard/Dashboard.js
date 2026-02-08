@@ -29,14 +29,13 @@ const Dashboard = () => {
     expired: false,
   });
   const [page, setPage] = useState(1);
-  const [limit] = useState(10); // Set fixed limit to 10 items per page
+  const [limit] = useState(10);
   const [status, setStatus] = useState("all");
   const [viewAll, setViewAll] = useState(true);
   const [filteredCarsData, setFilteredCarsData] = useState(null);
   const [showQrDialog, setShowQrDialog] = useState(false);
   const [showTabDropdown, setShowTabDropdown] = useState(false);
   const [selectedTab, setSelectedTab] = useState("View All");
-  const BASE_URL_IMG = process.env.REACT_APP_API_URL;
 
   const handleTabSelect = (tab) => {
     const newStatus = {
@@ -54,7 +53,7 @@ const Dashboard = () => {
     setShowTabDropdown(false);
   };
 
-  // ✅ Fetch data from API
+  //  Fetch data from API
   const { data: AddsCount, isPending: LoadingAddsData } = useGetAddsCount(
     user?.business?._id,
   );
@@ -70,8 +69,6 @@ const Dashboard = () => {
     pending: "pending",
     expired: "expired",
   };
-
-  // Update filtered data when API data or filter changes
   useEffect(() => {
     if (!AllCarsData?.cars) return;
 
@@ -89,17 +86,30 @@ const Dashboard = () => {
     setFilteredCarsData(filteredData);
   }, [AddStatus, AllCarsData]);
 
-  // ✅ Sample stats (replace with dynamic data if API provides)
   const stats = [
-    { icon: DailyBooking, label: "DAILY BOOKING", value: 10, change: "+10%" },
-    { icon: ActiveAdds, label: "ACTIVE ADDS", value: 10, change: "+10%" },
+    {
+      icon: DailyBooking,
+      label: "TOTAL NUMBER OF ADS",
+      value:
+        (AddsCount?.data?.inactive || 0) +
+        (AddsCount?.data?.live || 0) +
+        (AddsCount?.data?.pending || 0),
+    },
+    {
+      icon: ActiveAdds,
+      label: "ACTIVE ADDS",
+      value: AddsCount?.data?.live || 0,
+    },
     {
       icon: AddImpression,
-      label: "ADD IMPRESSIONS",
-      value: 10,
-      change: "+10%",
+      label: "INACTIVE ADDS",
+      value: AddsCount?.data?.inactive || 0,
     },
-    { icon: ExpireAdds, label: "EXPIRE ADDS", value: 10, change: "+10%" },
+    {
+      icon: ExpireAdds,
+      label: "PENDING ADDS",
+      value: AddsCount?.data?.pending || 0,
+    },
   ];
 
   const addTabs = [
@@ -150,7 +160,7 @@ const Dashboard = () => {
     console.log("handle removeadd called");
   };
   return (
-    <div className=" flex w-full items-center h-full flex-col my-4 px-3">
+    <div className=" flex w-full items-center flex-col my-4 px-3">
       <div className="flex w-full justify-center md:justify-start px-1 md:flex-nowrap flex-wrap gap-2 md:gap-6">
         {stats.map((stat, index) => (
           <div
@@ -167,10 +177,6 @@ const Dashboard = () => {
               <h1 className="font-archivo font-bold text-[32px] h-[35px] leading-[100%] text-[#44505A]">
                 {stat.value}
               </h1>
-              <p className="font-inter font-medium text-[11px] text-[#778C99] leading-[100%] h-[79px] flex items-center">
-                <span className="text-[#32B550] mr-[2px]">{stat.change}</span>
-                Last week
-              </p>
             </div>
           </div>
         ))}
