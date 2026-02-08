@@ -13,6 +13,7 @@ import {
 import moment from "moment/moment";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../slices/userSlice";
+import { showNotification } from "../../slices/notificationSlice";
 const Profile = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
@@ -20,7 +21,8 @@ const Profile = () => {
   const [preview, setPreview] = useState(null);
 
   // API Calls
-  const { mutate: updateProfile } = useUpdateProfile();
+  const { mutate: updateProfile, isPending: UpdateProfileLoading } =
+    useUpdateProfile();
   const { data: CityData } = useGetAllActiveByCountryId(
     "665000000000000000000001",
   );
@@ -44,7 +46,15 @@ const Profile = () => {
       formData.append("email", values.email);
 
       updateProfile(formData, {
-        onSuccess: (res) => dispatch(setUser(res)),
+        onSuccess: (res) => {
+          dispatch(setUser(res));
+          dispatch(
+            showNotification({
+              status: "success",
+              message: "Profile updated successfully",
+            }),
+          );
+        },
         onError: (err) => console.log("Update failed:", err),
       });
     },
@@ -220,7 +230,12 @@ const Profile = () => {
             className="font-inter font-normal text-input text-sm bg-[#F7F7F7] h-[49px] rounded pl-3"
           />
 
-          <PrimaryButton label="Save changes" onClick={handleUpdateProfile} />
+          <PrimaryButton
+            label="Save changes"
+            onClick={handleUpdateProfile}
+            disabled={UpdateProfileLoading}
+            loading={UpdateProfileLoading}
+          />
         </div>
       </div>
     </div>

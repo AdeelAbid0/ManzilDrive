@@ -6,9 +6,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
 const QRDialog = ({ showQrDialog, setShowQrDialog, user }) => {
-  const BASE_URL_IMG = process.env.REACT_APP_API_URL;
-  const businessUrl = `${BASE_URL_IMG}/business/${user?.business?._id}`;
-
+  const businessUrl = `https://manzil-drive.vercel.app/viewAll/${user?.business?._id}`;
   const handleDownloadPDF = async () => {
     try {
       // Create a temporary div for PDF content
