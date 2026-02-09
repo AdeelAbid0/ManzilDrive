@@ -437,7 +437,11 @@ const Dashboard = () => {
               <CarCard
                 key={item._id || index}
                 items={item}
-                handleEdit={() => handleEdit(item)}
+                handleEdit={(e) => {
+                  e?.stopPropagation();
+                  setSelectedRow(item);
+                  op.current?.toggle(e);
+                }}
                 handleRemoveAdd={() => handleRemoveAdd(item)}
                 isDashboard={true}
               />
