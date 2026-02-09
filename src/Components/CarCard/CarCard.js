@@ -37,14 +37,16 @@ const CarCard = ({ items, isDashboard, handleRemoveAdd, handleEdit }) => {
               {items?.make?.name || "Make"}&nbsp;
               {items?.variant?.name || "Variant"}
             </h1>
-            <span className="flex items-center w-[81px] h-[23px] gap-[10px] rounded-[1px] bg-[#00796B1A]">
-              <p className="font-inter font-medium text-xs leading-[100%] pt-[2px] ml-1 text-primary">
-                Featured
-              </p>
-              <span>
-                <Steric />
+            {items?.boost?.isActive && (
+              <span className="flex items-center w-[81px] h-[23px] gap-[10px] rounded-[1px] bg-[#00796B1A]">
+                <p className="font-inter font-medium text-xs leading-[100%] pt-[2px] ml-1 text-primary">
+                  {items?.boost?.isActive ? "Featured" : ""}
+                </p>
+                <span>
+                  <Steric />
+                </span>
               </span>
-            </span>
+            )}
           </div>
 
           <div className="flex shrink-0 mt-2 md:mt-0 md:flex-col w-full md:w-[99px] md:h-auto">

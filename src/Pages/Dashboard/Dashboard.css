@@ -1,65 +1,74 @@
 .dashboard {
-  width: 1094px;
+  width: 95%;
+  overflow-x: auto;
 }
+
+.dashboard .p-datatable {
+  width: 100%;
+  min-width: 670px;
+}
+
+.dashboard .p-datatable-wrapper {
+  overflow-x: auto;
+}
+
 .dashboard .p-datatable-thead {
-  height: 13px !important;
-  width: 1094px !important;
-  gap: 98px !important;
-  justify-content: space-between !important;
+  height: auto !important;
+  width: 100% !important;
+  display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
-  display: flex !important;
+  justify-content: space-between !important;
   padding-left: 8px;
   padding-right: 8px;
 }
+
 .dashboard .p-datatable .p-datatable-tbody {
   background-color: none !important;
 }
-.dashboard .p-datatable {
-  overflow-x: hidden;
-}
+
 .dashboard .p-column-title {
   color: #719088 !important;
   font-size: 14px;
   font-weight: 500;
 }
+
 .dashboard .p-datatable .p-datatable-tbody > tr {
   justify-content: space-between !important;
   flex-direction: row !important;
   align-items: center !important;
-  width: 1084px !important;
-  height: 52px !important;
+  width: 100% !important;
+  min-height: 52px !important;
   display: flex !important;
   padding-left: 8px;
   padding-right: 8px;
-  width: inherit;
   background-color: #f8f9fa !important;
   border-bottom: solid #e1e4f3 1px;
-  gap: 88px !important;
 }
+
 .dashboard .p-datatable .p-datatable-tbody > tr:hover {
   cursor: pointer;
   background-color: #f0f2fe !important;
   border: none;
   border-bottom: solid #e1e4f3 1px;
 }
+
 .dashboard .p-datatable .p-datatable-tbody > tr > td {
   border: none !important;
-  padding: 0px !important;
+  padding: 8px 4px !important;
+  display: flex;
+  align-items: center;
 }
+
 .dashboard .p-datatable .p-datatable-tbody > tr:nth-of-type(1) {
   margin-top: 24px !important;
 }
 
-.dashboard .p-datatable .p-datatable-wrapper {
-  overflow-y: hidden;
-}
 .dashboard .p-datatable-tbody > tr > td {
   font-weight: 400 !important;
   font-size: 14px !important;
   overflow: hidden !important;
   border: none !important;
-  margin: 0px !important;
   line-height: 18px !important;
   color: #72728f !important;
 }
@@ -68,36 +77,73 @@
   justify-content: space-between !important;
   flex-direction: row !important;
   align-items: center !important;
-  height: 13px !important;
   display: flex !important;
-  width: inherit;
+  width: 100%;
   background-color: transparent !important;
+  min-height: 40px;
 }
 
 .dashboard .p-datatable-thead > tr > th {
   font-weight: 500 !important;
   font-size: 14px !important;
-  padding: 0px !important;
+  padding: 8px 4px !important;
   margin: 0px !important;
   line-height: 13px !important;
   background-color: inherit !important;
   color: #4d4d4d !important;
   letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
 }
 
+/* Auto width columns - flex grow kare gi */
 .dashboard .p-datatable-thead > tr > th:nth-of-type(1),
 .dashboard tbody > tr > td:nth-of-type(1) {
-  width: 474px !important;
+  flex: 1.5;
+  min-width: 300px;
 }
+
 .dashboard .p-datatable-thead > tr > th:nth-of-type(2),
 .dashboard tbody > tr > td:nth-of-type(2) {
-  width: 100px;
+  flex: 0.5;
+  min-width: 100px;
 }
+
 .dashboard .p-datatable-thead > tr > th:nth-of-type(3),
 .dashboard tbody > tr > td:nth-of-type(3) {
-  width: 100px;
+  flex: 0.5;
+  min-width: 120px;
 }
+
 .dashboard .p-datatable-thead > tr > th:nth-of-type(4),
 .dashboard tbody > tr > td:nth-of-type(4) {
-  width: 120px;
+  flex: 0.5;
+  min-width: 150px;
+}
+.dashboard .p-datatable-thead > tr > th:nth-of-type(5),
+.dashboard tbody > tr > td:nth-of-type(5) {
+  flex: 0.5;
+  min-width: 150px;
+}
+
+/* Responsive design for smaller screens */
+@media screen and (max-width: 1200px) {
+  .dashboard {
+    overflow-x: auto;
+  }
+
+  .dashboard .p-datatable {
+    min-width: 800px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .dashboard .p-datatable {
+    min-width: 670px;
+  }
+
+  .dashboard .p-datatable-thead > tr > th:nth-of-type(1),
+  .dashboard tbody > tr > td:nth-of-type(1) {
+    min-width: 250px;
+  }
 }

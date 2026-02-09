@@ -1,5 +1,5 @@
 import { ApiUrl } from "../../../api/apiUrls";
-import { useClientQuery } from "../../../api/api-service";
+import { useClientMutation, useClientQuery } from "../../../api/api-service";
 export const useGetAllCars = (page, limit, status, viewAll, businessId) => {
   return useClientQuery({
     queryKeys: ["GetAllCars", { page, limit, status, viewAll, businessId }],
@@ -12,5 +12,11 @@ export const useGetAddsCount = (businessId) => {
     queryKeys: ["GetAddsCount", { businessId }],
     url: ApiUrl.Dashboard.GetAddsCount(businessId),
     enabled: !!businessId,
+  });
+};
+export const useBoostAd = () => {
+  return useClientMutation({
+    url: ApiUrl.Dashboard.BoostAd(),
+    enabled: true,
   });
 };
