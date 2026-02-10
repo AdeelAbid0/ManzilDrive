@@ -15,10 +15,7 @@ const Layout = () => {
     location.pathname === "/login" ||
     location.pathname === "/register" ||
     location.pathname === "/forget-password";
-  const isHomePage =
-    location.pathname === "/landing-page" ||
-    location.pathname === "/detail" ||
-    location.pathname.startsWith("/viewAll");
+  const isHomePage = location.pathname === "/landing-page";
   const routes = PublicRoutes;
   const [showSidebar, setShowSidebar] = useState(
     user && token && !isAuthPage && !isHomePage,

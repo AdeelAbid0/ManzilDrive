@@ -43,27 +43,16 @@ const Dashboard = () => {
 
   // State management
   const [showBoostDialog, setShowBoostDialog] = useState(false);
-  const [addStatus, setAddStatus] = useState({
-    viewAll: true,
-    active: false,
-    inactive: false,
-    pending: false,
-    expired: false,
-  });
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [addStatus, setAddStatus] = useState("viewAll");
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
-  const [status, setStatus] = useState("all");
-  const [viewAll, setViewAll] = useState(true);
-  const [filteredCarsData, setFilteredCarsData] = useState([]);
   const [showQrDialog, setShowQrDialog] = useState(false);
   const [showTabDropdown, setShowTabDropdown] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [selectedTab, setSelectedTab] = useState("View All");
-  const [localCarData, setLocalCarData] = useState([]);
-  const [deleteConfirmation, setDeleteConfirmation] = useState({
-    show: false,
-    carToDelete: null,
-  });
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [carToDelete, setCarToDelete] = useState(null);
 
   // Status mapping
   const statusMap = {
@@ -73,6 +62,10 @@ const Dashboard = () => {
     pending: "pending",
     expired: "expired",
   };
+
+  // Get status and viewAll based on addStatus
+  const status = statusMap[addStatus];
+  const viewAll = addStatus === "viewAll";
 
   // Days options for boost dialog
   const daysOptions = [
@@ -96,9 +89,11 @@ const Dashboard = () => {
   });
 
   // API calls
-  const { data: addsCount, isPending: loadingAddsData } = useGetAddsCount(
-    user?.business?._id,
-  );
+  const {
+    data: addsCount,
+    isPending: loadingAddsData,
+    refetch: refetchAddsCount,
+  } = useGetAddsCount(user?.business?._id);
 
   const {
     data: allCarsData,
@@ -108,14 +103,7 @@ const Dashboard = () => {
   } = useGetAllCars(page, limit, status, viewAll, user?.business?._id);
 
   const { mutate: boostAd, isPending: boostAdLoading } = useBoostAd();
-  const { mutate: deleteAd, isPending: deleteAdLoading } = useDeleteAd();
-
-  // Initialize local car data when API data loads
-  useEffect(() => {
-    if (allCarsData?.cars) {
-      setLocalCarData(allCarsData.cars);
-    }
-  }, [allCarsData]);
+  const { mutate: deleteAd } = useDeleteAd();
 
   // Stats data
   const stats = [
@@ -180,19 +168,10 @@ const Dashboard = () => {
 
   // Handlers
   const handleTabSelect = useCallback((tab) => {
-    const newStatus = {
-      viewAll: false,
-      active: false,
-      inactive: false,
-      pending: false,
-      expired: false,
-      [tab.key]: true,
-    };
-    setAddStatus(newStatus);
-    setStatus(tab.statusValue);
-    setViewAll(tab.viewAllFlag);
+    setAddStatus(tab.key);
     setSelectedTab(tab.label);
     setShowTabDropdown(false);
+    setPage(1); // Reset to first page on tab change
   }, []);
 
   const handlePageChange = useCallback((newPage) => {
@@ -206,63 +185,53 @@ const Dashboard = () => {
   }, []);
 
   const handleRemoveAddClick = useCallback((rowData) => {
-    setDeleteConfirmation({
-      show: true,
-      carToDelete: rowData,
-    });
+    setCarToDelete(rowData);
+    setShowDeleteDialog(true);
   }, []);
 
   const handleConfirmDelete = useCallback(() => {
-    if (!deleteConfirmation.carToDelete) return;
+    if (!carToDelete) return;
 
-    const carId = deleteConfirmation.carToDelete._id;
-
+    setDeleteLoading(true);
     deleteAd(
-      { carId },
+      { carId: carToDelete._id },
       {
         onSuccess: (res) => {
-          console.log({ res });
           dispatch(
             showNotification({
-              message: res?.message,
+              message: res?.message || "Ad deleted successfully",
               status: "success",
             }),
           );
 
-          // Remove car from local state immediately
-          setLocalCarData((prev) => prev.filter((car) => car._id !== carId));
-
-          // Refetch data from API
+          // Refetch both APIs
           refetchAllCars();
+          refetchAddsCount();
 
-          // Close confirmation dialog
-          setDeleteConfirmation({ show: false, carToDelete: null });
-
-          // Also refetch the count
-          // You might want to add refetch for addsCount here if needed
+          // Close dialog and reset states
+          setShowDeleteDialog(false);
+          setCarToDelete(null);
+          setDeleteLoading(false);
         },
         onError: (error) => {
-          console.log({ error });
           dispatch(
             showNotification({
-              message: error?.response?.data?.message || "Failed to remove add",
+              message: error?.response?.data?.message || "Failed to delete ad",
               status: "error",
             }),
           );
-          setDeleteConfirmation({ show: false, carToDelete: null });
+          setShowDeleteDialog(false);
+          setCarToDelete(null);
+          setDeleteLoading(false);
         },
       },
     );
-  }, [deleteConfirmation, deleteAd, dispatch, refetchAllCars]);
+  }, [carToDelete, deleteAd, dispatch, refetchAllCars, refetchAddsCount]);
 
   const handleToggleAvailability = useCallback((carId, newStatus) => {
     console.log(`Toggling availability for car ${carId} to ${newStatus}`);
-
-    setLocalCarData((prev) =>
-      prev.map((car) =>
-        car._id === carId ? { ...car, status: newStatus } : car,
-      ),
-    );
+    // Implement toggle functionality here
+    // You might want to call an API here to update the status
   }, []);
 
   const handleBoostAdd = useCallback(
@@ -294,6 +263,7 @@ const Dashboard = () => {
             formik.resetForm();
             // Refresh the data
             refetchAllCars();
+            refetchAddsCount();
           },
           onError: (error) => {
             dispatch(
@@ -306,7 +276,7 @@ const Dashboard = () => {
         },
       );
     },
-    [selectedRow, boostAd, formik, dispatch, refetchAllCars],
+    [selectedRow, boostAd, formik, dispatch, refetchAllCars, refetchAddsCount],
   );
 
   // Overlay panel menu items
@@ -364,32 +334,6 @@ const Dashboard = () => {
     );
   };
 
-  // Filter cars data based on status
-  useEffect(() => {
-    if (localCarData.length === 0) {
-      setFilteredCarsData([]);
-      return;
-    }
-
-    const activeKey = Object.keys(addStatus).find((key) => addStatus[key]);
-    const currentStatus = statusMap[activeKey];
-
-    if (!activeKey || activeKey === "viewAll" || !currentStatus) {
-      setFilteredCarsData(localCarData);
-      return;
-    }
-
-    const filteredData = localCarData.filter(
-      (item) => item?.status === currentStatus,
-    );
-    setFilteredCarsData(filteredData);
-  }, [addStatus, localCarData, statusMap]);
-
-  // Reset page when filter changes
-  useEffect(() => {
-    setPage(1);
-  }, [status, viewAll]);
-
   // Status badge styling
   const getStatusBadgeStyle = (status) => {
     switch (status) {
@@ -404,9 +348,8 @@ const Dashboard = () => {
     }
   };
 
-  // Get the data to display
-  const displayData =
-    filteredCarsData.length > 0 ? filteredCarsData : localCarData;
+  // Display data
+  const displayData = allCarsData?.cars || [];
 
   return (
     <div className="flex w-full overflow-auto items-center flex-col my-4 px-3">
@@ -471,7 +414,7 @@ const Dashboard = () => {
           <Button
             label="Post ADD"
             onClick={() => navigate("/postadd")}
-            className="text-white font-medium text-sm border rounded border-primary w-full h-[33px] bg-primary hover:bg-blue-700 transition-colors duration-300 focus:ring-0 focus:outline-none"
+            className="text-white font-medium text-sm border rounded border-primary w-full h-[33px] bg-primary "
           />
           <Button
             type="default"
@@ -525,7 +468,7 @@ const Dashboard = () => {
                 label={btn.label}
                 onClick={() => handleTabSelect(btn)}
                 className={`font-medium text-xs border rounded-2xl w-[100px] h-[32px] transition-colors duration-300 focus:ring-0 focus:outline-none ${
-                  addStatus[btn.key]
+                  addStatus === btn.key
                     ? "bg-[#00796B] text-white border-[#00796B] hover:bg-[#00695C]"
                     : "bg-white text-primary border-primary hover:bg-blue-50"
                 }`}
@@ -537,7 +480,7 @@ const Dashboard = () => {
             <Button
               label="Post ADD"
               onClick={() => navigate("/postadd")}
-              className="text-white font-medium text-sm border rounded border-primary w-[106px] h-[33px] bg-primary hover:bg-blue-700 transition-colors duration-300 focus:ring-0 focus:outline-none"
+              className="text-white font-medium text-sm border rounded border-primary w-[106px] h-[33px] bg-primary "
             />
             <Button
               type="default"
@@ -569,21 +512,23 @@ const Dashboard = () => {
             >
               <Column
                 header="Car"
-                body={(rowData) => (
-                  <div className="flex items-center gap-4">
-                    <img
-                      src={rowData?.photos?.[0] || "/placeholder-car.jpg"}
-                      alt={`${rowData?.make?.name || ""} ${rowData?.variant?.name || ""}`}
-                      className="w-10 h-10 rounded-[2px] object-cover transition-all duration-300 hover:scale-105"
-                      onError={(e) => {
-                        e.target.src = "/placeholder-car.jpg";
-                      }}
-                    />
-                    <p className="text-sm text-[#666666] font-normal">
-                      {rowData?.make?.name} {rowData?.variant?.name}
-                    </p>
-                  </div>
-                )}
+                body={(rowData) => {
+                  return (
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={rowData?.photos?.[0] || "/placeholder-car.jpg"}
+                        alt={`${rowData?.make?.name || ""} ${rowData?.variant?.name || ""}`}
+                        className="w-10 h-10 rounded-[2px] object-cover transition-all duration-300 hover:scale-105"
+                        onError={(e) => {
+                          e.target.src = "/placeholder-car.jpg";
+                        }}
+                      />
+                      <p className="text-sm text-[#666666] font-normal">
+                        {rowData?.make?.name} {rowData?.variant?.name}
+                      </p>
+                    </div>
+                  );
+                }}
                 headerClassName="bg-blue-600 text-white text-center py-2"
                 style={{ minWidth: "300px" }}
               />
@@ -765,10 +710,13 @@ const Dashboard = () => {
 
       {/* Delete Confirmation Dialog */}
       <CommonDialog
-        open={deleteConfirmation.show}
-        onClose={() =>
-          setDeleteConfirmation({ show: false, carToDelete: null })
-        }
+        open={showDeleteDialog}
+        onClose={() => {
+          if (!deleteLoading) {
+            setShowDeleteDialog(false);
+            setCarToDelete(null);
+          }
+        }}
         className="md:!max-w-[450px] md:!w-[30%] !w-full !max-w-full mx-1 md:mx-0"
       >
         <div className="max-h-[90vh] overflow-y-auto p-6">
@@ -780,8 +728,7 @@ const Dashboard = () => {
 
           <div className="mt-6">
             <p className="text-base font-medium text-[#4D4D4D]">
-              {deleteConfirmation.carToDelete?.make?.name}{" "}
-              {deleteConfirmation.carToDelete?.variant?.name}
+              {carToDelete?.make?.name} {carToDelete?.variant?.name}
             </p>
           </div>
 
@@ -789,18 +736,22 @@ const Dashboard = () => {
             <Button
               type="default"
               label="Cancel"
-              onClick={() =>
-                setDeleteConfirmation({ show: false, carToDelete: null })
-              }
-              disabled={deleteAdLoading}
+              onClick={() => {
+                if (!deleteLoading) {
+                  setShowDeleteDialog(false);
+                  setCarToDelete(null);
+                }
+              }}
+              disabled={deleteLoading}
               className="bg-transparent! border border-primary! w-full"
             />
             <PrimaryButton
               type="primary"
-              label={"Delete Ad"}
+              label={deleteLoading ? "Deleting..." : "Delete Ad"}
               onClick={handleConfirmDelete}
-              disabled={deleteAdLoading}
-              loading={deleteAdLoading}
+              disabled={deleteLoading}
+              loading={deleteLoading}
+              className="bg-red-600! hover:bg-red-700! border-red-600!"
             />
           </div>
         </div>
