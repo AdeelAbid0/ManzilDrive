@@ -19,9 +19,9 @@ const CarCard = ({ items, isDashboard, handleRemoveAdd, handleEdit }) => {
 
   return (
     <div className="flex w-full md:items-center flex-col md:flex-row h-auto min-h-[192px] mt-[2px] gap-4 py-4 px-4 bg-white rounded">
-      <div className="w-full md:w-[280px] h-[200px] rounded">
+      <div className="w-full md:w-[280px] h-auto max-h-[400px] md:max-h-[200px] rounded">
         <img
-          className="relative w-full h-[200px] object-contain rounded z-10"
+          className="relative w-full h-auto max-h-[400px] md:max-h-[200px] object-contain rounded z-10"
           src={items?.photos?.[0]}
           alt="Car-Image"
           onError={(e) => {
@@ -31,7 +31,7 @@ const CarCard = ({ items, isDashboard, handleRemoveAdd, handleEdit }) => {
       </div>
 
       <div className="h-auto w-full">
-        <div className="flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center w-full md:mt-[27px]">
+        <div className="flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center w-full">
           <div className="flex w-full md:justify-start gap-3 justify-between">
             <h1 className="font-inter font-semibold md:font-bold text-base md:text-xl leading-[22px] md:leading-6 text-secondary">
               {items?.make?.name || "Make"}&nbsp;

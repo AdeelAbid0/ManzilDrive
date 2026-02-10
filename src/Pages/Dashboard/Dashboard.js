@@ -495,7 +495,7 @@ const Dashboard = () => {
       {/* Desktop DataTable */}
       <div className="mt-6 dashboard hidden lg:block w-[90%]">
         {carsDataLoading ? (
-          <div className="flex w-full justify-center mt-5">
+          <div className="flex items-center justify-center h-64">
             <Loader />
           </div>
         ) : carsDataError ? (
@@ -512,23 +512,21 @@ const Dashboard = () => {
             >
               <Column
                 header="Car"
-                body={(rowData) => {
-                  return (
-                    <div className="flex items-center gap-4">
-                      <img
-                        src={rowData?.photos[0]}
-                        alt={`${rowData?.make?.name} ${rowData?.variant?.name}`}
-                        className="w-10 h-10 rounded-[2px] object-cover transition-all duration-300 hover:scale-105"
-                        onError={(e) => {
-                          e.target.src = "/placeholder-car.jpg";
-                        }}
-                      />
-                      <p className="text-sm text-[#666666] font-normal">
-                        {rowData?.make?.name} {rowData?.variant?.name}
-                      </p>
-                    </div>
-                  );
-                }}
+                body={(rowData) => (
+                  <div className="flex items-center gap-4">
+                    <img
+                      src={rowData?.photos[0]}
+                      alt={`${rowData?.make?.name || ""} ${rowData?.variant?.name || ""}`}
+                      className="w-10 h-10 rounded-[2px] object-cover transition-all duration-300 hover:scale-105"
+                      onError={(e) => {
+                        e.target.src = "/placeholder-car.jpg";
+                      }}
+                    />
+                    <p className="text-sm text-[#666666] font-normal">
+                      {rowData?.make?.name} {rowData?.variant?.name}
+                    </p>
+                  </div>
+                )}
                 headerClassName="bg-blue-600 text-white text-center py-2"
                 style={{ minWidth: "300px" }}
               />
