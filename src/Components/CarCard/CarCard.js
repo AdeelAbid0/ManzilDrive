@@ -19,9 +19,9 @@ const CarCard = ({ items, isDashboard, handleRemoveAdd, handleEdit }) => {
 
   return (
     <div className="flex w-full md:items-center flex-col md:flex-row h-auto min-h-[192px] mt-[2px] gap-4 py-4 px-4 bg-white rounded">
-      <div className="w-full h-auto md:w-[280px] md:h-auto rounded">
+      <div className="w-full md:w-[280px] h-[200px] rounded">
         <img
-          className="relative w-full h-auto md:max-h-40 object-contain rounded z-10"
+          className="relative w-full h-[200px] object-contain rounded z-10"
           src={items?.photos?.[0]}
           alt="Car-Image"
           onError={(e) => {

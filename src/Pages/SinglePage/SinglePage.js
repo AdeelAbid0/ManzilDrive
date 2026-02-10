@@ -7,6 +7,7 @@ import { ReactComponent as CameraIcon } from "../../assets/SVG/camera.svg";
 import PrimaryButton from "../../Common/Button/Button";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+
 const SinglePage = () => {
   const navigate = useNavigate();
   const [showNumber, setShowNumber] = useState(false);
@@ -14,45 +15,53 @@ const SinglePage = () => {
 
   const location = useLocation();
   const carDetail = location.state;
+
   const handleNext = () => {
     if (currentIndex < carDetail?.photos?.length - 1) {
       setCurrentIndex((prev) => prev + 1);
     }
   };
+
   const handlePrevious = () => {
     if (currentIndex > 0) {
       setCurrentIndex((prev) => prev - 1);
     }
   };
+
   return (
     <div className="flex w-full flex-col gap-4 font-inter px-4 md:px-[64px] mt-4">
       <div className="flex md:flex-row flex-col w-full justify-center gap-4">
-        <div className="flex flex-col gap-1 md:gap-4 w-full md:w-[63%] ">
-          <div className="relative">
+        <div className="flex flex-col gap-1 md:gap-4 w-full md:w-[63%]">
+          {/* Image Container - Fixed */}
+          <div className="relative bg-white rounded-[4px] overflow-hidden h-[400px]">
             <img
               src={carDetail?.photos[currentIndex]}
               alt="car"
-              className="w-full object-cover max-h-[400px] rounded-[4px]"
+              className="w-full h-full object-contain"
             />
-            <span
-              className="absolute top-1/2 left-1  cursor-pointer flex justify-center items-center w-10 h-10 bg-white rounded-[4px] shadow-[0px_0px_4px_0px_#00000026]"
+            <button
+              className="absolute top-1/2 left-1 transform -translate-y-1/2 cursor-pointer flex justify-center items-center w-10 h-10 bg-white rounded-[4px] shadow-[0px_0px_4px_0px_#00000026]"
               onClick={handlePrevious}
+              disabled={currentIndex === 0}
             >
               <ArrowLeft />
-            </span>
-            <span
-              className="absolute top-1/2 right-1 cursor-pointer flex justify-center items-center w-10 h-10 bg-white rounded-[4px]  shadow-[0_0_4px_0_#00000026]"
+            </button>
+            <button
+              className="absolute top-1/2 right-1 transform -translate-y-1/2 cursor-pointer flex justify-center items-center w-10 h-10 bg-white rounded-[4px] shadow-[0_0_4px_0_#00000026]"
               onClick={handleNext}
+              disabled={currentIndex === carDetail?.photos?.length - 1}
             >
               <ArrowRight />
-            </span>
-            <span className="absolute bottom-1 right-1  bg-[#EDEDED] rounded-[20px] flex justify-center items-center px-[10px] py-[7px] gap-[10px] text-gradient">
+            </button>
+            <span className="absolute bottom-1 right-1 bg-[#EDEDED] rounded-[20px] flex justify-center items-center px-[10px] py-[7px] gap-[10px] text-gradient">
               <CameraIcon />
               <span className="text-sm font-medium">
                 {currentIndex + 1}/{carDetail?.photos?.length}
               </span>
             </span>
           </div>
+
+          {/* Price and Location Section */}
           <div className="p-6 bg-white rounded-tl-[4px] rounded-tr-[4px]">
             <h1 className="font-bold text-[20px] text-[#1A1A1A] leading-6">
               {`RS ${carDetail?.rentPerDay}`}
@@ -72,6 +81,8 @@ const SinglePage = () => {
               </p>
             </div>
           </div>
+
+          {/* Details Section */}
           <div className="p-6 bg-white rounded-tl-[4px] rounded-tr-[4px]">
             <h1 className="font-semibold md:font-bold text-[18px] leading-6 md:text-[20px] text-[#1A1A1A]">
               Details
@@ -115,14 +126,16 @@ const SinglePage = () => {
           </div>
         </div>
 
+        {/* Right Sidebar */}
         <div className="relative flex flex-col gap-4 w-full md:w-[37%]">
+          {/* Business Info Card */}
           <div className="flex flex-col items-center w-full px-6 py-11 md:py-14 bg-white rounded">
             <Avatar />
             <h1 className="!m-0 text-[#001326] text-sm font-semibold leading-[100%] pt-2">
               {carDetail?.business?.name}
             </h1>
             <span className="text-[#00132699] font-normal text-sm leading-[100%] pt-4">
-              Member since <span> </span>
+              Member since{" "}
               {new Date(carDetail?.business?.createdAt).toLocaleDateString(
                 "en-US",
                 {
@@ -132,8 +145,7 @@ const SinglePage = () => {
               )}
             </span>
             <p className="text-[#666666] font-medium text-sm pt-4">
-              {carDetail?.business?.location?.address} Bug here : Not showing
-              location
+              {carDetail?.business?.location?.address}
             </p>
             <span
               className="pt-4 text-[#00796B] text-[16px] font-medium underline underline-offset-2 cursor-pointer"
@@ -182,8 +194,14 @@ const SinglePage = () => {
               />
             </div>
           </div>
+
+          {/* Poster */}
           <div className="white rounded">
-            <img src="/Poster.png" alt="poster" />
+            <img
+              src="/Poster.png"
+              alt="poster"
+              className="w-full h-auto rounded"
+            />
           </div>
         </div>
       </div>
@@ -208,7 +226,7 @@ const SinglePage = () => {
             </li>
             <li>Carry your ID/license and sign a rental agreement.</li>
             <li>
-              Use caution—we’re not liable for accidents, damages, or disputes.
+              Use caution—we're not liable for accidents, damages, or disputes.
             </li>
             <li>
               Rent at your own risk. (Place near booking actions for
