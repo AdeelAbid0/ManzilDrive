@@ -16,6 +16,7 @@ export const ApiUrl = {
     GetAddsCount: (businessId) =>
       `cars/getBusinessAdsCount?businessId=${businessId}`,
     BoostAd: () => "cars/boostAd",
+    DeleteAd: () => "/cars/deleteAd",
   },
   Profile: {
     UpdateProfile: "business/update",

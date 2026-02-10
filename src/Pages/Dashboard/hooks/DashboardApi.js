@@ -17,6 +17,12 @@ export const useGetAddsCount = (businessId) => {
 export const useBoostAd = () => {
   return useClientMutation({
     url: ApiUrl.Dashboard.BoostAd(),
-    enabled: true,
+    method: "POST",
+  });
+};
+export const useDeleteAd = () => {
+  return useClientMutation({
+    url: ApiUrl.Dashboard.DeleteAd(),
+    method: "POST",
   });
 };

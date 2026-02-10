@@ -12,6 +12,7 @@ import {
 } from "../../Utils/Icons";
 import {
   useBoostAd,
+  useDeleteAd,
   useGetAddsCount,
   useGetAllCars,
 } from "./hooks/DashboardApi";
@@ -59,6 +60,10 @@ const Dashboard = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [selectedTab, setSelectedTab] = useState("View All");
   const [localCarData, setLocalCarData] = useState([]);
+  const [deleteConfirmation, setDeleteConfirmation] = useState({
+    show: false,
+    carToDelete: null,
+  });
 
   // Status mapping
   const statusMap = {
@@ -99,9 +104,11 @@ const Dashboard = () => {
     data: allCarsData,
     isLoading: carsDataLoading,
     error: carsDataError,
+    refetch: refetchAllCars,
   } = useGetAllCars(page, limit, status, viewAll, user?.business?._id);
 
   const { mutate: boostAd, isPending: boostAdLoading } = useBoostAd();
+  const { mutate: deleteAd, isPending: deleteAdLoading } = useDeleteAd();
 
   // Initialize local car data when API data loads
   useEffect(() => {
@@ -198,10 +205,55 @@ const Dashboard = () => {
     // Implement edit functionality here
   }, []);
 
-  const handleRemoveAdd = useCallback((rowData) => {
-    console.log("Remove Add clicked for:", rowData);
-    // Implement remove functionality here
+  const handleRemoveAddClick = useCallback((rowData) => {
+    setDeleteConfirmation({
+      show: true,
+      carToDelete: rowData,
+    });
   }, []);
+
+  const handleConfirmDelete = useCallback(() => {
+    if (!deleteConfirmation.carToDelete) return;
+
+    const carId = deleteConfirmation.carToDelete._id;
+
+    deleteAd(
+      { carId },
+      {
+        onSuccess: (res) => {
+          console.log({ res });
+          dispatch(
+            showNotification({
+              message: res?.message,
+              status: "success",
+            }),
+          );
+
+          // Remove car from local state immediately
+          setLocalCarData((prev) => prev.filter((car) => car._id !== carId));
+
+          // Refetch data from API
+          refetchAllCars();
+
+          // Close confirmation dialog
+          setDeleteConfirmation({ show: false, carToDelete: null });
+
+          // Also refetch the count
+          // You might want to add refetch for addsCount here if needed
+        },
+        onError: (error) => {
+          console.log({ error });
+          dispatch(
+            showNotification({
+              message: error?.response?.data?.message || "Failed to remove add",
+              status: "error",
+            }),
+          );
+          setDeleteConfirmation({ show: false, carToDelete: null });
+        },
+      },
+    );
+  }, [deleteConfirmation, deleteAd, dispatch, refetchAllCars]);
 
   const handleToggleAvailability = useCallback((carId, newStatus) => {
     console.log(`Toggling availability for car ${carId} to ${newStatus}`);
@@ -240,6 +292,8 @@ const Dashboard = () => {
             );
             setShowBoostDialog(false);
             formik.resetForm();
+            // Refresh the data
+            refetchAllCars();
           },
           onError: (error) => {
             dispatch(
@@ -252,7 +306,7 @@ const Dashboard = () => {
         },
       );
     },
-    [selectedRow, boostAd, formik],
+    [selectedRow, boostAd, formik, dispatch, refetchAllCars],
   );
 
   // Overlay panel menu items
@@ -279,7 +333,7 @@ const Dashboard = () => {
       icon: <DeleteIcon className="text-[#5D717D] w-4 h-4 flex shrink-0" />,
       label: "Remove Ad",
       onClick: (rowData) => {
-        handleRemoveAdd(rowData);
+        handleRemoveAddClick(rowData);
         op.current.hide();
       },
     },
@@ -312,7 +366,10 @@ const Dashboard = () => {
 
   // Filter cars data based on status
   useEffect(() => {
-    if (localCarData.length === 0) return;
+    if (localCarData.length === 0) {
+      setFilteredCarsData([]);
+      return;
+    }
 
     const activeKey = Object.keys(addStatus).find((key) => addStatus[key]);
     const currentStatus = statusMap[activeKey];
@@ -442,7 +499,7 @@ const Dashboard = () => {
                   setSelectedRow(item);
                   op.current?.toggle(e);
                 }}
-                handleRemoveAdd={() => handleRemoveAdd(item)}
+                handleRemoveAdd={() => handleRemoveAddClick(item)}
                 isDashboard={true}
               />
             ))
@@ -515,7 +572,7 @@ const Dashboard = () => {
                 body={(rowData) => (
                   <div className="flex items-center gap-4">
                     <img
-                      src={rowData?.photos[0]}
+                      src={rowData?.photos?.[0] || "/placeholder-car.jpg"}
                       alt={`${rowData?.make?.name || ""} ${rowData?.variant?.name || ""}`}
                       className="w-10 h-10 rounded-[2px] object-cover transition-all duration-300 hover:scale-105"
                       onError={(e) => {
@@ -701,6 +758,49 @@ const Dashboard = () => {
               disabled={!formik.values.days}
               loading={boostAdLoading}
               className=""
+            />
+          </div>
+        </div>
+      </CommonDialog>
+
+      {/* Delete Confirmation Dialog */}
+      <CommonDialog
+        open={deleteConfirmation.show}
+        onClose={() =>
+          setDeleteConfirmation({ show: false, carToDelete: null })
+        }
+        className="md:!max-w-[450px] md:!w-[30%] !w-full !max-w-full mx-1 md:mx-0"
+      >
+        <div className="max-h-[90vh] overflow-y-auto p-6">
+          <h1 className="text-xl font-semibold text-[#1A1A1A]">Delete Ad</h1>
+          <p className="text-sm text-[#5D717D] mt-2">
+            Are you sure you want to delete this ad? This action cannot be
+            undone.
+          </p>
+
+          <div className="mt-6">
+            <p className="text-base font-medium text-[#4D4D4D]">
+              {deleteConfirmation.carToDelete?.make?.name}{" "}
+              {deleteConfirmation.carToDelete?.variant?.name}
+            </p>
+          </div>
+
+          <div className="flex gap-4 w-full justify-between mt-8">
+            <Button
+              type="default"
+              label="Cancel"
+              onClick={() =>
+                setDeleteConfirmation({ show: false, carToDelete: null })
+              }
+              disabled={deleteAdLoading}
+              className="bg-transparent! border border-primary! w-full"
+            />
+            <PrimaryButton
+              type="primary"
+              label={"Delete Ad"}
+              onClick={handleConfirmDelete}
+              disabled={deleteAdLoading}
+              loading={deleteAdLoading}
             />
           </div>
         </div>
