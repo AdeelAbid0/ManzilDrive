@@ -2,21 +2,33 @@ import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 
-const CarDetailForm = ({ formik, data, modelsData, variantData }) => {
+const CarDetailForm = ({
+  formik,
+  data,
+  modelsData,
+  variantData,
+  isEditMode,
+}) => {
   return (
-    <div className="flex flex-col w-[734px]">
+    <div className="flex flex-col w-full">
       <h1 className="font-inter font-semibold text-[32px] text-[#4D4D4D] leading-[100%]">
-        Car Details
+        {isEditMode ? "Edit Details" : "Car Details"}
       </h1>
-      <p className="mt-4 font-inter font-normal text-sm text-[#666666] leading-[18px]">
-        Include Some Details
-      </p>
+      {!isEditMode && (
+        <p className="mt-4 font-inter font-normal text-sm text-[#666666] leading-[18px]">
+          Include Some Details
+        </p>
+      )}
       <div className="flex flex-col mt-4">
         <Dropdown
           value={formik.values.make}
           name="make"
-          options={data}
-          onChange={formik.handleChange}
+          options={data || []}
+          onChange={(e) => {
+            formik.setFieldValue("make", e.value);
+            formik.setFieldValue("model", "");
+            formik.setFieldValue("variant", "");
+          }}
           onBlur={formik.handleBlur}
           optionLabel="label"
           optionValue="_id"
@@ -32,15 +44,19 @@ const CarDetailForm = ({ formik, data, modelsData, variantData }) => {
         <Dropdown
           value={formik.values.model}
           name="model"
-          options={modelsData ?? []}
-          onChange={formik.handleChange}
+          options={modelsData || []}
+          onChange={(e) => {
+            formik.setFieldValue("model", e.value);
+            formik.setFieldValue("variant", "");
+          }}
           onBlur={formik.handleBlur}
           optionLabel="name"
           optionValue="_id"
-          placeholder="Select model"
+          placeholder="Select Model"
           filter
-          filterPlaceholder="Search model"
-          className={` mt-3 font-inter items-center font-normal text-input text-sm h-[49px] bg-[#F7F7F7] rounded placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px]  ${
+          filterPlaceholder="Search Model"
+          disabled={!formik.values.make}
+          className={`mt-3 font-inter items-center font-normal text-input text-sm h-[49px] bg-[#F7F7F7] rounded placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] ${!formik.values.make ? "opacity-50" : ""} ${
             formik.touched.model && formik.errors.model
               ? "border border-error text-error"
               : ""
@@ -49,15 +65,16 @@ const CarDetailForm = ({ formik, data, modelsData, variantData }) => {
         <Dropdown
           value={formik.values.variant}
           name="variant"
-          options={variantData ?? []}
-          onChange={formik.handleChange}
+          options={variantData || []}
+          onChange={(e) => formik.setFieldValue("variant", e.value)}
           onBlur={formik.handleBlur}
           optionLabel="name"
           optionValue="_id"
           placeholder="Select Variant"
           filter
           filterPlaceholder="Search Variant"
-          className={` mt-3 font-inter items-center font-normal text-input text-sm h-[49px] bg-[#F7F7F7] rounded placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px]  ${
+          disabled={!formik.values.model}
+          className={`mt-3 font-inter items-center font-normal text-input text-sm h-[49px] bg-[#F7F7F7] rounded placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] ${!formik.values.model ? "opacity-50" : ""} ${
             formik.touched.variant && formik.errors.variant
               ? "border border-error text-error"
               : ""

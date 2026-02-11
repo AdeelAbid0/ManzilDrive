@@ -26,3 +26,18 @@ export const useDeleteAd = () => {
     method: "POST",
   });
 };
+
+export const useGetCarDetails = (carId) => {
+  return useClientQuery({
+    queryKeys: ["GetCarDetails", carId],
+    url: `cars/getCarDetails/${carId}`,
+    enabled: !!carId,
+  });
+};
+
+export const useUpdateCar = () => {
+  return useClientMutation({
+    url: "cars/updateCar",
+    method: "PUT",
+  });
+};
