@@ -24,9 +24,11 @@ import { initialValuesPersonalInfo } from "./Form/personalinfo.initial";
 import { useDispatch, useSelector } from "react-redux";
 import { showNotification } from "../../slices/notificationSlice";
 import { setUser } from "../../slices/userSlice";
+import { useQueryClient } from "@tanstack/react-query";
 
 const PostAdd = () => {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const [personalInfoActive, setPersonalInfoActive] = useState(false);
   const [showOtpScreen, setShowOtpScreen] = useState(false);
   const [images, setImages] = useState([]);
@@ -71,7 +73,12 @@ const PostAdd = () => {
               status: "success",
             }),
           );
-
+          queryClient.invalidateQueries({
+            queryKey: ["GetAllCars"],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ["GetAddsCount"],
+          });
           const formDataForAddVehicle = new FormData();
           formDataForAddVehicle.append("business", businessId);
           formDataForAddVehicle.append("make", formik.values.make);
