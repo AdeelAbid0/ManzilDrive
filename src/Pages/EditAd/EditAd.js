@@ -11,6 +11,8 @@ import {
 } from "./hooks/EditadApi";
 import { useEffect, useState } from "react";
 import { Loader } from "lucide-react";
+import ImageUpload from "../PostAdd/Components/ImageUpload";
+import PrimaryButton from "../../Common/Button/Button";
 
 const EditAd = () => {
   const navigate = useNavigate();
@@ -20,6 +22,7 @@ const EditAd = () => {
   console.log({ carData });
   const [initialModelsLoaded, setInitialModelsLoaded] = useState(false);
   const [initialVariantsLoaded, setInitialVariantsLoaded] = useState(false);
+  const [images, setImages] = useState(Array(6).fill(null));
 
   const formatCarData = (data) => {
     if (!data) return initialValues;
@@ -49,8 +52,24 @@ const EditAd = () => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       console.log("Form submitted with values:", values);
+      // TODO: Add API call to update car with images
     },
   });
+
+  // Initialize images when carData is available
+  useEffect(() => {
+    if (carData?.photos?.length) {
+      setImages((prev) => {
+        const newImages = [...prev];
+        carData.photos.forEach((photo, index) => {
+          if (index < 6) {
+            newImages[index] = photo;
+          }
+        });
+        return newImages;
+      });
+    }
+  }, [carData]);
 
   const { data: makesData, isLoading: isLoadingMakes } = useGetAllMakes();
 
@@ -119,8 +138,10 @@ const EditAd = () => {
 
   return (
     <div className="flex flex-col items-center mt-2 w-full mb-8 gap-6">
-      <div className="w-full md:max-w-[766px] md:w-[64%] md:mt-6 p-4 md:p-0">
+      <div className="w-full md:max-w-[766px] md:w-[64%] md:mt-6 p-4 md:p-0 space-y-6">
+        {/* Car Details Section */}
         <div className="bg-white rounded-lg shadow-md p-6">
+          <h2 className="text-xl font-semibold mb-4">Car Details</h2>
           <form onSubmit={formik.handleSubmit} className="space-y-6">
             <CarDetailForm
               formik={formik}
@@ -131,23 +152,32 @@ const EditAd = () => {
               isLoadingModels={isLoadingModels}
               isLoadingVariants={isLoadingVariants}
             />
-
-            <div className="flex justify-end space-x-4 mt-8 pt-4 border-t border-gray-200">
-              <Button
-                type="button"
-                label="Cancel"
-                severity="secondary"
-                onClick={() => navigate("/dashboard")}
-                className="px-6 py-2 bg-gray-200 text-gray-700 hover:bg-gray-300 rounded-md"
-              />
-              <Button
-                type="submit"
-                label="Save Changes"
-                className="px-6 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-md"
-                loading={formik.isSubmitting}
-              />
-            </div>
           </form>
+        </div>
+
+        {/* Images Section */}
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h2 className="text-xl font-semibold mb-4">Car Images</h2>
+          <ImageUpload images={images} setImages={setImages} />
+        </div>
+
+        {/* Buttons Section */}
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="flex justify-end space-x-4">
+            <Button
+              type="button"
+              label="Cancel"
+              severity="secondary"
+              onClick={() => navigate("/dashboard")}
+              className="w-full px-6 py-2 bg-gray-200 text-gray-700 hover:bg-gray-300 rounded-md"
+            />
+            <PrimaryButton
+              type="submit"
+              label="Save Changes"
+              onClick={formik.handleSubmit}
+              loading={formik.isSubmitting}
+            />
+          </div>
         </div>
       </div>
     </div>
