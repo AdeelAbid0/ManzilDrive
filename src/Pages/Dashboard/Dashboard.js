@@ -34,11 +34,13 @@ import PrimaryButton from "../../Common/Button/Button";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { showNotification } from "../../slices/notificationSlice";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Dashboard = () => {
   const op = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const user = useSelector((state) => state.user.user);
 
   // State management
@@ -180,8 +182,7 @@ const Dashboard = () => {
   }, []);
 
   const handleEdit = useCallback((rowData) => {
-    console.log("Edit clicked for:", rowData);
-    // Implement edit functionality here
+    navigate(`/editAdd/${rowData?._id}`);
   }, []);
 
   const handleRemoveAddClick = useCallback((rowData) => {
@@ -203,9 +204,10 @@ const Dashboard = () => {
               status: "success",
             }),
           );
+          queryClient.invalidateQueries({
+            queryKey: ["GetAllCars"],
+          });
 
-          // Refetch both APIs
-          refetchAllCars();
           refetchAddsCount();
 
           // Close dialog and reset states
@@ -440,6 +442,7 @@ const Dashboard = () => {
                 handleEdit={(e) => {
                   e?.stopPropagation();
                   setSelectedRow(item);
+
                   op.current?.toggle(e);
                 }}
                 handleRemoveAdd={() => handleRemoveAddClick(item)}

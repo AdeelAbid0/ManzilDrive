@@ -6,6 +6,7 @@ import Dashboard_Admin from "../Pages/Dashboard_Admin/Dashboard_Admin";
 import PostAdd from "../Pages/PostAdd/PostAdd";
 import Profile from "../Pages/Profile/Profile";
 import Products from "../Pages/Products/Product";
+import EditAd from "../Pages/EditAd/EditAd";
 
 export const PrivateRoutes = [
   {
@@ -22,37 +23,43 @@ export const PrivateRoutes = [
   },
   {
     id: 3,
+    name: "editAdd",
+    path: "/editAdd/:id",
+    component: EditAd,
+  },
+  {
+    id: 4,
     name: "profile",
     path: "/profile",
     component: Profile,
   },
   //Admin routes
   {
-    id: 4,
+    id: 5,
     name: "dashboard-admin",
     path: "/dashboard-admin",
     component: Dashboard_Admin,
   },
   {
-    id: 5,
+    id: 6,
     name: "list of adds",
     path: "/list-adds",
     component: AddsList,
   },
   {
-    id: 6,
+    id: 7,
     name: "categories",
     path: "/categories",
     component: Categories,
   },
   {
-    id: 7,
+    id: 8,
     name: "boost-adds",
     path: "/boost-adds",
     component: BoostAdds,
   },
   {
-    id: 8,
+    id: 9,
     name: "landing",
     path: "/landing-page",
     component: Products,

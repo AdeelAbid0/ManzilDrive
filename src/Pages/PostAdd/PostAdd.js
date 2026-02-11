@@ -157,7 +157,7 @@ const PostAdd = () => {
   // Add Business api
   const { mutate: addBusiness, isPending: BusinessLoading } = AddBusiness();
   // Add Vehicle api
-  const { mutate: addVehicle } = AddVehicle();
+  const { mutate: addVehicle, isPending: addVehicleLoading } = AddVehicle();
   // Get Business Detail api
   const { data: BusinessDetail, refetch: refetchBusinessDetail } =
     useGetBusinessDetail(businessId);
@@ -390,7 +390,7 @@ const PostAdd = () => {
               type={personalInfoActive ? "submit" : "button"}
               label={personalInfoActive ? "Post Now" : "Next"}
               disabled={disablefield}
-              loading={BusinessLoading}
+              loading={BusinessLoading || addVehicleLoading}
               onClick={() => {
                 if (images?.length < 1) {
                   dispatch(
