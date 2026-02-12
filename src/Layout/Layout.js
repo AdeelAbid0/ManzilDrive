@@ -1,76 +1,116 @@
-import { matchPath, useLocation } from "react-router-dom";
-
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useRoutes } from "react-router-dom";
+import { appRoutes } from "../Router";
+import Header from "./Header";
+import Sidebar from "./Sidebar";
 import Footer from "../Components/Footer/Footer";
 
-import AppRoutes from "../Routes/AppRoutes";
-
-import { useEffect, useState } from "react";
-
-import { PublicRoutes } from "../Routes/PublicRoutes";
-
-import Header from "./Header";
-
-import Sidebar from "./Sidebar";
-
 const Layout = () => {
+  const Routes = useRoutes(appRoutes);
   const user = JSON.parse(localStorage.getItem("User"));
-
   const token = localStorage.getItem("Token");
-
   const location = useLocation();
 
-  const isAuthPage =
-    location.pathname.startsWith("/auth") ||
-    location.pathname === "/login" ||
-    location.pathname === "/register" ||
-    location.pathname === "/forget-password";
+  // Public routes that should NOT show sidebar and SHOULD show footer
+  const publicRoutes = [
+    "/",
+    "/landing-page",
+    "/detail",
+    "/about",
+    "/contact",
+    "/pricing",
+    "/features",
+  ];
 
-  const isHomePage = location.pathname === "/landing-page";
+  // Auth routes (no sidebar, no footer)
+  const authRoutes = ["/login", "/register", "/forgot-password"];
 
-  const routes = PublicRoutes;
+  const isAuthPage = authRoutes.includes(location.pathname);
+  const isPublicPage =
+    publicRoutes.includes(location.pathname) ||
+    location.pathname.startsWith("/viewAll");
+  const isPrivateRoute = token && !isAuthPage && !isPublicPage;
 
-  const [showSidebar, setShowSidebar] = useState(
-    user && token && !isAuthPage && !isHomePage,
-  );
+  const [showSidebar, setShowSidebar] = useState(isPrivateRoute);
 
   useEffect(() => {
-    const routeCheck = routes.find((route) =>
-      matchPath({ path: route.path, end: true }, location.pathname),
-    );
+    setShowSidebar(isPrivateRoute);
+  }, [location.pathname, isPrivateRoute]);
 
-    if (routeCheck && (!user || !token)) {
-      setShowSidebar(false);
-    } else if (user && token && !isAuthPage && !isHomePage) {
-      setShowSidebar(true);
-    } else {
-      setShowSidebar(false);
+  // Determine if footer should be shown
+  const shouldShowFooter = () => {
+    if (isAuthPage) return false;
+    if (isPublicPage) return true;
+    if (isPrivateRoute) return false;
+    return false;
+  };
+
+  // Determine content width class
+  const getContentWidthClass = () => {
+    if (isPublicPage) return "max-w-[1440px] mx-auto ";
+    if (isPrivateRoute && showSidebar) return "max-w-[1440px] w-full ";
+    if (isPrivateRoute && !showSidebar) return "max-w-[1440px] mx-auto ";
+    if (isAuthPage) return "max-w-[1440px] mx-auto ";
+    return "max-w-[1440px] mx-auto ";
+  };
+
+  // Determine main content margin/padding
+  const getMainContentClass = () => {
+    // Base padding for all pages
+    let classes = "w-full";
+
+    // Add top padding/margin to account for fixed header
+
+    // Add left margin for private routes with sidebar
+    if (isPrivateRoute && showSidebar) {
+      classes += " md:ml-64";
     }
-  }, [location, user, token, isAuthPage, isHomePage]);
+
+    return classes;
+  };
 
   return (
-    <div className="font-inter w-full  bg-[#FAFAFA]">
-      {!isAuthPage && location.pathname !== "/" && <Header />}
+    <div className="min-h-screen flex w-full flex-col bg-gray-50">
+      {/* Header - Fixed at top for all pages */}
+      <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white shadow-sm">
+        <div className="w-full">
+          <Header
+            showSidebar={showSidebar}
+            setShowSidebar={setShowSidebar}
+            isPrivateRoute={isPrivateRoute}
+            isPublicPage={isPublicPage}
+          />
+        </div>
+      </header>
 
-      {location.pathname === "/" && <Header />}
-
-      <div className="flex gap-0 w-full justify-center min-h-[calc(100vh-70px)]">
-        {showSidebar && (
-          <div className="hidden h-[100vh] md:block ">
-            <Sidebar />
+      {/* Main Content Container - Add padding top to account for fixed header */}
+      <div className="flex flex-1 w-full pt-16 md:pt-20">
+        {/* Sidebar - Only for private routes (not public pages) */}
+        {isPrivateRoute && (
+          <div className="hidden md:block fixed left-0 top-16 md:top-20 h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] z-40">
+            <Sidebar
+              showSidebar={showSidebar}
+              setShowSidebar={setShowSidebar}
+            />
           </div>
         )}
 
-        <div
-          className={`flex max-w-[1440px] justify-center w-full h-auto ${
-            isAuthPage ? "mt-0" : "mt-[72px]"
-          }  ${showSidebar && "md:ml-[242px]"} `}
+        {/* Main Content */}
+        <main
+          className={`flex w-full justify-center transition-all duration-300 ${getMainContentClass()}`}
         >
-          <AppRoutes user={user} />
-        </div>
+          <div className={`w-full ${getContentWidthClass()}`}>{Routes}</div>
+        </main>
       </div>
 
-      {(location.pathname === "/" || location.pathname === "/detail") && (
-        <Footer />
+      {/* Footer - Show only on public pages and landing page */}
+      {shouldShowFooter() && (
+        <footer className="w-full bg-white border-t mt-auto">
+          <div className="w-full">
+            <Footer />
+          </div>
+        </footer>
       )}
     </div>
   );

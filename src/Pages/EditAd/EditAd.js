@@ -138,7 +138,7 @@ const EditAd = () => {
 
   return (
     <div className="flex flex-col items-center mt-2 w-full mb-8 gap-6">
-      <div className="w-full md:max-w-[766px] md:w-[64%] md:mt-6 p-4 md:p-0 space-y-6">
+      <div className="w-full md:max-w-[766px] md:w-[64%] md:mt-6 md:p-0 space-y-6">
         {/* Car Details Section */}
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-xl font-semibold mb-4">Car Details</h2>

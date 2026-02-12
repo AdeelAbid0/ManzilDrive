@@ -6,7 +6,7 @@ const Sidebar = () => {
   const user = useSelector((state) => state.user.user);
   const role = user?.business?.role;
   return (
-    <div className="mt-[72px] h-[calc(100vh-72px)] rounded-tr-[4px] w-[242px] bg-white fixed">
+    <div className="h-[calc(100vh-72px)] rounded-tr-[4px] w-[242px] bg-white fixed">
       <div className="h-full pt-12">
         <h1 className="pl-6 font-inter font-normal text-xs leading-[100%] tracking-[1px] text-[#082431]">
           MENU
