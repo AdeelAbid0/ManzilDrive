@@ -23,7 +23,7 @@ export const useApproveBusiness = () => {
 export const useRejectBusiness = () => {
   return useClientMutation({
     url: ApiUrl.AdminDashboard.RejectBusiness(),
-    method: "PUT",
+    method: "POST",
     enabled: true,
   });
 };

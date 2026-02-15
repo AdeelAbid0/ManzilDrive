@@ -1,116 +1,225 @@
 .dashboardadmin {
-  width: 1102px;
+  width: 100%;
+  max-width: 1102px;
 }
-.dashboardadmin .p-datatable-thead {
-  height: 13px !important;
-  width: 1094px !important;
-  gap: 98px !important;
-  justify-content: space-between !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  display: flex !important;
-  padding-left: 8px;
-  padding-right: 8px;
-}
-.dashboardadmin .p-datatable .p-datatable-tbody {
-  background-color: none !important;
-}
+
 .dashboardadmin .p-datatable {
-  overflow-x: hidden;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
 }
+
+.dashboardadmin .p-datatable-thead {
+  background-color: #f8f9fa !important;
+}
+
+.dashboardadmin .p-datatable-thead > tr {
+  display: flex;
+  width: 100%;
+  height: 48px;
+  align-items: center;
+  background-color: #f8f9fa !important;
+  border-radius: 8px 8px 0 0;
+}
+
+.dashboardadmin .p-datatable-thead > tr > th {
+  background-color: #f8f9fa !important;
+  color: #4d4d4d !important; /* Changed from white to dark text */
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  padding: 0 12px !important;
+  height: 48px !important;
+  display: flex !important;
+  align-items: center !important;
+  border: none !important;
+  text-align: left !important;
+}
+
+/* Column widths - Fixed for better responsiveness */
+.dashboardadmin .p-datatable-thead > tr > th:nth-child(1) {
+  width: 200px;
+  flex: 0 0 200px;
+}
+.dashboardadmin .p-datatable-thead > tr > th:nth-child(2) {
+  width: 240px;
+  flex: 0 0 240px;
+}
+.dashboardadmin .p-datatable-thead > tr > th:nth-child(3) {
+  width: 130px;
+  flex: 0 0 130px;
+}
+.dashboardadmin .p-datatable-thead > tr > th:nth-child(4) {
+  width: 303px;
+  flex: 0 0 303px;
+}
+.dashboardadmin .p-datatable-thead > tr > th:nth-child(5) {
+  width: 60px; /* Increased from 38px for better visibility */
+  flex: 0 0 60px;
+  display: flex;
+  justify-content: flex-start;
+}
+.dashboardadmin .p-datatable-thead > tr > th:nth-child(6) {
+  width: 80px; /* Increased from 46px for better click area */
+  flex: 0 0 80px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Table body */
+.dashboardadmin .p-datatable-tbody {
+  background-color: transparent !important;
+}
+
+.dashboardadmin .p-datatable-tbody > tr {
+  display: flex !important;
+  width: 100% !important;
+  min-height: 52px !important;
+  align-items: center !important;
+  background-color: #f8f9fa !important;
+  border-bottom: 1px solid #e1e4f3 !important;
+  margin: 0 !important;
+}
+
+.dashboardadmin .p-datatable-tbody > tr:hover {
+  background-color: #f0f2fe !important;
+  cursor: pointer;
+}
+
+.dashboardadmin .p-datatable-tbody > tr > td {
+  display: flex !important;
+  align-items: center !important;
+  padding: 8px 12px !important;
+  border: none !important;
+  background-color: transparent !important;
+}
+
+/* Column widths for body - Match exactly with header */
+.dashboardadmin .p-datatable-tbody > tr > td:nth-child(1) {
+  width: 200px;
+  flex: 0 0 200px;
+}
+.dashboardadmin .p-datatable-tbody > tr > td:nth-child(2) {
+  width: 240px;
+  flex: 0 0 240px;
+}
+.dashboardadmin .p-datatable-tbody > tr > td:nth-child(3) {
+  width: 130px;
+  flex: 0 0 130px;
+}
+.dashboardadmin .p-datatable-tbody > tr > td:nth-child(4) {
+  width: 303px;
+  flex: 0 0 303px;
+}
+.dashboardadmin .p-datatable-tbody > tr > td:nth-child(5) {
+  width: 60px; /* Increased from 38px */
+  flex: 0 0 60px;
+  display: flex;
+  justify-content: flex-start;
+}
+.dashboardadmin .p-datatable-tbody > tr > td:nth-child(6) {
+  width: 80px; /* Increased from 46px */
+  flex: 0 0 80px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Cell content styling */
+.dashboardadmin .cell-content {
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  line-height: 18px !important;
+  color: #72728f !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+/* Adds column specific styling */
+.dashboardadmin td:nth-child(5) .cell-content {
+  text-align: left;
+  padding-left: 4px;
+}
+
+/* Action cell */
+.dashboardadmin .action-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Header cell content */
 .dashboardadmin .p-column-title {
   color: #719088 !important;
   font-size: 14px;
   font-weight: 500;
+  white-space: nowrap;
 }
 
-.dashboardadmin .p-datatable .p-datatable-tbody > tr {
-  justify-content: space-between !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  width: 1084px !important;
-  height: 52px !important;
-  display: flex !important;
-  padding-left: 8px;
-  padding-right: 8px;
-  width: inherit;
-  background-color: #f8f9fa !important;
-  border-bottom: solid #e1e4f3 1px;
-  gap: 88px !important;
-}
-.dashboardadmin .p-datatable .p-datatable-tbody > tr:hover {
-  cursor: pointer;
-  background-color: #f0f2fe !important;
-  border: none;
-  border-bottom: solid #e1e4f3 1px;
-}
-.dashboardadmin .p-datatable .p-datatable-tbody > tr > td {
-  border: none !important;
-  padding: 0px !important;
-}
-.dashboardadmin .p-datatable .p-datatable-tbody > tr:nth-of-type(1) {
-  margin-top: 24px !important;
-}
-
+/* Remove default PrimeReact styles */
 .dashboardadmin .p-datatable .p-datatable-wrapper {
-  overflow-y: hidden;
-}
-.dashboardadmin .p-datatable-tbody > tr > td {
-  font-weight: 400 !important;
-  font-size: 14px !important;
-  overflow: hidden !important;
-  border: none !important;
-  margin: 0px !important;
-  line-height: 18px !important;
-  color: #72728f !important;
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
 }
 
-.dashboardadmin .p-datatable-thead > tr {
-  justify-content: space-between !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  height: 13px !important;
-  display: flex !important;
-  width: inherit;
-  background-color: transparent !important;
+.dashboardadmin .p-datatable .p-datatable-thead > tr > th,
+.dashboardadmin .p-datatable .p-datatable-tbody > tr > td {
+  box-shadow: none !important;
 }
 
-.dashboardadmin .p-datatable-thead > tr > th {
-  font-weight: 500 !important;
-  font-size: 14px !important;
-  padding: 0px !important;
-  margin: 0px !important;
-  line-height: 13px !important;
-  background-color: inherit !important;
-  color: #4d4d4d !important;
-  letter-spacing: 0.5px;
+.dashboardadmin .p-datatable .p-datatable-tbody > tr:last-child {
+  border-bottom: none !important;
 }
-.dashboardadmin .p-datatable .p-datatable-tbody > tr {
-  gap: 1px !important;
+
+/* First row margin */
+.dashboardadmin .p-datatable-tbody > tr:first-child {
+  margin-top: 8px;
 }
-.dashboardadmin .p-datatable-thead > tr > th:nth-of-type(1),
-.dashboardadmin tbody > tr > td:nth-of-type(1) {
-  width: 200px !important;
+
+/* Responsive Breakpoints */
+@media screen and (max-width: 1200px) {
+  .dashboardadmin {
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  .dashboardadmin .p-datatable {
+    min-width: 1102px;
+  }
 }
-.dashboardadmin .p-datatable-thead > tr > th:nth-of-type(2),
-.dashboardadmin tbody > tr > td:nth-of-type(2) {
-  width: 240px !important;
+
+/* Fix for smaller screens where columns might wrap */
+@media screen and (max-width: 768px) {
+  .dashboardadmin {
+    overflow-x: auto;
+  }
+
+  .dashboardadmin .p-datatable {
+    min-width: 1102px;
+  }
+
+  /* Ensure flex doesn't cause wrapping */
+  .dashboardadmin .p-datatable-thead > tr,
+  .dashboardadmin .p-datatable-tbody > tr {
+    flex-wrap: nowrap !important;
+  }
 }
-.dashboardadmin .p-datatable-thead > tr > th:nth-of-type(3),
-.dashboardadmin tbody > tr > td:nth-of-type(3) {
-  width: 130px !important;
-}
-.dashboardadmin .p-datatable-thead > tr > th:nth-of-type(4),
-.dashboardadmin tbody > tr > td:nth-of-type(4) {
-  width: 303px !important;
-}
-.dashboardadmin .p-datatable-thead > tr > th:nth-of-type(5),
-.dashboardadmin tbody > tr > td:nth-of-type(5) {
-  width: 38px !important;
-}
-.dashboardadmin .p-datatable-thead > tr > th:nth-of-type(6),
-.dashboardadmin tbody > tr > td:nth-of-type(6) {
-  width: 46px !important;
-  display: flex;
+
+/* Fix for last column alignment */
+.dashboardadmin .p-datatable-thead > tr > th:last-child,
+.dashboardadmin .p-datatable-tbody > tr > td:last-child {
   justify-content: center;
+}
+
+/* Ensure text doesn't overflow in adds column */
+.dashboardadmin td:nth-child(5) {
+  overflow: visible;
+}
+
+/* Fix for any potential flex shrinking */
+.dashboardadmin .p-datatable-thead > tr > th,
+.dashboardadmin .p-datatable-tbody > tr > td {
+  flex-shrink: 0;
 }

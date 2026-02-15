@@ -16,7 +16,7 @@ const CommonInput = ({
     <div className="relative w-full">
       {/* Prefix */}
       {PrefixIcon && (
-        <span className="absolute left-3 top-1/2  text-gray-400 pointer-events-none">
+        <span className="absolute left-3 top-1/4  text-gray-400 pointer-events-none">
           <PrefixIcon size={18} />
         </span>
       )}
