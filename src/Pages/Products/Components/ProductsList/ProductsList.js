@@ -265,11 +265,13 @@ const ProductsList = ({
             allCarsData={allCarsData}
             LoadingCarsData={LoadingCarsData}
           />
-          <Pagination
-            currentPage={page}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
+          {!LoadingCarsData && allCarsData?.length > 0 && (
+            <Pagination
+              currentPage={page}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          )}
         </div>
       </form>
     </div>

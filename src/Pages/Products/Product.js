@@ -14,6 +14,7 @@ const Products = () => {
   const [allCarsData, setAllCarsData] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState();
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const formik = useFormik({
     initialValues: {
       ...initialValues,
@@ -65,8 +66,18 @@ const Products = () => {
     });
   };
   useEffect(() => {
-    formik.submitForm();
+    if (isInitialLoad) {
+      console.log("1");
+      getAllActiveAdds();
+      setIsInitialLoad(false);
+    }
   }, []);
+
+  useEffect(() => {
+    if (!isInitialLoad) {
+      getAllActiveAdds();
+    }
+  }, [page]);
   return (
     <div className="flex w-full flex-col items-center h-full bg-[#EDEDED]">
       <div className="flex w-full md:flex-col flex-col-reverse">

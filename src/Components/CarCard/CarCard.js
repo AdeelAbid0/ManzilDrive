@@ -35,7 +35,8 @@ const CarCard = ({ items, isDashboard, handleRemoveAdd, handleEdit }) => {
           <div className="flex w-full md:justify-start gap-3 justify-between">
             <h1 className="font-inter font-semibold md:font-bold text-base md:text-xl leading-[22px] md:leading-6 text-secondary">
               {items?.make?.name || "Make"}&nbsp;
-              {items?.variant?.name || "Variant"}
+              {items?.variant?.name || "Variant"}&nbsp;
+              {items?.year ? items.year : ""}
             </h1>
             {items?.boost?.isActive && (
               <span className="flex items-center w-[81px] h-[23px] gap-[10px] rounded-[1px] bg-[#00796B1A]">
