@@ -57,12 +57,7 @@ const Layout = () => {
 
   // Determine main content margin/padding
   const getMainContentClass = () => {
-    // Base padding for all pages
     let classes = "w-full";
-
-    // Add top padding/margin to account for fixed header
-
-    // Add left margin for private routes with sidebar
     if (isPrivateRoute && showSidebar) {
       classes += " md:ml-64";
     }
@@ -73,19 +68,23 @@ const Layout = () => {
   return (
     <div className="min-h-screen flex w-full flex-col bg-gray-50">
       {/* Header - Fixed at top for all pages */}
-      <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white shadow-sm">
-        <div className="w-full">
-          <Header
-            showSidebar={showSidebar}
-            setShowSidebar={setShowSidebar}
-            isPrivateRoute={isPrivateRoute}
-            isPublicPage={isPublicPage}
-          />
-        </div>
-      </header>
+      {!isAuthPage && (
+        <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white shadow-sm">
+          <div className="w-full">
+            <Header
+              showSidebar={showSidebar}
+              setShowSidebar={setShowSidebar}
+              isPrivateRoute={isPrivateRoute}
+              isPublicPage={isPublicPage}
+            />
+          </div>
+        </header>
+      )}
 
       {/* Main Content Container - Add padding top to account for fixed header */}
-      <div className="flex flex-1 w-full pt-16 md:pt-20">
+      <div
+        className={`flex flex-1 w-full ${isAuthPage ? "" : "pt-16 md:pt-20"}`}
+      >
         {/* Sidebar - Only for private routes (not public pages) */}
         {isPrivateRoute && (
           <div className="hidden md:block fixed left-0 top-16 md:top-20 h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] z-40">

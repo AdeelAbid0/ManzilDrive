@@ -12,7 +12,7 @@ const CarDetailForm = ({
   return (
     <div className="flex flex-col w-full">
       <h1 className="font-inter font-semibold text-[32px] text-[#4D4D4D] leading-[100%]">
-        {isEditMode ? "Edit Details" : "Car Details"}
+        {isEditMode ? "Edit Car Details" : "Add Car Details"}
       </h1>
       {!isEditMode && (
         <p className="mt-4 font-inter font-normal text-sm text-[#666666] leading-[18px]">

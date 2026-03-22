@@ -54,7 +54,7 @@ const Footer = () => {
               </li>
             </div>
           </div>
-          <div className="flex flex-col md:w-[49.5%] w-full h-auto md:ml-0 ml-4">
+          <div className="flex flex-col md:w-[49.5%] w-full h-auto md:ml-0">
             <h1 className="font-inter font-medium text-xl leading-6 text-[#E6E6E6]">
               Subscribe To our News Letter
             </h1>

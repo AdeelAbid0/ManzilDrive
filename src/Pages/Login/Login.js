@@ -46,7 +46,7 @@ const Login = () => {
             }),
           );
           dispatch(setUser(res));
-          localStorage.setItem("Token", res?.token);
+          // localStorage.setItem("Token", res?.token);
           if (res?.business?.status === "active") {
             res?.business?.role === "admin"
               ? navigate("/dashboard-admin")

@@ -26,13 +26,13 @@ const AllBusinessCars = () => {
   const carsDetail = data?.cars;
   const businessDetail = data?.cars[0]?.business;
   return (
-    <div className="flex flex-col items-center justify-center w-full h-[calc(100vh-70px)] px-4 py-4 md:py-0 md:px-0 ">
+    <div className="flex flex-col items-center justify-center w-full !h-full px-4 py-4 md:py-0 md:px-0 ">
       {isPending ? (
         <div className="flex justify-center items-center w-full h-full">
           <Loader />
         </div>
       ) : (
-        <div className="flex flex-col md:flex-row gap-4 md:w-[92%] w-full h-[calc(100vh-70px)] pt-4">
+        <div className="flex flex-col md:flex-row gap-4 md:w-[92%] w-full !h-full pt-4">
           <div className="w-full md:w-[22%]">
             <div className="flex flex-col items-center w-full px-6 py-11 md:py-14 bg-white rounded">
               {businessDetail?.img ? (

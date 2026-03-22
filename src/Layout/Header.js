@@ -9,7 +9,7 @@ import { clearUser } from "../slices/userSlice";
 import SideMenu from "../Components/SideMenu/SideMenu";
 import { profileNavItems, sidebarNavItems } from "../config/navigation";
 const BASE_URL_IMG = process.env.REACT_APP_API_URL;
-const Header = () => {
+const Header = ({ isPrivateRoute }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -45,7 +45,11 @@ const Header = () => {
         <div
           className="flex items-center  w-[11.96%] min-w-[156px] gap-[8px] cursor-pointer"
           onClick={() => {
-            navigate("/landing-page");
+            if (!isPrivateRoute) {
+              navigate("/");
+            } else {
+              navigate("/landing-page");
+            }
           }}
         >
           <Logo />

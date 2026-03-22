@@ -34,6 +34,7 @@ export const ApiUrl = {
 
   Vehicle: {
     AddVehicle: "cars/addcar",
+    UpdateVehicle: "cars/updateCar",
     UpdateAvailability: (carId) => `cars/${carId}/availability`,
     ApprovePost: (carId) => `cars/${carId}/approve`,
     GetAllCars: () => `cars/cars`,
