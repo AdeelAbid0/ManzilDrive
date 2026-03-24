@@ -1,5 +1,5 @@
-import { useClientMutation, useClientQuery } from "../../../api/api-service";
-import { ApiUrl } from "../../../api/apiUrls";
+import { useClientMutation, useClientQuery } from "../../../../api/api-service";
+import { ApiUrl } from "../../../../api/apiUrls";
 export const useGetAllBusinesses = (page = 1, limit = 10) => {
   return useClientQuery({
     queryKeys: ["GetAllBusinesses", { page, limit }],

@@ -53,7 +53,7 @@
   flex: 0 0 303px;
 }
 .dashboardadmin .p-datatable-thead > tr > th:nth-child(5) {
-  width: 60px; /* Increased from 38px for better visibility */
+  width: 38px; /* Increased from 38px for better visibility */
   flex: 0 0 60px;
   display: flex;
   justify-content: flex-start;

@@ -4,14 +4,16 @@ import PrivateRoutes from "../PrivateRoutes";
 
 const PostAdd = lazy(() => import("../../Pages/PostAdd/PostAdd"));
 const EditAd = lazy(() => import("../../Pages/EditAd/EditAd"));
-const AddList = lazy(() => import("../../Pages/AddsList/AddsList"));
+const AddList = lazy(() => import("../../Pages/Admin/AddsList/AddsList"));
 const Dashboard = lazy(() => import("../../Pages/Dashboard/Dashboard"));
 const Profile = lazy(() => import("../../Pages/Profile/Profile"));
 const Dashboard_Admin = lazy(
-  () => import("../../Pages/Dashboard_Admin/Dashboard_Admin"),
+  () => import("../../Pages/Admin/Dashboard_Admin/Dashboard_Admin"),
 );
-const Categories = lazy(() => import("../../Pages/Categories/Categories"));
-const BoostAdds = lazy(() => import("../../Pages/BoostAdds/BoostAdds"));
+const Categories = lazy(
+  () => import("../../Pages/Admin/Categories/Categories"),
+);
+const BoostAdds = lazy(() => import("../../Pages/Admin/BoostAdds/BoostAdds"));
 const Products = lazy(() => import("../../Pages/Products/Product"));
 
 export const PRIVATE_ROUTES = [

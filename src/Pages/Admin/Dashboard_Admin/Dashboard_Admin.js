@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import "./Dashboard-admin.css";
@@ -9,20 +9,18 @@ import {
   useGetAllBusinesses,
   useRejectBusiness,
 } from "./hooks/DashboardApi";
-import { ReactComponent as SearchIcon } from "../../assets/SVG/search.svg";
-import { ReactComponent as Action } from "../../assets/SVG/action.svg";
-import { useSelector } from "react-redux";
-import Loader from "../../Components/Loader/Loader";
-import Pagination from "../../Common/Pagination/Pagination";
-import CommonInput from "../../Common/InputText/InputText";
-import CommonDialog from "../../Common/Dialog/CommonDialog";
+import { ReactComponent as SearchIcon } from "../../../assets/SVG/search.svg";
+import { ReactComponent as Action } from "../../../assets/SVG/action.svg";
+import Loader from "../../../Components/Loader/Loader";
+import Pagination from "../../../Common/Pagination/Pagination";
+import CommonInput from "../../../Common/InputText/InputText";
+import CommonDialog from "../../../Common/Dialog/CommonDialog";
 import { InputTextarea } from "primereact/inputtextarea";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Button } from "primereact/button";
-import PrimaryButton from "../../Common/Button/Button";
+import PrimaryButton from "../../../Common/Button/Button";
 
 const Dashboard_Admin = () => {
-  const user = useSelector((state) => state.user.user);
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
   const [selectedRow, setSelectedRow] = useState(null);
@@ -185,9 +183,9 @@ const Dashboard_Admin = () => {
   }
 
   return (
-    <div className="flex w-full items-center flex-col my-4">
+    <div className="flex w-full items-center flex-col my-4 max-w-[1102px]">
       {/* Stats Cards */}
-      <div className="flex w-full justify-center md:justify-start md:flex-nowrap flex-wrap gap-2 md:gap-6 px-4 md:px-6">
+      <div className="flex w-full justify-center md:justify-start md:flex-nowrap flex-wrap gap-2 md:gap-6">
         {stats.map((stat, index) => (
           <div
             key={index}
@@ -227,7 +225,7 @@ const Dashboard_Admin = () => {
       </OverlayPanel>
 
       {/* Search Section */}
-      <div className="w-full  mt-8 px-4">
+      <div className="w-full mt-8">
         <div className="flex justify-between items-center mb-4">
           <h1 className="font-archive font-semibold text-base text-[#4D4D4D]">
             Recently Requested
@@ -239,7 +237,7 @@ const Dashboard_Admin = () => {
               value={searchTerm}
               onChange={handleSearchChange}
               placeholder="Search by name, email, phone..."
-              prefixIcon={SearchIcon}
+              // prefixIcon={SearchIcon}
               className="!h-10 w-full"
             />
           </div>
@@ -306,7 +304,7 @@ const Dashboard_Admin = () => {
       </div>
 
       {/* Pagination */}
-      {AllBusinsses?.businesses?.length > 0 && AllBusinsses?.totalPages > 1 && (
+      {filteredBusinesses?.length > 0 && AllBusinsses?.totalPages > 1 && (
         <div className="mt-6 flex w-full justify-center px-4 ">
           <Pagination
             currentPage={page}

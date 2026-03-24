@@ -87,13 +87,17 @@ export const ApiUrl = {
     GetAllBusinesses: (page, limit) =>
       `business/adminGetAllBusinesses?page=${page}&limit=${limit}`,
     GetAddsCount: () => "cars/getAdminCarStatusCount",
-
     //Businesses
     ApproveBusiness: () => "business/approve",
     RejectBusiness: () => "business/rejectBusiness",
-
     // Adds list
     GetAllAdds: (page, limit, status, isDeleted) =>
       `cars/getAdminAllCars?page=${page}&limit=${limit}&status=${status}&isDeleted=${isDeleted}`,
+  },
+  BoostAds: {
+    GetAllBoostAdsRequest: (page, limit, status) =>
+      `cars/carBoostedRequests?page=${page}&limit=${limit}&status=${status}`,
+    RejectBoostRequest: () => "cars/rejectCarBoost",
+    ApproveBoostRequest: () => "cars/approveCarBoost",
   },
 };

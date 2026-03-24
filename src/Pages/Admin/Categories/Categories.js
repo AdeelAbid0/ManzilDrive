@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import "./BoostAdds.css";
+import "./Categories.css";
 import { useGetAddsCount, useGetAllCars } from "./hooks/DashboardApi";
-import { ReactComponent as SearchIcon } from "../../assets/SVG/search.svg";
-import { ReactComponent as FilterIcon } from "../../assets/SVG/filter.svg";
-import { ReactComponent as Action } from "../../assets/SVG/action.svg";
+import { ReactComponent as SearchIcon } from "../../../assets/SVG/search.svg";
+import { ReactComponent as FilterIcon } from "../../../assets/SVG/filter.svg";
+import { ReactComponent as Action } from "../../../assets/SVG/action.svg";
 import { useSelector } from "react-redux";
-import Loader from "../../Components/Loader/Loader";
-import Pagination from "../../Common/Pagination/Pagination";
-import CommonInput from "../../Common/InputText/InputText";
-import PrimaryButton from "../../Common/Button/Button";
+import Loader from "../../../Components/Loader/Loader";
+import Pagination from "../../../Common/Pagination/Pagination";
+import CommonInput from "../../../Common/InputText/InputText";
+import PrimaryButton from "../../../Common/Button/Button";
 
-const BoostAdds = () => {
+const Categories = () => {
   const user = useSelector((state) => state.user.user);
   const [AddStatus, setAddStatus] = useState({
     viewAll: true,
@@ -87,14 +87,9 @@ const BoostAdds = () => {
     <div className="flex w-full items-center h-full flex-col">
       <div className="hidden md:flex flex-col h-[66px] w-[1094px] mt-8 gap-4">
         <div className="flex w-full justify-between h-[17px]">
-          <div className="flex w-full gap-2">
-            <h1 className="flex w-full font-archive font-semibold text-base text-[#4D4D4D]">
-              New Requests
-            </h1>
-            {/* <h1 className="flex w-full font-archive font-semibold text-base text-[#4D4D4D]">
-              All Boosted Adds
-            </h1> */}
-          </div>
+          <h1 className="flex w-full font-archive font-semibold text-base text-[#4D4D4D]">
+            All Categories
+          </h1>
           <div className="flex w-full gap-2">
             <CommonInput
               type={"text"}
@@ -115,7 +110,7 @@ const BoostAdds = () => {
           className={"max-w-[190px] my-6"}
         />
       </div>
-      <div className="mt-6 boostadd hidden md:block">
+      <div className="mt-6 addlist hidden md:block">
         {CarsDataLoading ? (
           <div className="flex w-full justify-center mt-5">
             <Loader />
@@ -195,4 +190,4 @@ const BoostAdds = () => {
   );
 };
 
-export default BoostAdds;
+export default Categories;

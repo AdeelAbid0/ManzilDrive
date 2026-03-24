@@ -90,11 +90,11 @@
 }
 .boostadd .p-datatable-thead > tr > th:nth-of-type(1),
 .boostadd tbody > tr > td:nth-of-type(1) {
-  width: 200px !important;
+  width: 300px !important;
 }
 .boostadd .p-datatable-thead > tr > th:nth-of-type(2),
 .boostadd tbody > tr > td:nth-of-type(2) {
-  width: 240px !important;
+  width: 200px !important;
 }
 .boostadd .p-datatable-thead > tr > th:nth-of-type(3),
 .boostadd tbody > tr > td:nth-of-type(3) {
@@ -102,14 +102,11 @@
 }
 .boostadd .p-datatable-thead > tr > th:nth-of-type(4),
 .boostadd tbody > tr > td:nth-of-type(4) {
-  width: 303px !important;
+  width: 90px !important;
 }
+
 .boostadd .p-datatable-thead > tr > th:nth-of-type(5),
 .boostadd tbody > tr > td:nth-of-type(5) {
-  width: 38px !important;
-}
-.boostadd .p-datatable-thead > tr > th:nth-of-type(6),
-.boostadd tbody > tr > td:nth-of-type(6) {
   width: 46px !important;
   display: flex;
   justify-content: center;

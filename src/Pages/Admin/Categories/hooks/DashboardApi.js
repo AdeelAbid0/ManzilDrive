@@ -1,5 +1,5 @@
-import { ApiUrl } from "../../../api/apiUrls";
-import { useClientQuery } from "../../../api/api-service";
+import { ApiUrl } from "../../../../api/apiUrls";
+import { useClientQuery } from "../../../../api/api-service";
 export const useGetAllCars = (page, limit, status, viewAll, businessId) => {
   return useClientQuery({
     queryKeys: ["GetAllCars", { page, limit, status, viewAll, businessId }],
