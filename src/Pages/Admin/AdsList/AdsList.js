@@ -76,21 +76,6 @@ const AddList = () => {
     op.current?.hide();
   };
 
-  const handleRenew = () => {
-    console.log("Renew clicked for:", selectedRow);
-    op.current?.hide();
-  };
-
-  const handleBoost = () => {
-    console.log("Boost clicked for:", selectedRow);
-    op.current?.hide();
-  };
-
-  const handleContact = () => {
-    console.log("Contact clicked for:", selectedRow);
-    op.current?.hide();
-  };
-
   const handleDelete = () => {
     console.log("Delete clicked for:", selectedRow);
     op.current?.hide();
@@ -304,24 +289,7 @@ const AddList = () => {
                 >
                   <p className="text-sm font-normal">Edit</p>
                 </div>
-                <div
-                  className="px-3 py-2 border-b border-[#EFEFEF] text-[#5D717D] hover:bg-primary hover:text-white cursor-pointer rounded hover:rounded-none"
-                  onClick={handleRenew}
-                >
-                  <p className="text-sm font-normal">Renew</p>
-                </div>
-                <div
-                  className="px-3 py-2 border-b border-[#EFEFEF] text-[#5D717D] hover:bg-primary hover:text-white cursor-pointer rounded hover:rounded-none"
-                  onClick={handleBoost}
-                >
-                  <p className="text-sm font-normal">Boost</p>
-                </div>
-                <div
-                  className="px-3 py-2 border-b border-[#EFEFEF] text-[#5D717D] hover:bg-primary hover:text-white cursor-pointer rounded hover:rounded-none"
-                  onClick={handleContact}
-                >
-                  <p className="text-sm font-normal">Contact</p>
-                </div>
+
                 <div
                   className="px-3 py-2 text-[#5D717D] hover:bg-primary hover:text-white cursor-pointer rounded hover:rounded-none"
                   onClick={handleDelete}

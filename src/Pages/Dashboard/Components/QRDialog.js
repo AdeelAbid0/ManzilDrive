@@ -4,70 +4,100 @@ import { ReactComponent as ShareIcon } from "../../../assets/SVG/share.svg?react
 import PrimaryButton from "../../../Common/Button/Button";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import steeringWheel from "../../../assets/images/steering-wheel.png";
+import logo from "../../../assets/images/Logo.png";
 
 const QRDialog = ({ showQrDialog, setShowQrDialog, user }) => {
   const businessUrl = `https://manzil-drive.vercel.app/viewAll/${user?.business?._id}`;
+
   const handleDownloadPDF = async () => {
     try {
+      // Convert imported images to actual URLs
+      const logoUrl =
+        typeof logo === "string" ? logo : URL.createObjectURL(logo);
+      const steeringWheelUrl =
+        typeof steeringWheel === "string"
+          ? steeringWheel
+          : URL.createObjectURL(steeringWheel);
+
       // Create a temporary div for PDF content
       const pdfContent = document.createElement("div");
       pdfContent.style.position = "absolute";
       pdfContent.style.left = "-9999px";
-      pdfContent.style.width = "400px";
-      pdfContent.style.padding = "20px";
+      pdfContent.style.width = "600px";
+      pdfContent.style.minHeight = "800px";
       pdfContent.style.fontFamily = "Arial, sans-serif";
       pdfContent.style.backgroundColor = "white";
 
       // Add content to the temporary div
       pdfContent.innerHTML = `
-        <div style="text-align: center; margin-bottom: 20px;">
-          <h1 style="color: #394C49; font-size: 24px; font-weight: bold; margin-bottom: 10px;">
-            ${user?.business?.name || "My Business"} Profile
-          </h1>
-          <p style="color: #666; font-size: 14px; margin-bottom: 20px;">
-            Scan this QR code or visit the link below to view the business profile
-          </p>
-        </div>
-        
-        <div style="text-align: center; margin-bottom: 20px;">
-          <img 
-            src="${user?.business?.qrCode}" 
-            alt="QR Code" 
-            style="width: 200px; height: 200px; border: 1px solid #ccc; padding: 10px; margin: 0 auto;"
-            id="qr-code-img"
-          />
-        </div>
-        
-        <div style="text-align: center;">
-          <p style="color: #3E464C; font-size: 16px; font-weight: bold; margin-bottom: 10px;">
-            Business Profile Link:
-          </p>
-          <p style="color: #00796B; font-size: 14px; word-break: break-all; padding: 10px; border: 1px dashed #00796B; background-color: #f7f7f7;">
-            ${businessUrl}
-          </p>
-        </div>
-        
-        <div style="margin-top: 20px; text-align: center; color: #888; font-size: 12px;">
-          <p>Generated on ${new Date().toLocaleDateString()}</p>
+        <div style="display: flex; flex-direction: column; width: 100%; align-items: center; justify-content: flex-start; background-color: white; padding: 20px; min-height: 800px;">
+          <div style="display: flex; width: 100%; justify-content: center; gap: 8px; margin-top: 24px;">
+            <div style="width: 40px; height: 40px; background-color: #00796B; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+               <img
+                src="${logoUrl}"
+                alt="Logo"
+                style="width: 30px; height: 30px; object-fit: contain;"
+              />
+            </div>
+            <h1 style="color: #00796B; font-weight: bold; font-size: 24px; margin: 0;">Manzil Drive</h1>
+          </div>
+          <div style="margin-top: 44px; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+            <h2 style="color: #394543; font-weight: 800; font-size: 24px; margin: 0;">
+              ${user?.business?.shopName || "Business Name"}
+            </h2>
+            <p style="color: #394543; font-weight: 400; font-size: 24px; margin: 0;">
+              SCAN To view car list
+            </p>
+            <p style="color: #000000; font-weight: 400; font-size: 24px; margin: 0;">
+              ہماری کار کی فہرست دیکھیں
+            </p>
+          </div>
+          <div style="position: relative; background-color: #00796B; margin-top: 16px; display: flex; flex-direction: column; align-items: center; width: 100%; min-height: 500px;">
+            <img src="${steeringWheelUrl}" alt="" style="width: 100%; height: auto; opacity: 0.3;" />
+            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; width: 360px; position: absolute; top: 40px;">
+              <img
+                src="${user?.business?.qrCode}"
+                alt="QR Code"
+                style="width: 300px; height: 300px; margin: auto; border-radius: 6px; background-color: white; padding: 10px;"
+                id="qr-code-img"
+              />
+              <div style="background-color: white; width: 320px; border-radius: 4px; margin-top: 30px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <h3 style="color: #394543; font-weight: 400; font-size: 24px; margin: 0 0 8px 0;">
+                  ${user?.business?.name || "Business Name"}
+                </h3>
+                <p style="font-weight: bold; color: #394543; font-size: 20px; margin: 0;">
+                  ${user?.business?.phoneNumber || "N/A"}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top: 30px; text-align: center; color: #888; font-size: 12px;">
+            <p>Generated on ${new Date().toLocaleDateString()}</p>
+          </div>
         </div>
       `;
 
       document.body.appendChild(pdfContent);
 
-      // Wait for the QR code image to load
-      const qrImg = pdfContent.querySelector("#qr-code-img");
-      if (qrImg) {
-        await new Promise((resolve) => {
-          qrImg.onload = resolve;
-          if (qrImg.complete) resolve();
-        });
-      }
+      // Wait for images to load
+      const images = pdfContent.querySelectorAll("img");
+      await Promise.all(
+        Array.from(images).map((img) => {
+          if (img.complete) return Promise.resolve();
+          return new Promise((resolve) => {
+            img.onload = resolve;
+            img.onerror = resolve;
+          });
+        }),
+      );
 
       // Generate canvas from the content
       const canvas = await html2canvas(pdfContent, {
-        scale: 2,
+        scale: 3,
         useCORS: true,
         backgroundColor: "#ffffff",
+        logging: false,
       });
 
       // Create PDF
@@ -84,11 +114,11 @@ const QRDialog = ({ showQrDialog, setShowQrDialog, user }) => {
       // Calculate dimensions to fit the content
       const imgWidth = canvas.width;
       const imgHeight = canvas.height;
-      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * 0.85; // Reduced ratio for better fit
+      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * 0.85;
       const imgX = (pdfWidth - imgWidth * ratio) / 2;
       const imgY = 10;
 
-      // Add only the canvas content (which includes everything)
+      // Add the canvas content to PDF
       pdf.addImage(
         imgData,
         "PNG",
@@ -103,6 +133,11 @@ const QRDialog = ({ showQrDialog, setShowQrDialog, user }) => {
 
       // Clean up
       document.body.removeChild(pdfContent);
+
+      // Clean up object URLs if created
+      if (logoUrl !== logo) URL.revokeObjectURL(logoUrl);
+      if (steeringWheelUrl !== steeringWheel)
+        URL.revokeObjectURL(steeringWheelUrl);
     } catch (error) {
       console.error("Error generating PDF:", error);
       alert("Failed to download PDF. Please try again.");
@@ -117,6 +152,8 @@ const QRDialog = ({ showQrDialog, setShowQrDialog, user }) => {
       alert("Failed to copy link. Please try again.");
     }
   };
+
+  console.log({ user });
 
   return (
     <div>
@@ -168,7 +205,7 @@ const QRDialog = ({ showQrDialog, setShowQrDialog, user }) => {
             <PrimaryButton
               label={"Download PDF"}
               className={"flex !w-full"}
-              onClick={handleDownloadPDF} // Changed from handleClick to onClick
+              onClick={handleDownloadPDF}
             />
           </div>
         </div>

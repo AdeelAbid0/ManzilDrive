@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Hambergur, Logo } from "../Utils/Icons";
+import { Hambergur } from "../Utils/Icons";
 import { Button } from "primereact/button";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { ReactComponent as AvatarIcon } from "../assets/SVG/avatar.svg";
@@ -52,7 +52,7 @@ const Header = ({ isPrivateRoute }) => {
             }
           }}
         >
-          <Logo />
+          <img src="/Logo.png" alt="logo" className="!w-10 !h-10" />
           <h1 className="text-primary font-bold text-lg font-inter leading-[100%]">
             Manzil Drive
           </h1>
