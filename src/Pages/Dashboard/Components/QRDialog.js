@@ -12,9 +12,8 @@ const QRDialog = ({ showQrDialog, setShowQrDialog, user }) => {
 
   const handleDownloadPDF = async () => {
     try {
-      // Convert imported images to actual URLs
-      const logoUrl =
-        typeof logo === "string" ? logo : URL.createObjectURL(logo);
+      // Use online URLs for images
+      const logoUrl = "https://manzil-drive.vercel.app/Logo.png";
       const steeringWheelUrl =
         typeof steeringWheel === "string"
           ? steeringWheel
@@ -32,15 +31,15 @@ const QRDialog = ({ showQrDialog, setShowQrDialog, user }) => {
       // Add content to the temporary div
       pdfContent.innerHTML = `
         <div style="display: flex; flex-direction: column; width: 100%; align-items: center; justify-content: flex-start; background-color: white; padding: 20px; min-height: 800px;">
-          <div style="display: flex; width: 100%; justify-content: center; gap: 8px; margin-top: 24px;">
-            <div style="width: 40px; height: 40px; background-color: #00796B; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+          <div style="display: flex; width: 100%; justify-content: center; gap: 8px; margin-top: 24px; align-items: center; height: 50px;">
+            <div style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
                <img
                 src="${logoUrl}"
                 alt="Logo"
-                style="width: 30px; height: 30px; object-fit: contain;"
+                style="width: 40px; height: 40px; object-fit: contain;"
               />
             </div>
-            <h1 style="color: #00796B; font-weight: bold; font-size: 24px; margin: 0;">Manzil Drive</h1>
+            <h1 style="color: #00796B; font-weight: bold; font-size: 24px; margin: 0; display: flex; align-items: center; height: 40px;">Manzil Drive</h1>
           </div>
           <div style="margin-top: 44px; display: flex; flex-direction: column; align-items: center; gap: 4px;">
             <h2 style="color: #394543; font-weight: 800; font-size: 24px; margin: 0;">
