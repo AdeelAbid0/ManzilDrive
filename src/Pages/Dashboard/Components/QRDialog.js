@@ -31,14 +31,12 @@ const QRDialog = ({ showQrDialog, setShowQrDialog, user }) => {
       // Add content to the temporary div
       pdfContent.innerHTML = `
         <div style="display: flex; flex-direction: column; width: 100%; align-items: center; justify-content: flex-start; background-color: white; padding: 20px; min-height: 800px;">
-          <div style="display: flex; width: 100%; justify-content: center; gap: 8px; margin-top: 24px; align-items: center; height: 50px;">
-            <div style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+          <div style="display: flex; width: 100%; justify-content: center; gap: 8px; margin-top: 24px; align-items: center; height: 40px;">
                <img
                 src="${logoUrl}"
                 alt="Logo"
-                style="width: 40px; height: 40px; object-fit: contain;"
+                style="width: 40px; max-height: 40px; object-fit: contain; margin-top: 16px;"
               />
-            </div>
             <h1 style="color: #00796B; font-weight: bold; font-size: 24px; margin: 0; display: flex; align-items: center; height: 40px;">Manzil Drive</h1>
           </div>
           <div style="margin-top: 44px; display: flex; flex-direction: column; align-items: center; gap: 4px;">
