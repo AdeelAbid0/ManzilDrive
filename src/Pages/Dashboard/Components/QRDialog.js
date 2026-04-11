@@ -69,9 +69,7 @@ const QRDialog = ({ showQrDialog, setShowQrDialog, user }) => {
               </div>
             </div>
           </div>
-          <div style="margin-top: 30px; text-align: center; color: #888; font-size: 12px;">
-            <p>Generated on ${new Date().toLocaleDateString()}</p>
-          </div>
+         
         </div>
       `;
 
