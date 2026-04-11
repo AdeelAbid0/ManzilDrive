@@ -4,6 +4,7 @@ import PrivateRoutes from "../PrivateRoutes";
 
 const PostAdd = lazy(() => import("../../Pages/PostAdd/PostAdd"));
 const EditAd = lazy(() => import("../../Pages/EditAd/EditAd"));
+const AdminEditAd = lazy(() => import("../../Pages/Admin/EditAd/EditAd"));
 const AddList = lazy(() => import("../../Pages/Admin/AdsList/AdsList"));
 const Dashboard = lazy(() => import("../../Pages/Dashboard/Dashboard"));
 const Profile = lazy(() => import("../../Pages/Profile/Profile"));
@@ -59,6 +60,14 @@ export const PRIVATE_ROUTES = [
     element: (
       <PrivateRoutes>
         <AddList />
+      </PrivateRoutes>
+    ),
+  },
+  {
+    path: ROUTES.EDIT_AD,
+    element: (
+      <PrivateRoutes>
+        <AdminEditAd />
       </PrivateRoutes>
     ),
   },

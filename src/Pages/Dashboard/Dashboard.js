@@ -183,7 +183,7 @@ const Dashboard = () => {
   }, []);
 
   const handleEdit = useCallback((rowData) => {
-    navigate(`/editAdd/${rowData?._id}`, { state: { carData: rowData } });
+    navigate(`/editAd/${rowData?._id}`, { state: { carData: rowData } });
   }, []);
 
   const handleRemoveAddClick = useCallback((rowData) => {

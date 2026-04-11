@@ -72,6 +72,7 @@ const AddList = () => {
 
   const handleEdit = () => {
     console.log("Edit clicked for:", selectedRow);
+    navigate("/admin/edit-ad", { state: { carData: selectedRow } });
     op.current?.hide();
   };
 
