@@ -50,7 +50,7 @@ const Login = () => {
           if (res?.business?.status === "active") {
             res?.business?.role === "admin"
               ? navigate("/dashboard-admin")
-              : navigate("/postadd");
+              : navigate("/postAd");
           }
         },
         onError: (error) => {
@@ -94,7 +94,7 @@ const Login = () => {
         onSuccess: (res) => {
           dispatch(setUser(res));
           localStorage.setItem("Token", res?.token);
-          navigate("/postadd");
+          navigate("/postAd");
           dispatch(
             showNotification({
               message: "Login success",

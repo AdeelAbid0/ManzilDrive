@@ -2,7 +2,7 @@ import { lazy } from "react";
 import { ROUTES } from "../../constants/routes";
 import PrivateRoutes from "../PrivateRoutes";
 
-const PostAdd = lazy(() => import("../../Pages/PostAdd/PostAdd"));
+const PostAd = lazy(() => import("../../Pages/PostAd/PostAd"));
 const EditAd = lazy(() => import("../../Pages/EditAd/EditAd"));
 const AdminEditAd = lazy(() => import("../../Pages/Admin/EditAd/EditAd"));
 const AddList = lazy(() => import("../../Pages/Admin/AdsList/AdsList"));
@@ -24,15 +24,15 @@ export const PRIVATE_ROUTES = [
     ),
   },
   {
-    path: ROUTES.POSTADD,
+    path: ROUTES.POSTAD,
     element: (
       <PrivateRoutes>
-        <PostAdd />
+        <PostAd />
       </PrivateRoutes>
     ),
   },
   {
-    path: ROUTES.EDITADD,
+    path: ROUTES.EDITAD,
     element: (
       <PrivateRoutes>
         <EditAd />

@@ -416,7 +416,7 @@ const Dashboard = () => {
         <div className="flex gap-2 w-full mt-4">
           <Button
             label="Post ADD"
-            onClick={() => navigate("/postadd")}
+            onClick={() => navigate("/postAd")}
             className="text-white font-medium text-sm border rounded border-primary w-full h-[33px] bg-primary "
           />
           <Button
@@ -483,7 +483,7 @@ const Dashboard = () => {
           <div className="flex gap-2">
             <Button
               label="Post ADD"
-              onClick={() => navigate("/postadd")}
+              onClick={() => navigate("/postAd")}
               className="text-white font-medium text-sm border rounded border-primary w-[106px] h-[33px] bg-primary "
             />
             <Button

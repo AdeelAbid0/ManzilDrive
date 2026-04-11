@@ -7,7 +7,7 @@ import {
   useGetAllMakes,
   useGetAllmodelByMake,
   useGetAllVariantsBymodel,
-} from "../../../PostAdd/hooks/PostApi";
+} from "../../../PostAd/hooks/PostApi";
 import { useGetAllActiveByCountryId } from "../../hooks/ProductsApi";
 const SearchDialog = ({ formik, handleSearch, setShowSearchDialog }) => {
   // ------------------- API HOOKS -------------------

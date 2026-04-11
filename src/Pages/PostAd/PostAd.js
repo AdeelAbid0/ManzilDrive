@@ -26,7 +26,7 @@ import { showNotification } from "../../slices/notificationSlice";
 import { setUser } from "../../slices/userSlice";
 import { useQueryClient } from "@tanstack/react-query";
 
-const PostAdd = () => {
+const PostAd = () => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const [personalInfoActive, setPersonalInfoActive] = useState(false);
@@ -413,4 +413,4 @@ const PostAdd = () => {
   );
 };
 
-export default PostAdd;
+export default PostAd;

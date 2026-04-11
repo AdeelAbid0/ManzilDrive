@@ -3,10 +3,10 @@ import { useFormik } from "formik";
 import { Button } from "primereact/button";
 import { validationSchema } from "./Form/editad.schema";
 import { initialValues } from "./Form/editad.initial";
-import CarDetailForm from "../PostAdd/Components/CarDetailForm";
+import CarDetailForm from "../PostAd/Components/CarDetailForm";
 import { useEffect, useState } from "react";
 import { Loader } from "lucide-react";
-import ImageUpload from "../PostAdd/Components/ImageUpload";
+import ImageUpload from "../PostAd/Components/ImageUpload";
 import PrimaryButton from "../../Common/Button/Button";
 import {
   useGetAllMakes,
