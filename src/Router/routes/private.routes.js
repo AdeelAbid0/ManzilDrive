@@ -10,9 +10,6 @@ const Profile = lazy(() => import("../../Pages/Profile/Profile"));
 const Dashboard_Admin = lazy(
   () => import("../../Pages/Admin/Dashboard_Admin/Dashboard_Admin"),
 );
-const Categories = lazy(
-  () => import("../../Pages/Admin/Categories/Categories"),
-);
 const BoostAdds = lazy(() => import("../../Pages/Admin/BoostAds/BoostAds"));
 const Products = lazy(() => import("../../Pages/Products/Product"));
 
@@ -62,14 +59,6 @@ export const PRIVATE_ROUTES = [
     element: (
       <PrivateRoutes>
         <AddList />
-      </PrivateRoutes>
-    ),
-  },
-  {
-    path: ROUTES.CATEGORIES,
-    element: (
-      <PrivateRoutes>
-        <Categories />
       </PrivateRoutes>
     ),
   },
