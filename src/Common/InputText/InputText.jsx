@@ -9,6 +9,7 @@ const CommonInput = ({
   onBlur,
   className = "",
   prefixIcon: PrefixIcon,
+  prefixIconClassName,
   suffixIcon: SuffixIcon,
   error,
 }) => {
@@ -16,7 +17,9 @@ const CommonInput = ({
     <div className="relative w-full">
       {/* Prefix */}
       {PrefixIcon && (
-        <span className="absolute left-3 top-1/2 text-gray-400 pointer-events-none">
+        <span
+          className={`absolute left-3 top-1/2 text-gray-400 pointer-events-none ${prefixIconClassName}`}
+        >
           <PrefixIcon size={18} />
         </span>
       )}

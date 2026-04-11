@@ -104,5 +104,7 @@ export const ApiUrl = {
   AdsList: {
     GetAllAds: (page, limit, status, isDeleted) =>
       `cars/getAdminAllCars?page=${page}&limit=${limit}&status=${status}&isDeleted=${isDeleted}`,
+    ApproveAd: () => "cars/approve",
+    RejectAd: () => "cars/reject",
   },
 };

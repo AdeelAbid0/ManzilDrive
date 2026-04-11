@@ -12,3 +12,10 @@ export const useGetAllAds = (
     enabled: true,
   });
 };
+export const useApproveAd = () => {
+  return useClientMutation({
+    mutationKey: ["ApproveAd"],
+    url: ApiUrl.AdsList.ApproveAd(),
+    enabled: true,
+  });
+};

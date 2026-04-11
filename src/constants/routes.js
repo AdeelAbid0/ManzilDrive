@@ -16,9 +16,11 @@ export const ROUTES = {
   POSTAD: "/postAd",
   EDITAD: "/editAd/:id",
   PROFILE: "/profile",
+
+  // ADMIN ROUTES
   DASHBOARD_ADMIN: "/dashboard-admin",
   LIST_ADS: "/list-ads",
-  CATEGORIES: "/categories",
   BOOST_ADS: "/boost-ads",
   LANDING_PAGE: "/landing-page",
+  EDIT_AD: "/admin/edit-ad",
 };

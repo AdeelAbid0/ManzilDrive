@@ -223,3 +223,8 @@ input[type="number"] {
   outline: none !important;
   box-shadow: none !important;
 }
+
+/* Overlay top margin */
+.p-overlaypanel {
+  margin-top: 4px !important;
+}
