@@ -1,7 +1,7 @@
-.addlist {
+.boostadd {
   width: 1102px;
 }
-.addlist .p-datatable-thead {
+.boostadd .p-datatable-thead {
   height: 13px !important;
   width: 1094px !important;
   gap: 98px !important;
@@ -12,19 +12,19 @@
   padding-left: 8px;
   padding-right: 8px;
 }
-.addlist .p-datatable .p-datatable-tbody {
+.boostadd .p-datatable .p-datatable-tbody {
   background-color: none !important;
 }
-.addlist .p-datatable {
+.boostadd .p-datatable {
   overflow-x: hidden;
 }
-.addlist .p-column-title {
+.boostadd .p-column-title {
   color: #719088 !important;
   font-size: 14px;
   font-weight: 500;
 }
 
-.addlist .p-datatable .p-datatable-tbody > tr {
+.boostadd .p-datatable .p-datatable-tbody > tr {
   justify-content: space-between !important;
   flex-direction: row !important;
   align-items: center !important;
@@ -38,24 +38,24 @@
   border-bottom: solid #e1e4f3 1px;
   gap: 88px !important;
 }
-.addlist .p-datatable .p-datatable-tbody > tr:hover {
+.boostadd .p-datatable .p-datatable-tbody > tr:hover {
   cursor: pointer;
   background-color: #f0f2fe !important;
   border: none;
   border-bottom: solid #e1e4f3 1px;
 }
-.addlist .p-datatable .p-datatable-tbody > tr > td {
+.boostadd .p-datatable .p-datatable-tbody > tr > td {
   border: none !important;
   padding: 0px !important;
 }
-.addlist .p-datatable .p-datatable-tbody > tr:nth-of-type(1) {
+.boostadd .p-datatable .p-datatable-tbody > tr:nth-of-type(1) {
   margin-top: 24px !important;
 }
 
-.addlist .p-datatable .p-datatable-wrapper {
+.boostadd .p-datatable .p-datatable-wrapper {
   overflow-y: hidden;
 }
-.addlist .p-datatable-tbody > tr > td {
+.boostadd .p-datatable-tbody > tr > td {
   font-weight: 400 !important;
   font-size: 14px !important;
   overflow: hidden !important;
@@ -65,7 +65,7 @@
   color: #72728f !important;
 }
 
-.addlist .p-datatable-thead > tr {
+.boostadd .p-datatable-thead > tr {
   justify-content: space-between !important;
   flex-direction: row !important;
   align-items: center !important;
@@ -75,7 +75,7 @@
   background-color: transparent !important;
 }
 
-.addlist .p-datatable-thead > tr > th {
+.boostadd .p-datatable-thead > tr > th {
   font-weight: 500 !important;
   font-size: 14px !important;
   padding: 0px !important;
@@ -85,26 +85,29 @@
   color: #4d4d4d !important;
   letter-spacing: 0.5px;
 }
-.addlist .p-datatable .p-datatable-tbody > tr {
+.boostadd .p-datatable .p-datatable-tbody > tr {
   gap: 1px !important;
 }
-.addlist .p-datatable-thead > tr > th:nth-of-type(1),
-.addlist tbody > tr > td:nth-of-type(1) {
+.boostadd .p-datatable-thead > tr > th:nth-of-type(1),
+.boostadd tbody > tr > td:nth-of-type(1) {
   width: 300px !important;
 }
-.addlist .p-datatable-thead > tr > th:nth-of-type(2),
-.addlist tbody > tr > td:nth-of-type(2) {
+.boostadd .p-datatable-thead > tr > th:nth-of-type(2),
+.boostadd tbody > tr > td:nth-of-type(2) {
   width: 200px !important;
 }
-.addlist .p-datatable-thead > tr > th:nth-of-type(3),
-.addlist tbody > tr > td:nth-of-type(3) {
+.boostadd .p-datatable-thead > tr > th:nth-of-type(3),
+.boostadd tbody > tr > td:nth-of-type(3) {
   width: 130px !important;
 }
-.addlist .p-datatable-thead > tr > th:nth-of-type(4),
-.addlist tbody > tr > td:nth-of-type(4) {
+.boostadd .p-datatable-thead > tr > th:nth-of-type(4),
+.boostadd tbody > tr > td:nth-of-type(4) {
   width: 90px !important;
 }
-.addlist .p-datatable-thead > tr > th:nth-of-type(5),
-.addlist tbody > tr > td:nth-of-type(5) {
+
+.boostadd .p-datatable-thead > tr > th:nth-of-type(5),
+.boostadd tbody > tr > td:nth-of-type(5) {
   width: 46px !important;
+  display: flex;
+  justify-content: center;
 }

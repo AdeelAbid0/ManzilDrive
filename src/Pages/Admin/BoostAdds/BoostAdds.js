@@ -251,8 +251,10 @@ const BoostAdds = () => {
               <Column
                 header="Status"
                 body={(rowData) => (
-                  <p className="text-sm text-[#666666] font-normal">
-                    {rowData?.status || "N/A"}
+                  <p
+                    className={`flex items-center justify-center px-5 py-1 text-sm font-normal rounded-[4px] ${rowData?.boost?.isActive ? "bg-[#00796B1A] text-[#00796B]" : "bg-[#F39C121A] text-[#F39C12]"}`}
+                  >
+                    {rowData?.boost?.isActive ? "Active" : "Pending" || "N/A"}
                   </p>
                 )}
                 headerClassName="bg-blue-600 text-white text-start py-2"

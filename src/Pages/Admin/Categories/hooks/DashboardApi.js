@@ -1,16 +1,29 @@
+import { useClientMutation, useClientQuery } from "../../../../api/api-service";
 import { ApiUrl } from "../../../../api/apiUrls";
-import { useClientQuery } from "../../../../api/api-service";
-export const useGetAllCars = (page, limit, status, viewAll, businessId) => {
+export const useGetAllBusinesses = (page = 1, limit = 10) => {
   return useClientQuery({
-    queryKeys: ["GetAllCars", { page, limit, status, viewAll, businessId }],
-    url: ApiUrl.Dashboard.GetAllCars(page, limit, status, viewAll, businessId),
-    enabled: !!businessId,
+    queryKeys: ["GetAllBusinesses", { page, limit }],
+    url: ApiUrl.AdminDashboard.GetAllBusinesses(page, limit),
+    enabled: true,
   });
 };
-export const useGetAddsCount = (businessId) => {
+export const useGetAddsCount = () => {
   return useClientQuery({
-    queryKeys: ["GetAddsCount", { businessId }],
-    url: ApiUrl.Dashboard.GetAddsCount(businessId),
-    enabled: !!businessId,
+    url: ApiUrl.AdminDashboard.GetAddsCount(),
+    enabled: true,
+  });
+};
+export const useApproveBusiness = () => {
+  return useClientMutation({
+    url: ApiUrl.AdminDashboard.ApproveBusiness(),
+    method: "PUT",
+    enabled: true,
+  });
+};
+export const useRejectBusiness = () => {
+  return useClientMutation({
+    url: ApiUrl.AdminDashboard.RejectBusiness(),
+    method: "POST",
+    enabled: true,
   });
 };

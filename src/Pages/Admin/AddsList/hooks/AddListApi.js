@@ -1,16 +1,14 @@
+import { useClientMutation, useClientQuery } from "../../../../api/api-service";
 import { ApiUrl } from "../../../../api/apiUrls";
-import { useClientQuery } from "../../../../api/api-service";
-export const useGetAllAdds = (page, limit, isDeleted) => {
+export const useGetAllAds = (
+  page = 1,
+  limit = 10,
+  status = "all",
+  isDeleted = false,
+) => {
   return useClientQuery({
-    queryKeys: ["GetAllAdds", { page, limit, isDeleted }],
-    url: ApiUrl.AdminDashboard.GetAllAdds(page, limit, isDeleted),
+    queryKeys: ["GetAllBusinesses", { page, limit, status, isDeleted }],
+    url: ApiUrl.AdsList.GetAllAds(page, limit, status, isDeleted),
     enabled: true,
   });
 };
-// export const useGetAddsCount = (businessId) => {
-//   return useClientQuery({
-//     queryKeys: ["GetAddsCount", { businessId }],
-//     url: ApiUrl.Dashboard.GetAddsCount(businessId),
-//     enabled: !!businessId,
-//   });
-// };

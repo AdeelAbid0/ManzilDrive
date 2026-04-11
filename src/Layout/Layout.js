@@ -49,7 +49,7 @@ const Layout = () => {
   // Determine content width class
   const getContentWidthClass = () => {
     if (isPublicPage) return "max-w-[1440px] mx-auto ";
-    if (isPrivateRoute && showSidebar) return "max-w-[1440px] w-full ";
+    if (isPrivateRoute && showSidebar) return "max-w-[1102px]";
     if (isPrivateRoute && !showSidebar) return "max-w-[1440px] mx-auto ";
     if (isAuthPage) return "max-w-[1440px] mx-auto ";
     return "max-w-[1440px] mx-auto ";

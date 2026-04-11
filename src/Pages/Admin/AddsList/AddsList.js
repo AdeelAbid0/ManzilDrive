@@ -1,185 +1,225 @@
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { Button } from "primereact/button";
+import { OverlayPanel } from "primereact/overlaypanel";
 import "./Addlist.css";
-import { ReactComponent as SearchIcon } from "../../../assets/SVG/search.svg";
-import { ReactComponent as FilterIcon } from "../../../assets/SVG/filter.svg";
+import { useGetAllAds } from "./hooks/AddListApi";
 import { ReactComponent as Action } from "../../../assets/SVG/action.svg";
-import { useSelector } from "react-redux";
 import Loader from "../../../Components/Loader/Loader";
 import Pagination from "../../../Common/Pagination/Pagination";
-import CommonInput from "../../../Common/InputText/InputText";
-import { useGetAllAdds } from "./hooks/AddListApi";
 
 const AddList = () => {
-  const user = useSelector((state) => state.user.user);
-  const [AddStatus, setAddStatus] = useState({
-    viewAll: true,
-    active: false,
-    inactive: false,
-    pending: false,
-    expired: false,
-  });
+  const op = useRef(null);
+  const [selectedRow, setSelectedRow] = useState(null);
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
-  const [status, setStatus] = useState("all");
-  const [viewAll, setViewAll] = useState(true);
-  const [filteredCarsData, setFilteredCarsData] = useState(null);
-  const [showQrDialog, setShowQrDialog] = useState(false);
-  const BASE_URL_IMG = process.env.REACT_APP_API_URL;
 
-  // const { data: AddsCount, isPending: LoadingAddsData } = useGetAddsCount(
-  //   user?.business?._id,
-  // );
   const {
-    data: AddAddsData,
-    isLoading: AddsDataLoading,
-    error: AddsDataErorr,
-  } = useGetAllAdds(page, limit, status);
+    data: GetAdsList,
+    isLoading: AdsLoading,
+    error: AdsError,
+  } = useGetAllAds(page, limit);
 
-  const statusMap = {
-    viewAll: "all",
-    active: "active",
-    inactive: "inactive",
-    pending: "pending",
-    expired: "expired",
+  const handleActionClick = (e, rowData) => {
+    setSelectedRow(rowData);
+    op.current.toggle(e);
   };
 
-  useEffect(() => {
-    if (!AddAddsData?.cars) return;
+  const handleApprove = () => {
+    console.log("Approve clicked for:", selectedRow);
+    op.current?.hide();
+  };
 
-    const activeKey = Object.keys(AddStatus).find((key) => AddStatus[key]);
-    const currentStatus = statusMap[activeKey];
+  const handleViewDetail = () => {
+    console.log("View Detail clicked for:", selectedRow);
+    op.current?.hide();
+  };
 
-    if (!activeKey || activeKey === "viewAll" || !currentStatus) {
-      setFilteredCarsData(AddAddsData.cars);
-      return;
-    }
+  const handleEdit = () => {
+    console.log("Edit clicked for:", selectedRow);
+    op.current?.hide();
+  };
 
-    const filteredData = AddAddsData.cars.filter(
-      (item) => item?.status === currentStatus,
-    );
-    setFilteredCarsData(filteredData);
-  }, [AddStatus, AddAddsData]);
+  const handleRenew = () => {
+    console.log("Renew clicked for:", selectedRow);
+    op.current?.hide();
+  };
+
+  const handleBoost = () => {
+    console.log("Boost clicked for:", selectedRow);
+    op.current?.hide();
+  };
+
+  const handleContact = () => {
+    console.log("Contact clicked for:", selectedRow);
+    op.current?.hide();
+  };
+
+  const handleDelete = () => {
+    console.log("Delete clicked for:", selectedRow);
+    op.current?.hide();
+  };
 
   const handlePageChange = (newPage) => {
     setPage(newPage);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  useEffect(() => {
-    setPage(1);
-  }, [status, viewAll]);
-  const dummyCarsData = [
-    {
-      id: 1,
-      user: {
-        title: "Adeel Abid",
-        userName: "alma.lawson@example.com",
-        phoneNumber: "31234567890",
-      },
-      status: "Pending",
-    },
-  ];
+  const actionBodyTemplate = (rowData) => {
+    return (
+      <div className="action-cell">
+        <div
+          className="flex align-items-center cursor-pointer justify-center"
+          onClick={(e) => handleActionClick(e, rowData)}
+        >
+          <Action />
+        </div>
+      </div>
+    );
+  };
+
+  if (AdsLoading) {
+    return (
+      <div className="flex w-full items-center h-full flex-col my-4">
+        <Loader />
+      </div>
+    );
+  }
+
+  if (AdsError) {
+    return (
+      <div className="flex w-full justify-center mt-5">
+        <p className="text-red-500">Error loading data</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="flex w-full items-center h-full flex-col">
-      <div className="hidden md:flex flex-col h-[66px] w-[1094px] mt-8 gap-4">
-        <div className="flex w-full justify-between h-[17px]">
-          <h1 className="flex w-full font-archive font-semibold text-base text-[#4D4D4D]">
-            Recently Requested
-          </h1>
-          <div className="flex w-full gap-2">
-            <CommonInput
-              type={"text"}
-              name={"search"}
-              placeholder={"Search here"}
-              prefixIcon={SearchIcon}
-              className="!h-10"
+    <div className="flex w-full items-center flex-col my-4 max-w-[1102px]">
+      <div className="w-full">
+        <h1 className="font-archive font-semibold text-base text-[#4D4D4D] mb-4">
+          Ads List
+        </h1>
+
+        <div className="mt-6 boostadd hidden md:block">
+          <DataTable
+            value={GetAdsList?.data || []}
+            rows={limit}
+            paginator={false}
+            className="w-full"
+          >
+            <Column
+              header="Ad Title"
+              body={(rowData) => (
+                <div className="flex items-center gap-2">
+                  <img
+                    src={`${rowData?.photos[0]}`}
+                    alt="ad-image"
+                    className="!w-10 !h-10 object-cover rounded"
+                  />
+                  <p className="text-sm text-[#666666] font-normal">
+                    {rowData?.make?.name ? `${rowData?.make?.name} ` : ""}{" "}
+                    {rowData?.model?.name ? `${rowData?.model?.name}` : ""}{" "}
+                    {rowData?.year ? `${rowData?.year}` : ""}
+                  </p>
+                </div>
+              )}
+              headerClassName="bg-blue-600 text-start py-2"
             />
-            <div className="w-10 h-10 flex shrink-0 justify-center items-center rounded border border-[#DFE8E5] cursor-pointer">
-              <FilterIcon />
+            <Column
+              header="User Name"
+              body={(rowData) => (
+                <p className="text-sm text-[#666666] font-normal">
+                  {rowData?.business?.name || "N/A"}
+                </p>
+              )}
+              headerClassName="bg-blue-600 text-white text-start py-2"
+            />
+            <Column
+              header="Phone"
+              body={(rowData) => (
+                <p className="text-sm text-[#666666] font-normal">
+                  {rowData?.phoneNumber ? `${rowData?.phoneNumber}` : "N/A"}
+                </p>
+              )}
+              headerClassName="bg-blue-600 text-white text-start py-2"
+            />
+            <Column
+              header="Status"
+              body={(rowData) => (
+                <p className="text-sm text-[#666666] font-normal">
+                  {rowData?.status || "N/A"}
+                </p>
+              )}
+              headerClassName="bg-blue-600 text-white text-start py-2"
+            />
+            <Column
+              header="Action"
+              body={actionBodyTemplate}
+              headerClassName="bg-blue-600 text-white text-start py-2"
+            />
+          </DataTable>
+
+          <OverlayPanel ref={op}>
+            <div className="flex flex-col min-w-[120px]">
+              <div
+                className="px-3 py-2 hover:bg-gray-100 cursor-pointer rounded opacity-50"
+                onClick={handleApprove}
+              >
+                <p className="text-sm font-medium">Approve</p>
+              </div>
+              <div
+                className="px-3 py-2 hover:bg-gray-100 cursor-pointer rounded"
+                onClick={handleViewDetail}
+              >
+                <p className="text-sm font-medium">View Detail</p>
+              </div>
+              <div
+                className="px-3 py-2 hover:bg-gray-100 cursor-pointer rounded"
+                onClick={handleEdit}
+              >
+                <p className="text-sm font-medium">Edit</p>
+              </div>
+              <div
+                className="px-3 py-2 hover:bg-gray-100 cursor-pointer rounded"
+                onClick={handleRenew}
+              >
+                <p className="text-sm font-medium">Renew</p>
+              </div>
+              <div
+                className="px-3 py-2 hover:bg-gray-100 cursor-pointer rounded"
+                onClick={handleBoost}
+              >
+                <p className="text-sm font-medium">Boost</p>
+              </div>
+              <div
+                className="px-3 py-2 hover:bg-gray-100 cursor-pointer rounded"
+                onClick={handleContact}
+              >
+                <p className="text-sm font-medium">Contact</p>
+              </div>
+              <div
+                className="px-3 py-2 hover:bg-gray-100 cursor-pointer rounded"
+                onClick={handleDelete}
+              >
+                <p className="text-sm font-medium">Delete</p>
+              </div>
             </div>
-          </div>
+          </OverlayPanel>
         </div>
       </div>
-      <div className="mt-6 addlist hidden md:block">
-        {AddsDataLoading ? (
-          <div className="flex w-full justify-center mt-5">
-            <Loader />
-          </div>
-        ) : AddsDataErorr ? (
-          <p>Error loading data</p>
-        ) : (
-          <div className="w-full">
-            <DataTable
-              value={dummyCarsData}
-              rows={limit}
-              paginator={false}
-              className="w-full"
-            >
-              <Column
-                header="Add Title"
-                body={(rowData) => (
-                  <p className="text-sm text-[#666666] font-normal">
-                    {rowData?.user?.title || "N/A"}
-                  </p>
-                )}
-                headerClassName="bg-blue-600 text-start py-2"
-              />
-              <Column
-                header="User Name"
-                body={(rowData) => (
-                  <p className="text-sm text-[#666666] font-normal">
-                    {rowData?.user?.userName || "N/A"}
-                  </p>
-                )}
-                headerClassName="bg-blue-600 text-white text-start py-2"
-              />
-              <Column
-                header="Phone"
-                body={(rowData) => (
-                  <p className="text-sm text-[#666666] font-normal">
-                    {rowData?.user?.phoneNumber
-                      ? `${rowData.user.phoneNumber}`
-                      : "N/A"}
-                  </p>
-                )}
-                headerClassName="bg-blue-600 text-white text-start py-2"
-              />
-              <Column
-                header="Status"
-                body={(rowData) => (
-                  <p className="text-sm text-[#666666] font-normal">
-                    {rowData?.status || "N/A"}
-                  </p>
-                )}
-                headerClassName="bg-blue-600 text-white text-start py-2"
-              />
 
-              <Column
-                header="Action"
-                body={(rowData) => (
-                  <div className="flex pl-3 items-center justify-center gap-2">
-                    <Action />
-                  </div>
-                )}
-                headerClassName="bg-blue-600 text-white text-start py-2"
-              />
-            </DataTable>
+      {/* Pagination */}
+      {GetAdsList?.data?.length > 0 &&
+        GetAdsList?.pagination?.totalPages > 1 && (
+          <div className="mt-6 flex w-full justify-center px-4">
+            <Pagination
+              currentPage={page}
+              totalPages={GetAdsList.pagination.totalPages}
+              onPageChange={handlePageChange}
+            />
           </div>
         )}
-      </div>
-      {filteredCarsData?.length > 0 && AddAddsData?.totalPages > 1 && (
-        <div className="mt-6 flex w-full px-14">
-          <Pagination
-            currentPage={page}
-            totalPages={AddAddsData.totalPages}
-            onPageChange={handlePageChange}
-          />
-        </div>
-      )}
     </div>
   );
 };

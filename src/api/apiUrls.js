@@ -3,6 +3,7 @@ export const ApiUrl = {
     Register: "business/register",
     Login: "auth/login",
     GoogleLogin: "auth/google-login",
+    refreshToToken: "auth/refresh-token",
     sendEmailVerficationCode: "business/sendEmailVerficationCode",
     ResendEmailVerification: "business/resend-email-verification",
     VerifyPhone: "business/verify-phone",
@@ -99,5 +100,9 @@ export const ApiUrl = {
       `cars/carBoostedRequests?page=${page}&limit=${limit}&status=${status}`,
     RejectBoostRequest: () => "cars/rejectCarBoost",
     ApproveBoostRequest: () => "cars/approveCarBoost",
+  },
+  AdsList: {
+    GetAllAds: (page, limit, status, isDeleted) =>
+      `cars/getAdminAllCars?page=${page}&limit=${limit}&status=${status}&isDeleted=${isDeleted}`,
   },
 };
