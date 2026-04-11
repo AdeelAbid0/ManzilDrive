@@ -17,13 +17,13 @@ export const sidebarNavItemsAdmin = [
     icon: DashboardIcon,
   },
   {
-    title: "List of Adds",
-    path: "/list-adds",
+    title: "List of Ads",
+    path: "/list-ads",
     icon: DashboardIcon,
   },
   {
-    title: "Boost Adds",
-    path: "/boost-adds",
+    title: "Boost Ads",
+    path: "/boost-ads",
     icon: DashboardIcon,
   },
 ];
@@ -35,8 +35,8 @@ export const profileNavItems = [
     icon: ProfileIcon,
   },
   {
-    title: "My Adds",
-    path: "/my-adds",
+    title: "My Ads",
+    path: "/my-ads",
     icon: ProfileIcon,
   },
   {

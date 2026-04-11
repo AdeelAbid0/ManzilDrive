@@ -5,7 +5,7 @@ import "./Categories.css";
 import { Users, Eye, Clock, XCircle } from "lucide-react";
 import {
   useApproveBusiness,
-  useGetAddsCount,
+  useGetAdsCount,
   useGetAllBusinesses,
   useRejectBusiness,
 } from "./hooks/DashboardApi";
@@ -29,7 +29,7 @@ const Categories = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const op = useRef(null);
 
-  const { data: AddsCount, isPending: LoadingAddsData } = useGetAddsCount();
+  const { data: AdsCount, isPending: LoadingAdsData } = useGetAdsCount();
 
   const {
     data: AllBusinsses,
@@ -49,22 +49,22 @@ const Categories = () => {
     {
       icon: Users,
       label: "TOTAL USERS",
-      value: AddsCount?.data?.totalUsers || 0,
+      value: AdsCount?.data?.totalUsers || 0,
     },
     {
       icon: Eye,
-      label: "ACTIVE ADDS",
-      value: AddsCount?.data?.live || 0,
+      label: "ACTIVE ADS",
+      value: AdsCount?.data?.live || 0,
     },
     {
       icon: Clock,
-      label: "EXPIRED ADDS",
-      value: AddsCount?.data?.expired || 0,
+      label: "EXPIRED ADS",
+      value: AdsCount?.data?.expired || 0,
     },
     {
       icon: XCircle,
-      label: "INACTIVE ADDS",
-      value: AddsCount?.data?.inactive || 0,
+      label: "INACTIVE ADS",
+      value: AdsCount?.data?.inactive || 0,
     },
   ];
 
@@ -169,12 +169,12 @@ const Categories = () => {
     );
   };
 
-  // Adds count template
-  const addsBodyTemplate = (rowData) => {
-    return <span className="cell-content">{rowData?.totalAdds || 0}</span>;
+  // Ads count template
+  const adsBodyTemplate = (rowData) => {
+    return <span className="cell-content">{rowData?.totalAds || 0}</span>;
   };
 
-  if (LoadingAddsData) {
+  if (LoadingAdsData) {
     return (
       <div className="flex w-full items-center h-full flex-col my-4">
         <Loader />
@@ -287,8 +287,8 @@ const Categories = () => {
                 style={{ width: "303px" }}
               />
               <Column
-                header="Adds"
-                body={addsBodyTemplate}
+                header="Ads"
+                body={adsBodyTemplate}
                 headerClassName="bg-blue-600 text-white"
                 style={{ width: "38px" }}
               />

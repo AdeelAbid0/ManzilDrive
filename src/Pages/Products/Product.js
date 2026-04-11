@@ -20,7 +20,7 @@ const Products = () => {
       ...initialValues,
     },
     onSubmit: (values) => {
-      getAllActiveAdds(values);
+      getAllActiveAds(values);
     },
   });
 
@@ -35,7 +35,7 @@ const Products = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const getAllActiveAdds = () => {
+  const getAllActiveAds = () => {
     const filters = {
       page: page,
       limit: formik.values.limit,
@@ -68,14 +68,14 @@ const Products = () => {
   useEffect(() => {
     if (isInitialLoad) {
       console.log("1");
-      getAllActiveAdds();
+      getAllActiveAds();
       setIsInitialLoad(false);
     }
   }, []);
 
   useEffect(() => {
     if (!isInitialLoad) {
-      getAllActiveAdds();
+      getAllActiveAds();
     }
   }, [page]);
   return (
@@ -102,7 +102,7 @@ const Products = () => {
         <ProductsList
           allCarsData={allCarsData}
           formik={formik}
-          handleSearch={getAllActiveAdds}
+          handleSearch={getAllActiveAds}
           LoadingCarsData={LoadingCarsData}
           page={page}
           handlePageChange={handlePageChange}
@@ -122,7 +122,7 @@ const Products = () => {
         <div className="max-h-[90vh] overflow-y-auto p-6">
           <SearchDialog
             formik={formik}
-            handleSearch={getAllActiveAdds}
+            handleSearch={getAllActiveAds}
             setShowSearchDialog={setShowSearchDialog}
           />
         </div>

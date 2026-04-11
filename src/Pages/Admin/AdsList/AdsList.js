@@ -2,8 +2,8 @@ import { useState, useRef } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { OverlayPanel } from "primereact/overlaypanel";
-import "./Addlist.css";
-import { useGetAllAds } from "./hooks/AddListApi";
+import "./AdsList.css";
+import { useGetAllAds } from "./hooks/AdsListApi";
 import { ReactComponent as Action } from "../../../assets/SVG/action.svg";
 import Loader from "../../../Components/Loader/Loader";
 import Pagination from "../../../Common/Pagination/Pagination";
@@ -80,7 +80,7 @@ const AddList = () => {
 
   if (AdsLoading) {
     return (
-      <div className="flex w-full items-center h-full flex-col my-4">
+      <div className="flex w-full items-center justify-center h-[calc(100vh-200px)] flex-col my-4">
         <Loader />
       </div>
     );

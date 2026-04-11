@@ -77,7 +77,7 @@ const PostAdd = () => {
             queryKey: ["GetAllCars"],
           });
           queryClient.invalidateQueries({
-            queryKey: ["GetAddsCount"],
+            queryKey: ["GetAdsCount"],
           });
           const formDataForAddVehicle = new FormData();
           formDataForAddVehicle.append("business", businessId);

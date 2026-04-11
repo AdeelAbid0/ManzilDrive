@@ -5,15 +5,16 @@ import { Button } from "primereact/button";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 import {
-  ActiveAdds,
+  ActiveAds,
   AddImpression,
   DailyBooking,
-  ExpireAdds,
+  ExpireAds,
 } from "../../Utils/Icons";
 import {
   useBoostAd,
   useDeleteAd,
-  useGetAddsCount,
+  useGetAdsCount,
+  useGetAllAds,
   useGetAllCars,
 } from "./hooks/DashboardApi";
 import { ReactComponent as ArrowDownIcon } from "../../assets/SVG/arrow-down.svg";
@@ -46,7 +47,7 @@ const Dashboard = () => {
   // State management
   const [showBoostDialog, setShowBoostDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const [addStatus, setAddStatus] = useState("viewAll");
+  const [adStatus, setAdStatus] = useState("viewAll");
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
   const [showQrDialog, setShowQrDialog] = useState(false);
@@ -65,9 +66,9 @@ const Dashboard = () => {
     expired: "expired",
   };
 
-  // Get status and viewAll based on addStatus
-  const status = statusMap[addStatus];
-  const viewAll = addStatus === "viewAll";
+  // Get status and viewAll based on adStatus
+  const status = statusMap[adStatus];
+  const viewAll = adStatus === "viewAll";
 
   // Days options for boost dialog
   const daysOptions = [
@@ -92,10 +93,10 @@ const Dashboard = () => {
 
   // API calls
   const {
-    data: addsCount,
-    isPending: loadingAddsData,
-    refetch: refetchAddsCount,
-  } = useGetAddsCount(user?.business?._id);
+    data: adsCount,
+    isPending: loadingAdsData,
+    refetch: refetchAdsCount,
+  } = useGetAdsCount(user?.business?._id);
 
   const {
     data: allCarsData,
@@ -113,24 +114,24 @@ const Dashboard = () => {
       icon: DailyBooking,
       label: "TOTAL NUMBER OF ADS",
       value:
-        (addsCount?.data?.inactive || 0) +
-        (addsCount?.data?.live || 0) +
-        (addsCount?.data?.pending || 0),
+        (adsCount?.data?.inactive || 0) +
+        (adsCount?.data?.live || 0) +
+        (adsCount?.data?.pending || 0),
     },
     {
-      icon: ActiveAdds,
-      label: "ACTIVE ADDS",
-      value: addsCount?.data?.live || 0,
+      icon: ActiveAds,
+      label: "ACTIVE ADS",
+      value: adsCount?.data?.live || 0,
     },
     {
       icon: AddImpression,
-      label: "INACTIVE ADDS",
-      value: addsCount?.data?.inactive || 0,
+      label: "INACTIVE ADS",
+      value: adsCount?.data?.inactive || 0,
     },
     {
-      icon: ExpireAdds,
-      label: "PENDING ADDS",
-      value: addsCount?.data?.pending || 0,
+      icon: ExpireAds,
+      label: "PENDING ADS",
+      value: adsCount?.data?.pending || 0,
     },
   ];
 
@@ -143,19 +144,19 @@ const Dashboard = () => {
       viewAllFlag: true,
     },
     {
-      label: "Active Adds",
+      label: "Active Ads",
       key: "active",
       statusValue: "active",
       viewAllFlag: false,
     },
     {
-      label: "Inactive Adds",
+      label: "Inactive Ads",
       key: "inactive",
       statusValue: "inactive",
       viewAllFlag: false,
     },
     {
-      label: "Pending Adds",
+      label: "Pending Ads",
       key: "pending",
       statusValue: "pending",
       viewAllFlag: false,
@@ -170,7 +171,7 @@ const Dashboard = () => {
 
   // Handlers
   const handleTabSelect = useCallback((tab) => {
-    setAddStatus(tab.key);
+    setAdStatus(tab.key);
     setSelectedTab(tab.label);
     setShowTabDropdown(false);
     setPage(1); // Reset to first page on tab change
@@ -208,7 +209,7 @@ const Dashboard = () => {
             queryKey: ["GetAllCars"],
           });
 
-          refetchAddsCount();
+          refetchAdsCount();
 
           // Close dialog and reset states
           setShowDeleteDialog(false);
@@ -228,7 +229,7 @@ const Dashboard = () => {
         },
       },
     );
-  }, [carToDelete, deleteAd, dispatch, refetchAllCars, refetchAddsCount]);
+  }, [carToDelete, deleteAd, dispatch, refetchAllCars, refetchAdsCount]);
 
   const handleToggleAvailability = useCallback((carId, newStatus) => {
     console.log(`Toggling availability for car ${carId} to ${newStatus}`);
@@ -265,7 +266,7 @@ const Dashboard = () => {
             formik.resetForm();
             // Refresh the data
             refetchAllCars();
-            refetchAddsCount();
+            refetchAdsCount();
           },
           onError: (error) => {
             dispatch(
@@ -278,7 +279,7 @@ const Dashboard = () => {
         },
       );
     },
-    [selectedRow, boostAd, formik, dispatch, refetchAllCars, refetchAddsCount],
+    [selectedRow, boostAd, formik, dispatch, refetchAllCars, refetchAdsCount],
   );
 
   // Overlay panel menu items
@@ -381,7 +382,7 @@ const Dashboard = () => {
       <div className="lg:hidden flex flex-col w-full px-4 mt-6">
         <div className="flex w-full justify-between items-center h-[17px] mb-2">
           <h1 className="w-full font-archive font-semibold text-base text-[#4D4D4D]">
-            My Adds
+            My Ads
           </h1>
           <div
             className="relative flex justify-center items-center w-full min-w-[105px] h-9 text-primary border border-primary rounded cursor-pointer hover:bg-blue-50"
@@ -459,7 +460,7 @@ const Dashboard = () => {
       <div className="hidden lg:flex flex-col w-[95%] mt-8 gap-4">
         <div className="h-[17px]">
           <h1 className="font-archive font-semibold text-base text-[#4D4D4D]">
-            My Adds
+            My Ads
           </h1>
         </div>
 
@@ -471,7 +472,7 @@ const Dashboard = () => {
                 label={btn.label}
                 onClick={() => handleTabSelect(btn)}
                 className={`font-medium text-xs border rounded-2xl w-[100px] h-[32px] transition-colors duration-300 focus:ring-0 focus:outline-none ${
-                  addStatus === btn.key
+                  adStatus === btn.key
                     ? "bg-[#00796B] text-white border-[#00796B] hover:bg-[#00695C]"
                     : "bg-white text-primary border-primary hover:bg-blue-50"
                 }`}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import "./BoostAdds.css";
+import "./BoostAds.css";
 import {
   useApproveBoostRequest,
   useGetAllBoostAdsRequests,

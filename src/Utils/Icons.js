@@ -607,7 +607,7 @@ export const DailyBooking = () => {
     </>
   );
 };
-export const ActiveAdds = () => {
+export const ActiveAds = () => {
   return (
     <>
       <svg
@@ -747,7 +747,7 @@ export const AddImpression = () => {
     </>
   );
 };
-export const ExpireAdds = () => {
+export const ExpireAds = () => {
   return (
     <>
       <svg

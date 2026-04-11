@@ -7,7 +7,7 @@ export const useGetAllAds = (
   isDeleted = false,
 ) => {
   return useClientQuery({
-    queryKeys: ["GetAllBusinesses", { page, limit, status, isDeleted }],
+    queryKeys: ["GetAllAds", { page, limit, status, isDeleted }],
     url: ApiUrl.AdsList.GetAllAds(page, limit, status, isDeleted),
     enabled: true,
   });

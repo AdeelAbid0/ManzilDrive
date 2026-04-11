@@ -4,7 +4,7 @@ import PrivateRoutes from "../PrivateRoutes";
 
 const PostAdd = lazy(() => import("../../Pages/PostAdd/PostAdd"));
 const EditAd = lazy(() => import("../../Pages/EditAd/EditAd"));
-const AddList = lazy(() => import("../../Pages/Admin/AddsList/AddsList"));
+const AddList = lazy(() => import("../../Pages/Admin/AdsList/AdsList"));
 const Dashboard = lazy(() => import("../../Pages/Dashboard/Dashboard"));
 const Profile = lazy(() => import("../../Pages/Profile/Profile"));
 const Dashboard_Admin = lazy(
@@ -13,7 +13,7 @@ const Dashboard_Admin = lazy(
 const Categories = lazy(
   () => import("../../Pages/Admin/Categories/Categories"),
 );
-const BoostAdds = lazy(() => import("../../Pages/Admin/BoostAdds/BoostAdds"));
+const BoostAdds = lazy(() => import("../../Pages/Admin/BoostAds/BoostAds"));
 const Products = lazy(() => import("../../Pages/Products/Product"));
 
 export const PRIVATE_ROUTES = [
@@ -58,7 +58,7 @@ export const PRIVATE_ROUTES = [
     ),
   },
   {
-    path: ROUTES.LIST_ADDS,
+    path: ROUTES.LIST_ADS,
     element: (
       <PrivateRoutes>
         <AddList />
@@ -74,7 +74,7 @@ export const PRIVATE_ROUTES = [
     ),
   },
   {
-    path: ROUTES.BOOST_ADDS,
+    path: ROUTES.BOOST_ADS,
     element: (
       <PrivateRoutes>
         <BoostAdds />

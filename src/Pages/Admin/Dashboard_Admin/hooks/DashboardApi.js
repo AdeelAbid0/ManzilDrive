@@ -7,9 +7,10 @@ export const useGetAllBusinesses = (page = 1, limit = 10) => {
     enabled: true,
   });
 };
-export const useGetAddsCount = () => {
+export const useGetAdsCount = () => {
   return useClientQuery({
-    url: ApiUrl.AdminDashboard.GetAddsCount(),
+    queryKeys: ["GetAdsCount"],
+    url: ApiUrl.AdminDashboard.GetAdsCount(),
     enabled: true,
   });
 };

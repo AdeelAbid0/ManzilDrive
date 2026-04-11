@@ -13,12 +13,12 @@ export const ROUTES = {
 
   //PRIVATE ROUTES
   DASHBOARD: "/dashboard",
-  POSTADD: "/postAdd",
-  EDITADD: "/editAdd/:id",
+  POSTAD: "/postAd",
+  EDITAD: "/editAd/:id",
   PROFILE: "/profile",
   DASHBOARD_ADMIN: "/dashboard-admin",
-  LIST_ADDS: "/list-adds",
+  LIST_ADS: "/list-ads",
   CATEGORIES: "/categories",
-  BOOST_ADDS: "/boost-adds",
+  BOOST_ADS: "/boost-ads",
   LANDING_PAGE: "/landing-page",
 };

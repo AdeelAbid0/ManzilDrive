@@ -7,10 +7,10 @@ export const useGetAllCars = (page, limit, status, viewAll, businessId) => {
     enabled: true,
   });
 };
-export const useGetAddsCount = (businessId) => {
+export const useGetAdsCount = (businessId) => {
   return useClientQuery({
-    queryKeys: ["GetAddsCount", { businessId }],
-    url: ApiUrl.Dashboard.GetAddsCount(businessId),
+    queryKeys: ["GetAdsCount", { businessId }],
+    url: ApiUrl.Dashboard.GetAdsCount(businessId),
     enabled: true,
   });
 };

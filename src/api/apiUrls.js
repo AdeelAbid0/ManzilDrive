@@ -14,7 +14,7 @@ export const ApiUrl = {
   Dashboard: {
     GetAllCars: (page, limit, status, viewAll, businessId) =>
       `/cars/getAllCarsOfBusiness?page=${page}&limit=${limit}&status=${status}&viewAll=${viewAll}&businessId=${businessId}`,
-    GetAddsCount: (businessId) =>
+    GetAdsCount: (businessId) =>
       `cars/getBusinessAdsCount?businessId=${businessId}`,
     BoostAd: () => "cars/boostAd",
     DeleteAd: () => "/cars/deleteAd",
@@ -87,12 +87,12 @@ export const ApiUrl = {
   AdminDashboard: {
     GetAllBusinesses: (page, limit) =>
       `business/adminGetAllBusinesses?page=${page}&limit=${limit}`,
-    GetAddsCount: () => "cars/getAdminCarStatusCount",
+    GetAdsCount: () => "cars/getAdminCarStatusCount",
     //Businesses
     ApproveBusiness: () => "business/approve",
     RejectBusiness: () => "business/rejectBusiness",
-    // Adds list
-    GetAllAdds: (page, limit, status, isDeleted) =>
+    // Ads list
+    GetAllAds: (page, limit, status, isDeleted) =>
       `cars/getAdminAllCars?page=${page}&limit=${limit}&status=${status}&isDeleted=${isDeleted}`,
   },
   BoostAds: {
