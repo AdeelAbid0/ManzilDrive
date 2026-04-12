@@ -30,14 +30,20 @@ export const useDeleteAd = () => {
 export const useGetCarDetails = (carId) => {
   return useClientQuery({
     queryKeys: ["GetCarDetails", carId],
-    url: `cars/getCarDetails/${carId}`,
+    url: ApiUrl.Dashboard.GetCarDetails(carId),
     enabled: !!carId,
   });
 };
 
 export const useUpdateCar = () => {
   return useClientMutation({
-    url: "cars/updateCar",
+    url: ApiUrl.Vehicle.UpdateVehicle,
+    method: "PUT",
+  });
+};
+export const useUpdateCarAvailability = () => {
+  return useClientMutation({
+    url: ApiUrl.Vehicle.UpdateAvailability,
     method: "PUT",
   });
 };

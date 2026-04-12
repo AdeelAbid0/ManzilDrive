@@ -92,9 +92,15 @@ const Login = () => {
       { idToken: token },
       {
         onSuccess: (res) => {
+          console.log({ res });
           dispatch(setUser(res));
           localStorage.setItem("Token", res?.token);
-          navigate("/postAd");
+          console.log("login", res?.business?.isFirstLogin);
+          if (res?.business?.isFirstLogin) {
+            navigate("/postAd");
+          } else {
+            navigate("/dashboard");
+          }
           dispatch(
             showNotification({
               message: "Login success",

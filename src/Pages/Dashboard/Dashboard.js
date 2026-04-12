@@ -16,6 +16,7 @@ import {
   useGetAdsCount,
   useGetAllAds,
   useGetAllCars,
+  useUpdateCarAvailability,
 } from "./hooks/DashboardApi";
 import { ReactComponent as ArrowDownIcon } from "../../assets/SVG/arrow-down.svg";
 import { ReactComponent as EditIcon } from "../../assets/SVG/edit.svg";
@@ -107,7 +108,10 @@ const Dashboard = () => {
 
   const { mutate: boostAd, isPending: boostAdLoading } = useBoostAd();
   const { mutate: deleteAd } = useDeleteAd();
-
+  const {
+    mutate: updateCarAvailability,
+    isPending: updateAvailabilityLoading,
+  } = useUpdateCarAvailability();
   // Stats data
   const stats = [
     {
@@ -646,6 +650,30 @@ const Dashboard = () => {
                         if (item.onToggle) {
                           item.onToggle(selectedRow, e.value);
                         }
+                        updateCarAvailability(
+                          {
+                            isAvailable: false,
+                            carId: selectedRow._id,
+                          },
+                          {
+                            onSuccess: (response) => {
+                              console.log({ response });
+                              dispatch(
+                                showNotification({
+                                  message: response?.message,
+                                  success: true,
+                                }),
+                              );
+                            },
+                            onError: (error) => {
+                              console.log({ error });
+                              showNotification({
+                                message: error?.message,
+                                success: false,
+                              });
+                            },
+                          },
+                        );
                       }}
                     />
                   </div>

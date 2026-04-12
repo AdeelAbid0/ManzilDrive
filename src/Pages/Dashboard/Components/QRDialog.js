@@ -9,7 +9,6 @@ import logo from "../../../assets/images/Logo.png";
 
 const QRDialog = ({ showQrDialog, setShowQrDialog, user }) => {
   const businessUrl = `https://manzil-drive.vercel.app/viewAll/${user?.business?._id}`;
-
   const handleDownloadPDF = async () => {
     try {
       // Use online URLs for images
@@ -50,21 +49,21 @@ const QRDialog = ({ showQrDialog, setShowQrDialog, user }) => {
               ہماری کار کی فہرست دیکھیں
             </p>
           </div>
-          <div style="position: relative; background-color: #00796B; margin-top: 16px; display: flex; flex-direction: column; align-items: center; width: 100%; min-height: 500px;">
-            <img src="${steeringWheelUrl}" alt="" style="width: 100%; height: auto; opacity: 0.3;" />
-            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; width: 360px; position: absolute; top: 40px;">
+          <div style="position: relative; background-color: #00796B; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; min-height: 500px; margin-top: 16px;">
+            <img src="${steeringWheelUrl}" alt="" style="width: 100%; height: auto; opacity: 0.3; position: absolute;" />
+            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; width: 360px; position: relative; z-index: 1;">
               <img
                 src="${user?.business?.qrCode}"
                 alt="QR Code"
                 style="width: 300px; height: 300px; margin: auto; border-radius: 6px; background-color: white; padding: 10px;"
                 id="qr-code-img"
               />
-              <div style="background-color: white; width: 320px; border-radius: 4px; margin-top: 30px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                <h3 style="color: #394543; font-weight: 400; font-size: 24px; margin: 0 0 8px 0;">
+              <div style="background-color: white; width: 300px; border-radius: 4px; margin-top: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <h3 style="color: #394543; font-weight: 400; font-size: 32px; line-height: 0; padding: 16px 12px;">
                   ${user?.business?.name || "Business Name"}
                 </h3>
-                <p style="font-weight: bold; color: #394543; font-size: 20px; margin: 0;">
-                  ${user?.business?.phoneNumber || "N/A"}
+                <p style="font-weight: bold; color: #394543; font-size: 32px; padding: 0px 12px 16px 12px;">
+                  +92 ${user?.business?.phoneNumber || "N/A"}
                 </p>
               </div>
             </div>

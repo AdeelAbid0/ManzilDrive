@@ -18,6 +18,7 @@ export const ApiUrl = {
       `cars/getBusinessAdsCount?businessId=${businessId}`,
     BoostAd: () => "cars/boostAd",
     DeleteAd: () => "/cars/deleteAd",
+    GetCarDetails: (carId) => `cars/getCarDetails/${carId}`,
   },
   Profile: {
     UpdateProfile: "business/update",
@@ -36,7 +37,7 @@ export const ApiUrl = {
   Vehicle: {
     AddVehicle: "cars/addcar",
     UpdateVehicle: "cars/updateCar",
-    UpdateAvailability: (carId) => `cars/${carId}/availability`,
+    UpdateAvailability: "/cars/availability",
     ApprovePost: (carId) => `cars/${carId}/approve`,
     GetAllCars: () => `cars/cars`,
     AddPostDuration: "postDuration/car-post-duration",
