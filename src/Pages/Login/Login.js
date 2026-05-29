@@ -15,6 +15,7 @@ import { showNotification } from "../../slices/notificationSlice";
 import { useVerifyPhone } from "../Register/hooks/RegisterApi";
 import OTPScreen from "../Register/OTP";
 import { setUser } from "../../slices/userSlice";
+import { ROUTES } from "../../constants/routes";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -261,7 +262,7 @@ const Login = () => {
                 <div className="flex items-start w-full h-[28px] mt-2">
                   <p
                     className="font-inter font-medium text-xs leading-4 text-[#174473] cursor-pointer"
-                    onClick={() => navigate("/forget-password")}
+                    onClick={() => navigate(ROUTES.FORGOT_PASSWORD)}
                   >
                     Forgot Your Password ?
                   </p>

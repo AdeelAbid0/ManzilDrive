@@ -3,7 +3,7 @@ import { InputOtp } from "primereact/inputotp";
 import { useEffect, useState } from "react";
 import PrimaryButton from "../../Common/Button/Button";
 import { formatTime } from "../../Utils/helpers";
-const OTPScreen = ({ setTokens, token, handleVerifyPhone }) => {
+const OTPScreen = ({ setTokens, token, handleVerifyPhone, isVerifying }) => {
   const [timeLeft, setTimeLeft] = useState(120);
   useEffect(() => {
     if (timeLeft <= 0) return;
@@ -34,6 +34,7 @@ const OTPScreen = ({ setTokens, token, handleVerifyPhone }) => {
         <PrimaryButton
           type="submit"
           label="Verify"
+          loading={isVerifying}
           onClick={handleVerifyPhone}
         />
       </div>

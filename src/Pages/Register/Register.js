@@ -46,7 +46,7 @@ const Register = () => {
         onError: (error) => {
           toast.error(error?.message);
         },
-      }
+      },
     );
   };
   const handleVerifyPhone = () => {
@@ -63,7 +63,7 @@ const Register = () => {
         onError: (error) => {
           toast.error(error?.message);
         },
-      }
+      },
     );
   };
 

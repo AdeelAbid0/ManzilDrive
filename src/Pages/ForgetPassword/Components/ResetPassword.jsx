@@ -20,7 +20,7 @@ const ResetPassword = ({ phoneNumber }) => {
       }
     },
   });
-  const { mutate: ResetPassword, isPending: Loading } = useResetPassword();
+  const { mutate: ResetPassword, isPending: isResetting } = useResetPassword();
   const handleResetPassword = () => {
     ResetPassword(
       {
@@ -34,7 +34,7 @@ const ResetPassword = ({ phoneNumber }) => {
             showNotification({
               message: res?.message,
               status: "success",
-            })
+            }),
           );
         },
         onError: (error) => {
@@ -42,10 +42,10 @@ const ResetPassword = ({ phoneNumber }) => {
             showNotification({
               message: error?.message,
               status: "error",
-            })
+            }),
           );
         },
-      }
+      },
     );
   };
   useEffect(() => {
@@ -112,6 +112,7 @@ const ResetPassword = ({ phoneNumber }) => {
         <div className="flex w-full mt-8">
           <PrimaryButton
             label={"Reset Password"}
+            loading={isResetting}
             type="submit"
             className="w-full"
             onClick={handleResetPassword}

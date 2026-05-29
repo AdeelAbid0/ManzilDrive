@@ -23,8 +23,8 @@ const ForgetPassword = () => {
     },
   });
 
-  const { mutate: VerifyPhone } = useVerifyPhone();
-  const { mutate: sendOTP } = useResendOTP();
+  const { mutate: VerifyPhone, isPending: isVerifyingPhone } = useVerifyPhone();
+  const { mutate: sendOTP, isPending: isSendingOTP } = useResendOTP();
   const handleSendOTP = () => {
     sendOTP(
       {
@@ -37,7 +37,7 @@ const ForgetPassword = () => {
             showNotification({
               message: "OTP sent successfully",
               status: "success",
-            })
+            }),
           );
         },
         onError: (error) => {
@@ -45,10 +45,10 @@ const ForgetPassword = () => {
             showNotification({
               message: "Error while sending OTP",
               status: "error",
-            })
+            }),
           );
         },
-      }
+      },
     );
   };
   const handleVerifyPhone = () => {
@@ -65,7 +65,7 @@ const ForgetPassword = () => {
             showNotification({
               message: "OTP verified successfully",
               status: "success",
-            })
+            }),
           );
         },
         onError: (error) => {
@@ -73,10 +73,10 @@ const ForgetPassword = () => {
             showNotification({
               message: error?.message,
               status: "error",
-            })
+            }),
           );
         },
-      }
+      },
     );
   };
   return (
@@ -101,7 +101,10 @@ const ForgetPassword = () => {
         </div>
         <div className=" flex flex-col justify-start md:justify-center items-center w-full  md:w-[50%] lg:w-[38%] h-auto md:h-full bg-white rounded-lg z-0 p-6 ">
           {showOtp ? (
-            <OTPScreen handleVerifyPhone={handleVerifyPhone} />
+            <OTPScreen
+              handleVerifyPhone={handleVerifyPhone}
+              isVerifying={isVerifying}
+            />
           ) : showPasswordScreen ? (
             <ResetPassword phoneNumber={formik.values.phoneNumber} />
           ) : (
@@ -140,7 +143,11 @@ const ForgetPassword = () => {
                   />
                 </div>
                 <div className="flex w-full mt-8">
-                  <PrimaryButton label={"Reset"} onClick={handleSendOTP} />
+                  <PrimaryButton
+                    label={"Reset"}
+                    onClick={handleSendOTP}
+                    loading={isSendingOTP}
+                  />
                 </div>
               </form>
             </div>
