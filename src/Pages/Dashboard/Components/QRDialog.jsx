@@ -1,6 +1,6 @@
-import CommonDialog from "../../../Common/Dialog/CommonDialog";
-import { ReactComponent as LinkIcon } from "../../../assets/SVG/link.svg?react";
-import { ReactComponent as ShareIcon } from "../../../assets/SVG/share.svg?react";
+﻿import CommonDialog from "../../../Common/Dialog/CommonDialog";
+import LinkIcon from "../../../assets/SVG/link.svg?react";
+import ShareIcon from "../../../assets/SVG/share.svg?react";
 import PrimaryButton from "../../../Common/Button/Button";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";

@@ -1,9 +1,9 @@
-import { ReactComponent as LocationIcon } from "../../assets/SVG/location.svg";
-import { ReactComponent as Avatar } from "../../assets/SVG/avatar.svg";
-import { ReactComponent as Disclaimer } from "../../assets/SVG/disclaimer.svg";
-import { ReactComponent as ArrowLeft } from "../../assets/SVG/arrow-left.svg";
-import { ReactComponent as ArrowRight } from "../../assets/SVG/arrow-right.svg";
-import { ReactComponent as CameraIcon } from "../../assets/SVG/camera.svg";
+﻿import LocationIcon from "../../assets/SVG/location.svg?react";
+import Avatar from "../../assets/SVG/avatar.svg?react";
+import Disclaimer from "../../assets/SVG/disclaimer.svg?react";
+import ArrowLeft from "../../assets/SVG/arrow-left.svg?react";
+import ArrowRight from "../../assets/SVG/arrow-right.svg?react";
+import CameraIcon from "../../assets/SVG/camera.svg?react";
 import PrimaryButton from "../../Common/Button/Button";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";

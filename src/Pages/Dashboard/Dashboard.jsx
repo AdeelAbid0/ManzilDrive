@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+﻿import { useState, useEffect, useRef, useCallback } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
@@ -14,15 +14,14 @@ import {
   useBoostAd,
   useDeleteAd,
   useGetAdsCount,
-  useGetAllAds,
   useGetAllCars,
   useUpdateCarAvailability,
 } from "./hooks/DashboardApi";
-import { ReactComponent as ArrowDownIcon } from "../../assets/SVG/arrow-down.svg";
-import { ReactComponent as EditIcon } from "../../assets/SVG/edit.svg";
-import { ReactComponent as DeleteIcon } from "../../assets/SVG/delete.svg";
-import { ReactComponent as CarIcon } from "../../assets/SVG/car.svg";
-import { ReactComponent as BoostIcon } from "../../assets/SVG/boost.svg";
+import ArrowDownIcon from "../../assets/SVG/arrow-down.svg?react";
+import EditIcon from "../../assets/SVG/edit.svg?react";
+import DeleteIcon from "../../assets/SVG/delete.svg?react";
+import CarIcon from "../../assets/SVG/car.svg?react";
+import BoostIcon from "../../assets/SVG/boost.svg?react";
 import { useSelector } from "react-redux";
 import Loader from "../../Components/Loader/Loader";
 import Pagination from "../../Common/Pagination/Pagination";

@@ -1,14 +1,13 @@
-import { useState, useRef, useEffect } from "react";
+﻿import { useState, useRef, useEffect } from "react";
 import { Hambergur } from "../Utils/Icons";
 import { Button } from "primereact/button";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { ReactComponent as AvatarIcon } from "../assets/SVG/avatar.svg";
-import { ReactComponent as ArorwDownIcon } from "../assets/SVG/arrow-down.svg";
+import AvatarIcon from "../assets/SVG/avatar.svg?react";
+import ArorwDownIcon from "../assets/SVG/arrow-down.svg?react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUser } from "../slices/userSlice";
 import SideMenu from "../Components/SideMenu/SideMenu";
 import { profileNavItems, sidebarNavItems } from "../config/navigation";
-const BASE_URL_IMG = process.env.REACT_APP_API_URL;
 const Header = ({ isPrivateRoute }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();

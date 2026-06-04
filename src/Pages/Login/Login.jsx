@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { LogoFooter } from "../../Utils/Icons";
 import { InputText } from "primereact/inputtext";
 import { useNavigate } from "react-router-dom";
-import { ReactComponent as GoogleIcon } from "../../assets/SVG/google-icon.svg";
+import GoogleIcon from "../../assets/SVG/google-icon.svg?react";
 import { useFormik } from "formik";
 import { initialValues } from "./Form/login.initial";
 import { validationSchema } from "./Form/login.schema";

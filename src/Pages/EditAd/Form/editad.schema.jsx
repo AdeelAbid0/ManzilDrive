@@ -1,3 +1,5 @@
+export const validationSchema = null;
+
 // import * as Yup from "yup";
 
 // export const validationSchema = Yup.object().shape({

@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+﻿import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { clearNotification } from "../../slices/notificationSlice";
-import { ReactComponent as CancelIcon } from "../../assets/SVG/cancel.svg";
+import CancelIcon from "../../assets/SVG/cancel.svg?react";
 
 export default function NotificationProvider() {
   const { notifications } = useSelector((state) => state.notification);

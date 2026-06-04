@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { ReactComponent as AvatarIcon } from "../../assets/SVG/avatar.svg";
+import AvatarIcon from "../../assets/SVG/avatar.svg?react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUser } from "../../slices/userSlice";
 import { Button } from "primereact/button";
@@ -11,7 +11,6 @@ import {
 } from "../../config/navigation";
 
 const SideMenu = ({ setMenu }) => {
-  const BASE_URL_IMG = process.env.REACT_APP_API_URL;
   const [isClosing, setIsClosing] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const user = useSelector((state) => state.user.user);

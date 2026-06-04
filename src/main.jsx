@@ -10,9 +10,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PrimeReactProvider } from "primereact/api";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
+
 const queryClient = new QueryClient();
+
 const loader = document.getElementById("loader");
 if (loader) loader.remove();
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>

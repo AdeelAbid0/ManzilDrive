@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+﻿import { useState, useRef } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import "./Dashboard-admin.css";
@@ -9,8 +9,8 @@ import {
   useGetAllBusinesses,
   useRejectBusiness,
 } from "./hooks/DashboardApi";
-import { ReactComponent as SearchIcon } from "../../../assets/SVG/search.svg";
-import { ReactComponent as Action } from "../../../assets/SVG/action.svg";
+import SearchIcon from "../../../assets/SVG/search.svg?react";
+import Action from "../../../assets/SVG/action.svg?react";
 import Loader from "../../../Components/Loader/Loader";
 import Pagination from "../../../Common/Pagination/Pagination";
 import CommonInput from "../../../Common/InputText/InputText";

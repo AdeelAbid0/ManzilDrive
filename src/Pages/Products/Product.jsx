@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { InputText } from "primereact/inputtext";
 import HeroSection from "../../Components/HeroSection/HeroSection";
 import ProductsList from "./Components/ProductsList/ProductsList";
@@ -7,7 +7,7 @@ import { initialValues } from "./Form/Poducts.initail";
 import { useGetAllCars } from "./hooks/ProductsApi";
 import CommonDialog from "../../Common/Dialog/CommonDialog";
 import SearchDialog from "./Components/SearchDialog/SearchDialog";
-import { ReactComponent as SearchIcon } from "../../assets/SVG/search.svg";
+import SearchIcon from "../../assets/SVG/search.svg?react";
 
 const Products = () => {
   const [showSearchDialog, setShowSearchDialog] = useState(false);

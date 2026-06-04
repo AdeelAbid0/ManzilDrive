@@ -1,7 +1,7 @@
-import { useLocation, useParams } from "react-router-dom";
+﻿import { useLocation, useParams } from "react-router-dom";
 import { useGetAllBusinessCars } from "./hooks/AllBusinessCarsApi";
 import { useState } from "react";
-import { ReactComponent as Avatar } from "../../assets/SVG/avatar.svg";
+import Avatar from "../../assets/SVG/avatar.svg?react";
 import CarCard from "../../Components/CarCard/CarCard";
 import Loader from "../../Components/Loader/Loader";
 import Pagination from "../../Common/Pagination/Pagination";

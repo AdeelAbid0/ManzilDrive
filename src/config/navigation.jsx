@@ -1,6 +1,6 @@
-import { DashboardIcon } from "../Utils/Icons";
-import { ReactComponent as ProfileIcon } from "../assets/SVG/profile-icon.svg";
-import { ReactComponent as LogoutIcon } from "../assets/SVG/logout.svg";
+﻿import { DashboardIcon } from "../Utils/Icons";
+import ProfileIcon from "../assets/SVG/profile-icon.svg?react";
+import LogoutIcon from "../assets/SVG/logout.svg?react";
 
 // Main navigation items for the sidebar
 export const sidebarNavItems = [

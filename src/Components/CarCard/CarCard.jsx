@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+﻿import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
 import {
   AC,
@@ -8,8 +8,8 @@ import {
   Service,
   Steric,
 } from "../../Utils/Icons";
-import { ReactComponent as EditIcon } from "../../assets/SVG/edit.svg";
-import { ReactComponent as DeleteIcon } from "../../assets/SVG/delete.svg";
+import EditIcon from "../../assets/SVG/edit.svg?react";
+import DeleteIcon from "../../assets/SVG/delete.svg?react";
 const CarCard = ({ items, isDashboard, handleRemoveAdd, handleEdit }) => {
   const location = useLocation();
   const showDetailBtn =

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import "./BoostAds.css";
@@ -7,8 +7,8 @@ import {
   useGetAllBoostAdsRequests,
   useRejectBoostRequest,
 } from "./hooks/BoostAdsApi";
-import { ReactComponent as SearchIcon } from "../../../assets/SVG/search.svg";
-import { ReactComponent as Action } from "../../../assets/SVG/action.svg";
+import SearchIcon from "../../../assets/SVG/search.svg?react";
+import Action from "../../../assets/SVG/action.svg?react";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../../Components/Loader/Loader";
 import Pagination from "../../../Common/Pagination/Pagination";
