@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
-import PrimaryButton from "../../../../Common/Button/Button";
+import PrimaryButton from "../../../../Common/Button";
 import Location from "../../../../Common/LocationInput/Location";
 import {
   useGetAllMakes,

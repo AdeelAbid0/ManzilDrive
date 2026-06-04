@@ -17,7 +17,7 @@ import { useFormik } from "formik";
 import { initialValues } from "./Form/postadd.initial";
 import { ValidationSchema } from "./Form/postadd.schema";
 import { useEffect, useMemo, useState } from "react";
-import PrimaryButton from "../../Common/Button/Button";
+import PrimaryButton from "../../Common/Button";
 import { Button } from "primereact/button";
 import { ValidationSchemaPersonalInfo } from "./Form/personalinfo.schema";
 import { initialValuesPersonalInfo } from "./Form/personalinfo.initial";

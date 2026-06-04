@@ -1,14 +1,15 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import AvatarIcon from "../../assets/SVG/avatar.svg?react";
+import AvatarIcon from "../assets/SVG/avatar.svg?react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearUser } from "../../slices/userSlice";
+import { clearUser } from "../slices/userSlice";
 import { Button } from "primereact/button";
 import {
   sidebarNavItems,
   profileNavItems,
   authNavItems,
-} from "../../config/navigation";
+} from "../config/navigation";
+import { ROUTES } from "../constants/routes";
 
 const SideMenu = ({ setMenu }) => {
   const [isClosing, setIsClosing] = useState(false);
@@ -133,7 +134,7 @@ const SideMenu = ({ setMenu }) => {
                   if (item.isLogout) {
                     handleNavClick();
                     dispatch(clearUser());
-                    navigate("/");
+                    navigate(ROUTES.LANDING);
                   } else {
                     handleNavClick();
                     navigate(item.path);

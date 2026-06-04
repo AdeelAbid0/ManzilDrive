@@ -1,4 +1,4 @@
-import { LogoFooter } from "../../Utils/Icons";
+import { LogoFooter } from "../Utils/Icons";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 

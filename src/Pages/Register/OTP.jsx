@@ -1,7 +1,7 @@
 import { Button } from "primereact/button";
 import { InputOtp } from "primereact/inputotp";
 import { useEffect, useState } from "react";
-import PrimaryButton from "../../Common/Button/Button";
+import PrimaryButton from "../../Common/Button";
 import { formatTime } from "../../Utils/helpers";
 const OTPScreen = ({ setTokens, token, handleVerifyPhone, isVerifying }) => {
   const [timeLeft, setTimeLeft] = useState(120);

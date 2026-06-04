@@ -2,9 +2,9 @@
 import { useGetAllBusinessCars } from "./hooks/AllBusinessCarsApi";
 import { useState } from "react";
 import Avatar from "../../assets/SVG/avatar.svg?react";
-import CarCard from "../../Components/CarCard/CarCard";
+import CarCard from "../../Components/CarCard";
 import Loader from "../../Components/Loader/Loader";
-import Pagination from "../../Common/Pagination/Pagination";
+import Pagination from "../../Common/Pagination";
 const AllBusinessCars = () => {
   const location = useLocation();
   const { id } = useParams();

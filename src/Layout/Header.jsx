@@ -6,8 +6,9 @@ import AvatarIcon from "../assets/SVG/avatar.svg?react";
 import ArorwDownIcon from "../assets/SVG/arrow-down.svg?react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUser } from "../slices/userSlice";
-import SideMenu from "../Components/SideMenu/SideMenu";
+import SideMenu from "../Components/SideMenu";
 import { profileNavItems, sidebarNavItems } from "../config/navigation";
+import { ROUTES } from "../constants/routes";
 const Header = ({ isPrivateRoute }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -45,9 +46,9 @@ const Header = ({ isPrivateRoute }) => {
           className="flex items-center  w-[11.96%] min-w-[156px] gap-[8px] cursor-pointer"
           onClick={() => {
             if (!isPrivateRoute) {
-              navigate("/");
+              navigate(ROUTES.LANDING);
             } else {
-              navigate("/landing-page");
+              navigate(ROUTES.LANDING_PAGE);
             }
           }}
         >
@@ -77,7 +78,7 @@ const Header = ({ isPrivateRoute }) => {
               <Button
                 label={"Login"}
                 onClick={() => {
-                  navigate("/login");
+                  navigate(ROUTES.LOGIN);
                 }}
                 className="text-primary font-inter font-medium text-sm border rounded border-primary w-[140px] h-[46px]"
               />
@@ -87,7 +88,7 @@ const Header = ({ isPrivateRoute }) => {
               <Button
                 label="Register"
                 onClick={() => {
-                  navigate("/register");
+                  navigate(ROUTES.REGISTER);
                 }}
                 className="text-white font-medium text-sm border rounded border-primary w-[140px] h-[46px] bg-primary"
               />
@@ -131,7 +132,7 @@ const Header = ({ isPrivateRoute }) => {
             </div>
           </div>
           <div
-            className={`${location.pathname === "/landing-page" ? "block" : "hidden"}`}
+            className={`${location.pathname === ROUTES.LANDING_PAGE ? "block" : "hidden"}`}
           >
             {sidebarNavItems.map((item) => (
               <NavLink
@@ -155,7 +156,7 @@ const Header = ({ isPrivateRoute }) => {
           </div>
           {profileNavItems.map((item) => {
             const Icon = item.icon;
-            const isActive = window.location.pathname === item.path;
+            const isActive = location.pathname === item.path;
             return (
               <div
                 key={item.path}
@@ -164,7 +165,7 @@ const Header = ({ isPrivateRoute }) => {
                   if (item.isLogout) {
                     setOpenProfile(false);
                     dispatch(clearUser());
-                    navigate("/");
+                    navigate(ROUTES.LANDING);
                   } else {
                     navigate(item.path);
                     setOpenProfile(false);

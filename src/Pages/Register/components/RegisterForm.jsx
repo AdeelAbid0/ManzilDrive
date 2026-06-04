@@ -1,6 +1,7 @@
 import { InputText } from "primereact/inputtext";
 import { useNavigate } from "react-router-dom";
-import PrimaryButton from "../../../Common/Button/Button";
+import PrimaryButton from "../../../Common/Button";
+import { ROUTES } from "../../../constants/routes";
 const RegisterForm = ({ formik, isPending, setShowOTPScreen }) => {
   const navigate = useNavigate();
 
@@ -78,7 +79,7 @@ const RegisterForm = ({ formik, isPending, setShowOTPScreen }) => {
         <p
           className="font-inter font-semibold text-xs leading-4 underline underline-offset-2 cursor-pointer text-primary"
           onClick={() => {
-            navigate("/login");
+            navigate(ROUTES.LOGIN);
           }}
         >
           Login

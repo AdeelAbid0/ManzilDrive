@@ -4,7 +4,7 @@ import Disclaimer from "../../assets/SVG/disclaimer.svg?react";
 import ArrowLeft from "../../assets/SVG/arrow-left.svg?react";
 import ArrowRight from "../../assets/SVG/arrow-right.svg?react";
 import CameraIcon from "../../assets/SVG/camera.svg?react";
-import PrimaryButton from "../../Common/Button/Button";
+import PrimaryButton from "../../Common/Button";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 

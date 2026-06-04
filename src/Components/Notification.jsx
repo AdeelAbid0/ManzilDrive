@@ -1,7 +1,7 @@
-﻿import { useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { clearNotification } from "../../slices/notificationSlice";
-import CancelIcon from "../../assets/SVG/cancel.svg?react";
+import { clearNotification } from "../slices/notificationSlice";
+import CancelIcon from "../assets/SVG/cancel.svg?react";
 
 export default function NotificationProvider() {
   const { notifications } = useSelector((state) => state.notification);
@@ -23,7 +23,7 @@ export default function NotificationProvider() {
         <div
           key={n.id}
           className={`
-            relative min-w-[343px] !w-full md:min-w-[400px] px-4 py-3 rounded-lg bg-white shadow-md 
+            relative min-w-[343px] !w-full md:min-w-[400px] px-4 py-3 rounded-lg bg-white shadow-md
             transform transition-all duration-300 ease-in-out
             animate-slide-in
           `}

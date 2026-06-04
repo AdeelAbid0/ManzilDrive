@@ -1,29 +1,30 @@
 ﻿import { DashboardIcon } from "../Utils/Icons";
 import ProfileIcon from "../assets/SVG/profile-icon.svg?react";
 import LogoutIcon from "../assets/SVG/logout.svg?react";
+import { ROUTES } from "../constants/routes";
 
-// Main navigation items for the sidebar
 export const sidebarNavItems = [
   {
     title: "Dashboard",
-    path: "/dashboard",
+    path: ROUTES.DASHBOARD,
     icon: DashboardIcon,
   },
 ];
+
 export const sidebarNavItemsAdmin = [
   {
     title: "Dashboard",
-    path: "/dashboard-admin",
+    path: ROUTES.DASHBOARD_ADMIN,
     icon: DashboardIcon,
   },
   {
     title: "List of Ads",
-    path: "/list-ads",
+    path: ROUTES.LIST_ADS,
     icon: DashboardIcon,
   },
   {
     title: "Boost Ads",
-    path: "/boost-ads",
+    path: ROUTES.BOOST_ADS,
     icon: DashboardIcon,
   },
 ];
@@ -31,38 +32,27 @@ export const sidebarNavItemsAdmin = [
 export const profileNavItems = [
   {
     title: "Profile",
-    path: "/profile",
-    icon: ProfileIcon,
-  },
-  {
-    title: "My Ads",
-    path: "/my-ads",
-    icon: ProfileIcon,
-  },
-  {
-    title: "Change Password",
-    path: "/change-password",
+    path: ROUTES.PROFILE,
     icon: ProfileIcon,
   },
   {
     title: "Logout",
-    path: "/logout",
+    path: ROUTES.LANDING,
     icon: LogoutIcon,
     isLogout: true,
   },
 ];
 
-// Auth navigation items for login/register
 export const authNavItems = [
   {
     title: "Login",
-    path: "/login",
+    path: ROUTES.LOGIN,
     type: "button",
     variant: "outline",
   },
   {
     title: "Register",
-    path: "/register",
+    path: ROUTES.REGISTER,
     type: "button",
     variant: "primary",
   },

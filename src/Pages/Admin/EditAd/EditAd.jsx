@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useFormik } from "formik";
+import { ROUTES } from "../../../constants/routes";
 import { Button } from "primereact/button";
 import { validationSchema } from "./Form/editad.schema";
 import { initialValues } from "./Form/editad.initial";
@@ -7,7 +8,7 @@ import CarDetailForm from "../../PostAd/Components/CarDetailForm";
 import { useEffect, useState } from "react";
 import { Loader } from "lucide-react";
 import ImageUpload from "../../PostAd/Components/ImageUpload";
-import PrimaryButton from "../../../Common/Button/Button";
+import PrimaryButton from "../../../Common/Button";
 import {
   useGetAllMakes,
   useGetAllmodelByMake,
@@ -51,7 +52,6 @@ const AdminEditAd = () => {
     };
   };
 
-  console.log("formating car data", carData);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -90,7 +90,7 @@ const AdminEditAd = () => {
               status: "success",
             }),
           );
-          navigate("/list-ads");
+          navigate(ROUTES.LIST_ADS);
         },
         onError: (error) => {
           dispatch(
@@ -213,7 +213,7 @@ const AdminEditAd = () => {
               type="button"
               label="Cancel"
               severity="secondary"
-              onClick={() => navigate("/dashboard-admin/list-ads")}
+              onClick={() => navigate(ROUTES.LIST_ADS)}
               className="w-full px-6 py-2 bg-gray-200 text-gray-700 hover:bg-gray-300 rounded-md"
             />
             <PrimaryButton

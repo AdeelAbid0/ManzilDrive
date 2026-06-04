@@ -12,13 +12,13 @@ import {
 import SearchIcon from "../../../assets/SVG/search.svg?react";
 import Action from "../../../assets/SVG/action.svg?react";
 import Loader from "../../../Components/Loader/Loader";
-import Pagination from "../../../Common/Pagination/Pagination";
-import CommonInput from "../../../Common/InputText/InputText";
-import CommonDialog from "../../../Common/Dialog/CommonDialog";
+import Pagination from "../../../Common/Pagination";
+import CommonInput from "../../../Common/InputText";
+import CommonDialog from "../../../Common/CommonDialog";
 import { InputTextarea } from "primereact/inputtextarea";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Button } from "primereact/button";
-import PrimaryButton from "../../../Common/Button/Button";
+import PrimaryButton from "../../../Common/Button";
 
 const Dashboard_Admin = () => {
   const [page, setPage] = useState(1);

@@ -1,5 +1,5 @@
 import { Dialog } from "primereact/dialog";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 const CommonDialog = ({
   open,

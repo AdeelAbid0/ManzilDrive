@@ -1,5 +1,5 @@
-import Loader from "../Loader/Loader";
-import CarCard from "../CarCard/CarCard";
+import Loader from "./Loader/Loader";
+import CarCard from "./CarCard";
 
 const Details = ({ allCarsData, LoadingCarsData }) => {
   return (

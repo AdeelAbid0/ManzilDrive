@@ -1,8 +1,9 @@
-﻿import { useState, useEffect, useRef, useCallback } from "react";
+﻿import { useState, useRef, useCallback } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../constants/routes";
 import "./Dashboard.css";
 import {
   ActiveAds,
@@ -24,14 +25,14 @@ import CarIcon from "../../assets/SVG/car.svg?react";
 import BoostIcon from "../../assets/SVG/boost.svg?react";
 import { useSelector } from "react-redux";
 import Loader from "../../Components/Loader/Loader";
-import Pagination from "../../Common/Pagination/Pagination";
+import Pagination from "../../Common/Pagination";
 import QRDialog from "./Components/QRDialog";
-import CarCard from "../../Components/CarCard/CarCard";
+import CarCard from "../../Components/CarCard";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { InputSwitch } from "primereact/inputswitch";
-import CommonDialog from "../../Common/Dialog/CommonDialog";
+import CommonDialog from "../../Common/CommonDialog";
 import { Dropdown } from "primereact/dropdown";
-import PrimaryButton from "../../Common/Button/Button";
+import PrimaryButton from "../../Common/Button";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { showNotification } from "../../slices/notificationSlice";
@@ -186,7 +187,7 @@ const Dashboard = () => {
   }, []);
 
   const handleEdit = useCallback((rowData) => {
-    navigate(`/editAd/${rowData?._id}`, { state: { carData: rowData } });
+    navigate(ROUTES.EDITAD.replace(":id", rowData?._id), { state: { carData: rowData } });
   }, []);
 
   const handleRemoveAddClick = useCallback((rowData) => {
@@ -235,9 +236,7 @@ const Dashboard = () => {
   }, [carToDelete, deleteAd, dispatch, refetchAllCars, refetchAdsCount]);
 
   const handleToggleAvailability = useCallback((carId, newStatus) => {
-    console.log(`Toggling availability for car ${carId} to ${newStatus}`);
-    // Implement toggle functionality here
-    // You might want to call an API here to update the status
+    // TODO: call API to update availability status
   }, []);
 
   const handleBoostAdd = useCallback(
@@ -419,7 +418,7 @@ const Dashboard = () => {
         <div className="flex gap-2 w-full mt-4">
           <Button
             label="Post ADD"
-            onClick={() => navigate("/postAd")}
+            onClick={() => navigate(ROUTES.POSTAD)}
             className="text-white font-medium text-sm border rounded border-primary w-full h-[33px] bg-primary "
           />
           <Button
@@ -486,7 +485,7 @@ const Dashboard = () => {
           <div className="flex gap-2">
             <Button
               label="Post ADD"
-              onClick={() => navigate("/postAd")}
+              onClick={() => navigate(ROUTES.POSTAD)}
               className="text-white font-medium text-sm border rounded border-primary w-[106px] h-[33px] bg-primary "
             />
             <Button
@@ -656,7 +655,6 @@ const Dashboard = () => {
                           },
                           {
                             onSuccess: (response) => {
-                              console.log({ response });
                               dispatch(
                                 showNotification({
                                   message: response?.message,
@@ -665,7 +663,6 @@ const Dashboard = () => {
                               );
                             },
                             onError: (error) => {
-                              console.log({ error });
                               showNotification({
                                 message: error?.message,
                                 success: false,

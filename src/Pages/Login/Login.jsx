@@ -9,7 +9,7 @@ import { validationSchema } from "./Form/login.schema";
 import { useGoogleLoginApi, useLoginApi, useResendOTP } from "./hooks/LoginApi";
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../../firebase/firebase";
-import PrimaryButton from "../../Common/Button/Button";
+import PrimaryButton from "../../Common/Button";
 import { useDispatch } from "react-redux";
 import { showNotification } from "../../slices/notificationSlice";
 import { useVerifyPhone } from "../Register/hooks/RegisterApi";
@@ -50,8 +50,8 @@ const Login = () => {
           // localStorage.setItem("Token", res?.token);
           if (res?.business?.status === "active") {
             res?.business?.role === "admin"
-              ? navigate("/dashboard-admin")
-              : navigate("/postAd");
+              ? navigate(ROUTES.DASHBOARD_ADMIN)
+              : navigate(ROUTES.POSTAD);
           }
         },
         onError: (error) => {
@@ -93,14 +93,12 @@ const Login = () => {
       { idToken: token },
       {
         onSuccess: (res) => {
-          console.log({ res });
           dispatch(setUser(res));
           localStorage.setItem("Token", res?.token);
-          console.log("login", res?.business?.isFirstLogin);
           if (res?.business?.isFirstLogin) {
-            navigate("/postAd");
+            navigate(ROUTES.POSTAD);
           } else {
-            navigate("/dashboard");
+            navigate(ROUTES.DASHBOARD);
           }
           dispatch(
             showNotification({
@@ -274,7 +272,7 @@ const Login = () => {
                   <p
                     className="font-inter font-semibold text-xs leading-4 underline underline-offset-2 cursor-pointer text-primary"
                     onClick={() => {
-                      navigate("/register");
+                      navigate(ROUTES.REGISTER);
                     }}
                   >
                     Create an Account

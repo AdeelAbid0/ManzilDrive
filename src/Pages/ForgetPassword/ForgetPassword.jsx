@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 import { initialValues } from "./Form/forgetpassword.initial";
 import { validationSchema } from "./Form/forgetpassword.schema";
 import { InputText } from "primereact/inputtext";
-import PrimaryButton from "../../Common/Button/Button";
+import PrimaryButton from "../../Common/Button";
 import { useResendOTP } from "../Login/hooks/LoginApi";
 import { useDispatch } from "react-redux";
 import { showNotification } from "../../slices/notificationSlice";
@@ -18,9 +18,7 @@ const ForgetPassword = () => {
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
-    },
+    onSubmit: () => {},
   });
 
   const { mutate: VerifyPhone, isPending: isVerifyingPhone } = useVerifyPhone();

@@ -9,6 +9,7 @@ import { initialValues } from "./Form/register.initial";
 import { RegisterSchema } from "./Form/register.schema";
 import { useDispatch } from "react-redux";
 import { showNotification } from "../../slices/notificationSlice";
+import { ROUTES } from "../../constants/routes";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ const Register = () => {
       {
         onSuccess: (res) => {
           dispatch(showNotification({ message: res?.message, status: "success" }));
-          navigate("/login");
+          navigate(ROUTES.LOGIN);
         },
         onError: (error) => {
           dispatch(showNotification({ message: error?.message, status: "error" }));

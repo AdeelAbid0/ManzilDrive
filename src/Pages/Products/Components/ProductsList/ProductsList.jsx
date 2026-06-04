@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import Pagination from "../../../../Common/Pagination/Pagination";
-import Details from "../../../../Components/Details/Details";
+import Pagination from "../../../../Common/Pagination";
+import Details from "../../../../Components/Details";
 
 const ProductsList = ({
   allCarsData,

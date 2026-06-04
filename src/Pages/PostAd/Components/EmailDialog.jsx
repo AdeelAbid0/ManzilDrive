@@ -1,5 +1,5 @@
 import { InputText } from "primereact/inputtext";
-import PrimaryButton from "../../../Common/Button/Button";
+import PrimaryButton from "../../../Common/Button";
 import { Dialog } from "primereact/dialog";
 import { InputOtp } from "primereact/inputotp";
 import { formatTime } from "../../../Utils/helpers";

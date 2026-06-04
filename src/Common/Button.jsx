@@ -1,4 +1,5 @@
 import { Button } from "primereact/button";
+
 const PrimaryButton = ({
   type,
   label,

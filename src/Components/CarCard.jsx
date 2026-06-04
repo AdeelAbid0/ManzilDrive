@@ -1,4 +1,4 @@
-﻿import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
 import {
   AC,
@@ -7,9 +7,11 @@ import {
   Passengers,
   Service,
   Steric,
-} from "../../Utils/Icons";
-import EditIcon from "../../assets/SVG/edit.svg?react";
-import DeleteIcon from "../../assets/SVG/delete.svg?react";
+} from "../Utils/Icons";
+import EditIcon from "../assets/SVG/edit.svg?react";
+import DeleteIcon from "../assets/SVG/delete.svg?react";
+import { ROUTES } from "../constants/routes";
+
 const CarCard = ({ items, isDashboard, handleRemoveAdd, handleEdit }) => {
   const location = useLocation();
   const showDetailBtn =
@@ -127,7 +129,7 @@ const CarCard = ({ items, isDashboard, handleRemoveAdd, handleEdit }) => {
               <Button
                 label="View Details"
                 onClick={() => {
-                  navigate("/detail", { state: items });
+                  navigate(ROUTES.DETAIL, { state: items });
                 }}
                 className="text-primary font-inter font-medium text-sm border rounded border-primary w-[126px] h-10 focus:ring-0 focus:outline-none"
               />

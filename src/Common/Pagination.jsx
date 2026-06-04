@@ -4,32 +4,22 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const pageNumbers = useMemo(() => {
     const pages = [];
-
-    // Always show first 3 pages
     const firstPagesToShow = 3;
-    // Always show last 2 pages
     const lastPagesToShow = 2;
 
-    // If total pages are 5 or less, show all pages
     if (totalPages <= 5) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
       }
     } else {
-      // Add first 3 pages
       for (let i = 1; i <= firstPagesToShow; i++) {
         pages.push(i);
       }
-
-      // Add ellipsis if there are pages between first 3 and last 2
       if (totalPages > firstPagesToShow + lastPagesToShow) {
         pages.push("...");
       }
-
-      // Add last 2 pages
       for (let i = totalPages - lastPagesToShow + 1; i <= totalPages; i++) {
         if (i > firstPagesToShow) {
-          // Avoid duplicates if there's an overlap
           pages.push(i);
         }
       }

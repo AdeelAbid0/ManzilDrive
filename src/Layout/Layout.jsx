@@ -4,27 +4,21 @@ import { useRoutes } from "react-router-dom";
 import { appRoutes } from "../Router";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
-import Footer from "../Components/Footer/Footer";
+import Footer from "../Components/Footer";
+import { ROUTES } from "../constants/routes";
 
 const Layout = () => {
   const Routes = useRoutes(appRoutes);
-  const user = JSON.parse(localStorage.getItem("User"));
   const token = localStorage.getItem("Token");
   const location = useLocation();
 
-  // Public routes that should NOT show sidebar and SHOULD show footer
   const publicRoutes = [
-    "/",
-    "/landing-page",
-    "/detail",
-    "/about",
-    "/contact",
-    "/pricing",
-    "/features",
+    ROUTES.LANDING,
+    ROUTES.LANDING_PAGE,
+    ROUTES.DETAIL,
   ];
 
-  // Auth routes (no sidebar, no footer)
-  const authRoutes = ["/login", "/register", "/forgot-password"];
+  const authRoutes = [ROUTES.LOGIN, ROUTES.REGISTER, ROUTES.FORGOT_PASSWORD];
 
   const isAuthPage = authRoutes.includes(location.pathname);
   const isPublicPage =

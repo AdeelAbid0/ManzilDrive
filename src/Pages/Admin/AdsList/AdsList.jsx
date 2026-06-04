@@ -8,10 +8,11 @@ import SearchIcon from "../../../assets/SVG/search.svg?react";
 import Action from "../../../assets/SVG/action.svg?react";
 import FilterIcon from "../../../assets/SVG/filter.svg?react";
 import Loader from "../../../Components/Loader/Loader";
-import Pagination from "../../../Common/Pagination/Pagination";
-import CommonInput from "../../../Common/InputText/InputText";
+import Pagination from "../../../Common/Pagination";
+import CommonInput from "../../../Common/InputText";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { ROUTES } from "../../../constants/routes";
 import { showNotification } from "../../../slices/notificationSlice";
 
 const AddList = () => {
@@ -37,7 +38,6 @@ const AddList = () => {
   };
 
   const handleApprove = () => {
-    console.log("Approve clicked for:", selectedRow);
     approveAd(
       {
         carId: selectedRow._id,
@@ -65,19 +65,16 @@ const AddList = () => {
   };
 
   const handleViewDetail = () => {
-    console.log("View Detail clicked for:", selectedRow);
-    navigate("/detail", { state: selectedRow });
+    navigate(ROUTES.DETAIL, { state: selectedRow });
     op.current?.hide();
   };
 
   const handleEdit = () => {
-    console.log("Edit clicked for:", selectedRow);
-    navigate("/admin/edit-ad", { state: { carData: selectedRow } });
+    navigate(ROUTES.EDIT_AD, { state: { carData: selectedRow } });
     op.current?.hide();
   };
 
   const handleDelete = () => {
-    console.log("Delete clicked for:", selectedRow);
     op.current?.hide();
   };
 
@@ -132,7 +129,6 @@ const AddList = () => {
       </div>
     );
   }
-  console.log({ approveAdLoading });
   return (
     <div className="flex w-full items-center flex-col my-4 max-w-[1102px]">
       <div className="w-full">

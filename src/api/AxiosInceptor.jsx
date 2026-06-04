@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ApiUrl } from "./apiUrls";
+import { ROUTES } from "../constants/routes";
 
 let isRefreshing = false;
 let failedQueue = [];
@@ -68,7 +69,7 @@ api.interceptors.response.use(
       } catch (refreshError) {
         processQueue(refreshError, null);
         localStorage.clear();
-        window.location.href = "/login";
+        window.location.href = ROUTES.LOGIN;
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;

@@ -1,6 +1,6 @@
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
-import PrimaryButton from "../../../Common/Button/Button";
+import PrimaryButton from "../../../Common/Button";
 import { useVerifyPhone, useVerifyPhoneAuth } from "../hooks/PostApi";
 import { useEffect, useState } from "react";
 import { InputOtp } from "primereact/inputotp";

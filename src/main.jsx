@@ -11,7 +11,16 @@ import { PrimeReactProvider } from "primereact/api";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000,
+      gcTime: 10 * 60 * 1000,
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const loader = document.getElementById("loader");
 if (loader) loader.remove();

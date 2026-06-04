@@ -1,6 +1,6 @@
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
-import PrimaryButton from "../../Common/Button/Button";
+import PrimaryButton from "../../Common/Button";
 import { Calendar } from "primereact/calendar";
 import { useFormik } from "formik";
 import { initialValues } from "./Form/Profile.initial";
@@ -55,7 +55,9 @@ const Profile = () => {
             }),
           );
         },
-        onError: (err) => console.log("Update failed:", err),
+        onError: (err) => {
+          dispatch(showNotification({ status: "error", message: err?.message || "Update failed" }));
+        },
       });
     },
   });

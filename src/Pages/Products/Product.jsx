@@ -1,11 +1,11 @@
 ﻿import { useState, useEffect } from "react";
 import { InputText } from "primereact/inputtext";
-import HeroSection from "../../Components/HeroSection/HeroSection";
+import HeroSection from "../../Components/HeroSection";
 import ProductsList from "./Components/ProductsList/ProductsList";
 import { useFormik } from "formik";
 import { initialValues } from "./Form/Poducts.initail";
 import { useGetAllCars } from "./hooks/ProductsApi";
-import CommonDialog from "../../Common/Dialog/CommonDialog";
+import CommonDialog from "../../Common/CommonDialog";
 import SearchDialog from "./Components/SearchDialog/SearchDialog";
 import SearchIcon from "../../assets/SVG/search.svg?react";
 
@@ -67,7 +67,6 @@ const Products = () => {
   };
   useEffect(() => {
     if (isInitialLoad) {
-      console.log("1");
       getAllActiveAds();
       setIsInitialLoad(false);
     }

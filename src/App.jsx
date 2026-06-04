@@ -1,4 +1,4 @@
-import NotificationProvider from "./Components/Notification/Notification";
+import NotificationProvider from "./Components/Notification";
 import Layout from "./Layout/Layout";
 
 const App = () => {

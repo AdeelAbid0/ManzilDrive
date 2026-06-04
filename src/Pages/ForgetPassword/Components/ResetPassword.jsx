@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import PrimaryButton from "../../../Common/Button/Button";
+import PrimaryButton from "../../../Common/Button";
 import { InputText } from "primereact/inputtext";
 import { useFormik } from "formik";
 import { initialValues } from "../Form/resetpasswordinitials";

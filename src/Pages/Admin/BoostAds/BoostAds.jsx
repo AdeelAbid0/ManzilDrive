@@ -11,14 +11,14 @@ import SearchIcon from "../../../assets/SVG/search.svg?react";
 import Action from "../../../assets/SVG/action.svg?react";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../../Components/Loader/Loader";
-import Pagination from "../../../Common/Pagination/Pagination";
-import CommonInput from "../../../Common/InputText/InputText";
+import Pagination from "../../../Common/Pagination";
+import CommonInput from "../../../Common/InputText";
 import { useRef } from "react";
 import { OverlayPanel } from "primereact/overlaypanel";
-import CommonDialog from "../../../Common/Dialog/CommonDialog";
+import CommonDialog from "../../../Common/CommonDialog";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
-import PrimaryButton from "../../../Common/Button/Button";
+import PrimaryButton from "../../../Common/Button";
 import { showNotification } from "../../../slices/notificationSlice";
 
 const BoostAdds = () => {
@@ -109,7 +109,6 @@ const BoostAdds = () => {
       },
       {
         onSuccess: (res) => {
-          console.log({ res });
           setShowRejectDialog(false);
           setRejectReason("");
           refetchBoostAds();
@@ -122,7 +121,6 @@ const BoostAdds = () => {
           );
         },
         onError: (error) => {
-          console.log({ error });
           setShowRejectDialog(false);
           setRejectReason("");
           dispatch(
