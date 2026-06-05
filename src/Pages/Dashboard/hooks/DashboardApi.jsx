@@ -1,10 +1,24 @@
+import { useQuery } from "@tanstack/react-query";
 import { ApiUrl } from "../../../api/apiUrls";
 import { useClientMutation, useClientQuery } from "../../../api/api-service";
+import api from "../../../api/AxiosInceptor";
+
 export const useGetAllCars = (page, limit, status, viewAll, businessId) => {
-  return useClientQuery({
-    queryKeys: ["GetAllCars", { page, limit, status, viewAll, businessId }],
-    url: ApiUrl.Dashboard.GetAllCars(page, limit, status, viewAll, businessId),
+  return useQuery({
+    queryKey: ["GetAllCars", { page, limit, status, viewAll, businessId }],
+    queryFn: () =>
+      api
+        .post(ApiUrl.Dashboard.GetAllCars(), {
+          page,
+          limit,
+          status,
+          viewAll,
+          businessId,
+        })
+        .then((res) => res.data),
     enabled: true,
+    staleTime: 5 * 60 * 1000,
+    retry: 0,
   });
 };
 export const useGetAdsCount = (businessId) => {

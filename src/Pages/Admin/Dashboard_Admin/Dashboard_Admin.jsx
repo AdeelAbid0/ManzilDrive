@@ -174,9 +174,9 @@ const Dashboard_Admin = () => {
     return <span className="cell-content">{rowData?.totalAds || 0}</span>;
   };
 
-  if (LoadingAdsData) {
+  if (LoadingAdsData || DashboardDataLoading) {
     return (
-      <div className="flex w-full items-center h-full flex-col my-4">
+      <div className="flex w-full items-center justify-center h-full flex-col my-4">
         <Loader />
       </div>
     );
@@ -246,11 +246,7 @@ const Dashboard_Admin = () => {
 
       {/* Data Table */}
       <div className="dashboardadmin w-full ">
-        {DashboardDataLoading ? (
-          <div className="flex w-full justify-center mt-5">
-            <Loader />
-          </div>
-        ) : DashboardDataError ? (
+        {DashboardDataError ? (
           <div className="flex w-full justify-center mt-5">
             <p className="text-red-500">Error loading data</p>
           </div>

@@ -353,8 +353,18 @@ const Dashboard = () => {
     }
   };
 
+  const isLoading = loadingAdsData || carsDataLoading;
+
   // Display data
   const displayData = allCarsData?.cars || [];
+
+  if (isLoading) {
+    return (
+      <div className="flex w-full items-center justify-center h-[calc(100vh-200px)]">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="flex w-full overflow-auto items-center flex-col my-4 px-3">
@@ -431,11 +441,7 @@ const Dashboard = () => {
 
         {/* Mobile Car Cards */}
         <div className="w-full mt-4">
-          {carsDataLoading ? (
-            <div className="flex w-full justify-center mt-5">
-              <Loader />
-            </div>
-          ) : carsDataError ? (
+          {carsDataError ? (
             <p className="text-red-500 text-center">Error loading data</p>
           ) : displayData?.length > 0 ? (
             displayData.map((item, index) => (
@@ -500,11 +506,7 @@ const Dashboard = () => {
 
       {/* Desktop DataTable */}
       <div className="mt-6 dashboard hidden lg:block w-[90%]">
-        {carsDataLoading ? (
-          <div className="flex items-center justify-center h-64">
-            <Loader />
-          </div>
-        ) : carsDataError ? (
+        {carsDataError ? (
           <p className="text-red-500 text-center">Error loading data</p>
         ) : (
           <div className="w-full overflow-x-auto">
@@ -605,9 +607,7 @@ const Dashboard = () => {
       </div>
 
       {/* Pagination */}
-      {!carsDataLoading &&
-        displayData?.length > 0 &&
-        allCarsData?.totalPages > 1 && (
+      {displayData?.length > 0 && allCarsData?.totalPages > 1 && (
           <div className="mt-6 flex w-full justify-center px-14">
             <Pagination
               currentPage={page}

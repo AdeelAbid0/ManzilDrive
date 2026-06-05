@@ -12,8 +12,7 @@ export const ApiUrl = {
     ResetPassword: "/auth/reset-password",
   },
   Dashboard: {
-    GetAllCars: (page, limit, status, viewAll, businessId) =>
-      `/cars/getAllCarsOfBusiness?page=${page}&limit=${limit}&status=${status}&viewAll=${viewAll}&businessId=${businessId}`,
+    GetAllCars: () => "cars/getAllCarsOfBusiness",
     GetAdsCount: (businessId) =>
       `cars/getBusinessAdsCount?businessId=${businessId}`,
     BoostAd: () => "cars/boostAd",
@@ -93,8 +92,7 @@ export const ApiUrl = {
     ApproveBusiness: () => "business/approve",
     RejectBusiness: () => "business/rejectBusiness",
     // Ads list
-    GetAllAds: (page, limit, status, isDeleted) =>
-      `cars/getAdminAllCars?page=${page}&limit=${limit}&status=${status}&isDeleted=${isDeleted}`,
+    GetAllAds: () => "cars/getAdminAllCars",
   },
   BoostAds: {
     GetAllBoostAdsRequest: (page, limit, status) =>
@@ -103,8 +101,7 @@ export const ApiUrl = {
     ApproveBoostRequest: () => "cars/approveCarBoost",
   },
   AdsList: {
-    GetAllAds: (page, limit, status, isDeleted) =>
-      `cars/getAdminAllCars?page=${page}&limit=${limit}&status=${status}&isDeleted=${isDeleted}`,
+    GetAllAds: () => "cars/getAdminAllCars",
     ApproveAd: () => "cars/approve",
     RejectAd: () => "cars/reject",
   },

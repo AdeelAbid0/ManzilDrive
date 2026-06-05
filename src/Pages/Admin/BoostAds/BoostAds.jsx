@@ -42,9 +42,6 @@ const BoostAdds = () => {
     useRejectBoostRequest();
   const { mutate: approveBoostAdRequest, isPending: approvingBoostRequest } =
     useApproveBoostRequest();
-  useEffect(() => {
-    refetchBoostAds();
-  }, [status]);
   const handlePageChange = (newPage) => {
     setPage(newPage);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -66,9 +63,6 @@ const BoostAdds = () => {
       request?.business?.phoneNumber?.toLowerCase().includes(searchLower)
     );
   });
-  useEffect(() => {
-    setPage(1);
-  }, [status, viewAll]);
 
   const handleApprove = () => {
     approveBoostAdRequest(
@@ -176,7 +170,10 @@ const BoostAdds = () => {
                 ? "text-primary border-primary border-b"
                 : "text-[#3E464C]"
             }`}
-            onClick={() => setStatus("new")}
+            onClick={() => {
+              setStatus("new");
+              setPage(1);
+            }}
           >
             New Requests
           </h1>
@@ -186,7 +183,10 @@ const BoostAdds = () => {
                 ? "text-primary border-primary border-b"
                 : "text-[#3E464C]"
             }`}
-            onClick={() => setStatus("all")}
+            onClick={() => {
+              setStatus("all");
+              setPage(1);
+            }}
           >
             All Boosted Requests
           </h1>
@@ -250,9 +250,18 @@ const BoostAdds = () => {
                 header="Status"
                 body={(rowData) => (
                   <p
-                    className={`flex items-center justify-center px-5 py-1 text-sm font-normal rounded-[4px] ${rowData?.boost?.isActive ? "bg-[#00796B1A] text-[#00796B]" : "bg-[#F39C121A] text-[#F39C12]"}`}
+                    className={`flex items-center justify-center px-5 py-1 text-sm font-normal rounded-[4px] ${rowData?.boost?.status === "active" ? "bg-[#00796B1A] text-[#00796B]" : rowData?.boost?.status === "pending" ? "bg-[#F57C001A] text-[#F57C00]" : rowData?.boost?.status === "rejected" ? "bg-[#D32F2F1A] text-[#D32F2F]" : rowData?.boost?.status === "inactive" ? "bg-[#6161611A] text-[#616161]" : "bg-gray-200 text-gray-600"}`}
                   >
-                    {rowData?.boost?.isActive ? "Active" : "Pending" || "N/A"}
+                    {/* pending", "active", "inactive", "rejected */}
+                    {rowData?.boost?.status === "pending"
+                      ? "Pending"
+                      : rowData?.boost?.status === "active"
+                        ? "Active"
+                        : rowData?.boost?.status === "rejected"
+                          ? "Rejected"
+                          : rowData?.boost?.status === "inactive"
+                            ? "Inactive"
+                            : "N/A"}
                   </p>
                 )}
                 headerClassName="bg-blue-600 text-white text-start py-2"
@@ -269,14 +278,23 @@ const BoostAdds = () => {
         <OverlayPanel ref={op}>
           <div className="flex flex-col min-w-[120px]">
             <div
-              className="px-3 py-2 hover:bg-gray-100 cursor-pointer rounded"
-              onClick={handleApprove}
+              className={`px-3 py-2 rounded ${selectedRow?.boost?.status === "active" ? "opacity-40 cursor-not-allowed" : "hover:bg-gray-100 cursor-pointer"}`}
+              onClick={
+                selectedRow?.boost?.status !== "active"
+                  ? handleApprove
+                  : undefined
+              }
             >
               <p className="text-sm font-medium">Approve</p>
             </div>
             <div
-              className="px-3 py-2 hover:bg-gray-100 cursor-pointer rounded"
-              onClick={handleReject}
+              className={`px-3 py-2 rounded ${selectedRow?.boost?.status === "inactive" || selectedRow?.boost?.status === "rejected" ? "opacity-40 cursor-not-allowed" : "hover:bg-gray-100 cursor-pointer"}`}
+              onClick={
+                selectedRow?.boost?.status !== "inactive" &&
+                selectedRow?.boost?.status !== "rejected"
+                  ? handleReject
+                  : undefined
+              }
             >
               <p className="text-sm font-medium">Reject</p>
             </div>

@@ -1,4 +1,4 @@
-﻿import { useState, useRef, useEffect } from "react";
+﻿import { useState, useRef } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { OverlayPanel } from "primereact/overlaypanel";
@@ -96,10 +96,6 @@ const AddList = () => {
     setPage(1);
     filterOp.current?.hide();
   };
-
-  useEffect(() => {
-    setPage(1);
-  }, [status]);
 
   const actionBodyTemplate = (rowData) => {
     return (
