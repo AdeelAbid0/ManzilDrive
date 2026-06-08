@@ -59,6 +59,6 @@ export const useUpdateCar = () => {
 export const useUpdateCarAvailability = () => {
   return useClientMutation({
     url: ApiUrl.Vehicle.UpdateAvailability,
-    method: "PUT",
+    method: "PATCH",
   });
 };

@@ -14,8 +14,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ROUTES } from "../../../constants/routes";
 import { showNotification } from "../../../slices/notificationSlice";
+import { useQueryClient } from "@tanstack/react-query";
 
 const AddList = () => {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const op = useRef(null);
@@ -23,14 +25,17 @@ const AddList = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
-  const [status, setStatus] = useState("new");
+  const [status, setStatus] = useState("all");
+
   const [searchTerm, setSearchTerm] = useState("");
+
+  const tab = status === "new" ? "new" : "all";
 
   const {
     data: GetAdsList,
     isPending: AdsLoading,
     error: AdsError,
-  } = useGetAllAds(page, limit, status);
+  } = useGetAllAds(page, limit, status, tab);
   const { mutate: approveAd, isPending: approveAdLoading } = useApproveAd();
   const handleActionClick = (e, rowData) => {
     setSelectedRow(rowData);
@@ -49,6 +54,10 @@ const AddList = () => {
               message: response?.message,
               status: "success",
             }),
+            queryClient.invalidateQueries([
+              "GetAllAds",
+              { page, limit, status },
+            ]),
           );
         },
         onError: (error) => {
@@ -225,11 +234,24 @@ const AddList = () => {
             />
             <Column
               header="Status"
-              body={(rowData) => (
-                <p className="text-sm text-[#666666] font-normal">
-                  {rowData?.status || "N/A"}
-                </p>
-              )}
+              body={(rowData) => {
+                const s = rowData?.status;
+                const styles =
+                  s === "live"
+                    ? "bg-[#00796B1A] text-[#00796B]"
+                    : s === "pending"
+                      ? "bg-[#F57C001A] text-[#F57C00]"
+                      : s === "inactive"
+                        ? "bg-[#6161611A] text-[#616161]"
+                        : "bg-gray-100 text-gray-500";
+                return (
+                  <p
+                    className={`inline-flex items-center justify-center px-3 py-1 text-sm font-normal rounded-[4px] capitalize ${styles}`}
+                  >
+                    {s || "N/A"}
+                  </p>
+                );
+              }}
               headerClassName="bg-blue-600 text-white text-start py-2"
             />
             <Column

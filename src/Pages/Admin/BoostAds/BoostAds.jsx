@@ -37,7 +37,7 @@ const BoostAdds = () => {
     data: BoostAdsRequests,
     refetch: refetchBoostAds,
     isPending: LoadingBoostAdsRequests,
-  } = useGetAllBoostAdsRequests(page, limit, status);
+  } = useGetAllBoostAdsRequests(page, limit, status, status);
   const { mutate: rejectBoostRequest, isPending: rejectingBoostRequest } =
     useRejectBoostRequest();
   const { mutate: approveBoostAdRequest, isPending: approvingBoostRequest } =

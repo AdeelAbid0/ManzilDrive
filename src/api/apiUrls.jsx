@@ -40,8 +40,7 @@ export const ApiUrl = {
     ApprovePost: (carId) => `cars/${carId}/approve`,
     GetAllCars: () => `cars/cars`,
     AddPostDuration: "postDuration/car-post-duration",
-    GetAllCarsByBusiness: (page, limit, status, viewAll, businessId) =>
-      `cars/getAllCarsOfBusiness?page=${page}&limit=${limit}&status=${status}&viewAll=${viewAll}&businessId=${businessId}`,
+    GetAllCarsByBusiness: () => `cars/getAllCarsOfBusiness`,
     LocationSuggestion: (locationInput) =>
       `cars/location-suggestions?locationInput=${locationInput}`,
   },
@@ -95,8 +94,8 @@ export const ApiUrl = {
     GetAllAds: () => "cars/getAdminAllCars",
   },
   BoostAds: {
-    GetAllBoostAdsRequest: (page, limit, status) =>
-      `cars/carBoostedRequests?page=${page}&limit=${limit}&status=${status}`,
+    GetAllBoostAdsRequest: (page, limit, status, tab) =>
+      `cars/carBoostedRequests?page=${page}&limit=${limit}&status=${status}&tab=${tab}`,
     RejectBoostRequest: () => "cars/rejectCarBoost",
     ApproveBoostRequest: () => "cars/approveCarBoost",
   },

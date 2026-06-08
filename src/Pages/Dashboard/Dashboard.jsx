@@ -187,7 +187,9 @@ const Dashboard = () => {
   }, []);
 
   const handleEdit = useCallback((rowData) => {
-    navigate(ROUTES.EDITAD.replace(":id", rowData?._id), { state: { carData: rowData } });
+    navigate(ROUTES.EDITAD.replace(":id", rowData?._id), {
+      state: { carData: rowData },
+    });
   }, []);
 
   const handleRemoveAddClick = useCallback((rowData) => {
@@ -608,14 +610,14 @@ const Dashboard = () => {
 
       {/* Pagination */}
       {displayData?.length > 0 && allCarsData?.totalPages > 1 && (
-          <div className="mt-6 flex w-full justify-center px-14">
-            <Pagination
-              currentPage={page}
-              totalPages={allCarsData.totalPages}
-              onPageChange={handlePageChange}
-            />
-          </div>
-        )}
+        <div className="mt-6 flex w-full justify-center px-14">
+          <Pagination
+            currentPage={page}
+            totalPages={allCarsData.totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      )}
 
       {/* Overlay Panel */}
       <OverlayPanel ref={op} className="mt-1 shadow-lg" dismissable={true}>

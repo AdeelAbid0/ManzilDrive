@@ -7,15 +7,17 @@ export const useGetAllAds = (
   page = 1,
   limit = 10,
   status = "all",
+  tab = "new",
   isDeleted = false,
 ) => {
   return useQuery({
-    queryKey: ["GetAllAds", { page, limit, status }],
+    queryKey: ["GetAllAds", { page, limit, status, tab }],
     queryFn: () =>
       api
         .post(ApiUrl.AdsList.GetAllAds(), {
           page,
           limit,
+          tab,
           status:
             status === "all" ? [] : Array.isArray(status) ? status : [status],
         })
