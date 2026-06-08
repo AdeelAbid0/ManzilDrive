@@ -11,7 +11,8 @@ export const useGetAllCars = (page, limit, status, viewAll, businessId) => {
         .post(ApiUrl.Dashboard.GetAllCars(), {
           page,
           limit,
-          status,
+          status:
+            status === "all" ? [] : Array.isArray(status) ? status : [status],
           viewAll,
           businessId,
         })

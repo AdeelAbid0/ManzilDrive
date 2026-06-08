@@ -3,7 +3,7 @@ export const ApiUrl = {
     Register: "business/register",
     Login: "auth/login",
     GoogleLogin: "auth/google-login",
-    refreshToToken: "auth/refresh-token",
+    refreshToken: "auth/refresh-token",
     sendEmailVerficationCode: "business/sendEmailVerficationCode",
     ResendEmailVerification: "business/resend-email-verification",
     VerifyPhone: "business/verify-phone",

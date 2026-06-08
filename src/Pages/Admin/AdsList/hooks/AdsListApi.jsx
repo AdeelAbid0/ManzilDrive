@@ -13,7 +13,12 @@ export const useGetAllAds = (
     queryKey: ["GetAllAds", { page, limit, status }],
     queryFn: () =>
       api
-        .post(ApiUrl.AdsList.GetAllAds(), { page, limit, status })
+        .post(ApiUrl.AdsList.GetAllAds(), {
+          page,
+          limit,
+          status:
+            status === "all" ? [] : Array.isArray(status) ? status : [status],
+        })
         .then((res) => res.data),
     enabled: true,
     staleTime: 5 * 60 * 1000,
