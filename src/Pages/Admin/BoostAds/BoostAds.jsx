@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+﻿import { useState, useMemo } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import "./BoostAds.css";
@@ -9,7 +9,7 @@ import {
 } from "./hooks/BoostAdsApi";
 import SearchIcon from "../../../assets/SVG/search.svg?react";
 import Action from "../../../assets/SVG/action.svg?react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Loader from "../../../Components/Loader/Loader";
 import Pagination from "../../../Common/Pagination";
 import CommonInput from "../../../Common/InputText";
@@ -27,7 +27,6 @@ const BoostAdds = () => {
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
   const [status, setStatus] = useState("new");
-  const [viewAll, setViewAll] = useState(true);
   const [selectedRow, setSelectedRow] = useState(null);
   const [showRejectDialog, setShowRejectDialog] = useState(false);
   const [rejectReason, setRejectReason] = useState("");
@@ -51,18 +50,18 @@ const BoostAdds = () => {
     setPage(1);
   };
 
-  // Filter boost requests based on search term
-  const filteredBoostRequests = BoostAdsRequests?.data?.filter((request) => {
-    if (!searchTerm) return true;
+  const filteredBoostRequests = useMemo(() => {
+    if (!searchTerm) return BoostAdsRequests?.data || [];
     const searchLower = searchTerm.toLowerCase();
-    return (
-      request?.make?.name?.toLowerCase().includes(searchLower) ||
-      request?.model?.name?.toLowerCase().includes(searchLower) ||
-      request?.business?.name?.toLowerCase().includes(searchLower) ||
-      request?.business?.email?.toLowerCase().includes(searchLower) ||
-      request?.business?.phoneNumber?.toLowerCase().includes(searchLower)
+    return (BoostAdsRequests?.data || []).filter(
+      (r) =>
+        r?.make?.name?.toLowerCase().includes(searchLower) ||
+        r?.model?.name?.toLowerCase().includes(searchLower) ||
+        r?.business?.name?.toLowerCase().includes(searchLower) ||
+        r?.business?.email?.toLowerCase().includes(searchLower) ||
+        r?.business?.phoneNumber?.toLowerCase().includes(searchLower),
     );
-  });
+  }, [BoostAdsRequests, searchTerm]);
 
   const handleApprove = () => {
     approveBoostAdRequest(

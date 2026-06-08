@@ -32,13 +32,7 @@ const Layout = () => {
     setShowSidebar(isPrivateRoute);
   }, [location.pathname, isPrivateRoute]);
 
-  // Determine if footer should be shown
-  const shouldShowFooter = () => {
-    if (isAuthPage) return false;
-    if (isPublicPage) return true;
-    if (isPrivateRoute) return false;
-    return false;
-  };
+  const shouldShowFooter = !isAuthPage && isPublicPage;
 
   // Determine content width class
   const getContentWidthClass = () => {
@@ -98,7 +92,7 @@ const Layout = () => {
       </div>
 
       {/* Footer - Show only on public pages and landing page */}
-      {shouldShowFooter() && (
+      {shouldShowFooter && (
         <footer className="w-full bg-white border-t mt-auto">
           <div className="w-full">
             <Footer />

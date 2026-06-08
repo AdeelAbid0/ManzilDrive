@@ -1,4 +1,4 @@
-﻿import { useState, useRef, useCallback } from "react";
+﻿import { useState, useRef, useCallback, useMemo } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
@@ -38,6 +38,50 @@ import { useDispatch } from "react-redux";
 import { showNotification } from "../../slices/notificationSlice";
 import { useQueryClient } from "@tanstack/react-query";
 
+const DAYS_OPTIONS = [
+  { label: "5 days", value: "5" },
+  { label: "10 days", value: "10" },
+  { label: "15 days", value: "15" },
+  { label: "20 days", value: "20" },
+  { label: "30 days", value: "30" },
+];
+
+const ADD_TABS = [
+  { label: "View All", key: "viewAll", statusValue: "all", viewAllFlag: true },
+  {
+    label: "Active Ads",
+    key: "active",
+    statusValue: "active",
+    viewAllFlag: false,
+  },
+  {
+    label: "Inactive Ads",
+    key: "inactive",
+    statusValue: "inactive",
+    viewAllFlag: false,
+  },
+  {
+    label: "Pending Ads",
+    key: "pending",
+    statusValue: "pending",
+    viewAllFlag: false,
+  },
+  {
+    label: "Expired",
+    key: "expired",
+    statusValue: "expired",
+    viewAllFlag: false,
+  },
+];
+
+const STATUS_MAP = {
+  viewAll: "all",
+  active: "active",
+  inactive: "inactive",
+  pending: "pending",
+  expired: "expired",
+};
+
 const Dashboard = () => {
   const op = useRef(null);
   const navigate = useNavigate();
@@ -58,27 +102,8 @@ const Dashboard = () => {
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [carToDelete, setCarToDelete] = useState(null);
 
-  // Status mapping
-  const statusMap = {
-    viewAll: "all",
-    active: "active",
-    inactive: "inactive",
-    pending: "pending",
-    expired: "expired",
-  };
-
-  // Get status and viewAll based on adStatus
-  const status = statusMap[adStatus];
+  const status = STATUS_MAP[adStatus];
   const viewAll = adStatus === "viewAll";
-
-  // Days options for boost dialog
-  const daysOptions = [
-    { label: "5 days", value: "5" },
-    { label: "10 days", value: "10" },
-    { label: "15 days", value: "15" },
-    { label: "20 days", value: "20" },
-    { label: "30 days", value: "30" },
-  ];
 
   // Formik for boost dialog
   const formik = useFormik({
@@ -112,66 +137,34 @@ const Dashboard = () => {
     mutate: updateCarAvailability,
     isPending: updateAvailabilityLoading,
   } = useUpdateCarAvailability();
-  // Stats data
-  const stats = [
-    {
-      icon: DailyBooking,
-      label: "TOTAL NUMBER OF ADS",
-      value:
-        (adsCount?.data?.inactive || 0) +
-        (adsCount?.data?.live || 0) +
-        (adsCount?.data?.pending || 0),
-    },
-    {
-      icon: ActiveAds,
-      label: "ACTIVE ADS",
-      value: adsCount?.data?.live || 0,
-    },
-    {
-      icon: AddImpression,
-      label: "INACTIVE ADS",
-      value: adsCount?.data?.inactive || 0,
-    },
-    {
-      icon: ExpireAds,
-      label: "PENDING ADS",
-      value: adsCount?.data?.pending || 0,
-    },
-  ];
-
-  // Tab configuration
-  const addTabs = [
-    {
-      label: "View All",
-      key: "viewAll",
-      statusValue: "all",
-      viewAllFlag: true,
-    },
-    {
-      label: "Active Ads",
-      key: "active",
-      statusValue: "active",
-      viewAllFlag: false,
-    },
-    {
-      label: "Inactive Ads",
-      key: "inactive",
-      statusValue: "inactive",
-      viewAllFlag: false,
-    },
-    {
-      label: "Pending Ads",
-      key: "pending",
-      statusValue: "pending",
-      viewAllFlag: false,
-    },
-    {
-      label: "Expired",
-      key: "expired",
-      statusValue: "expired",
-      viewAllFlag: false,
-    },
-  ];
+  const stats = useMemo(
+    () => [
+      {
+        icon: DailyBooking,
+        label: "TOTAL NUMBER OF ADS",
+        value:
+          (adsCount?.data?.inactive || 0) +
+          (adsCount?.data?.live || 0) +
+          (adsCount?.data?.pending || 0),
+      },
+      {
+        icon: ActiveAds,
+        label: "ACTIVE ADS",
+        value: adsCount?.data?.live || 0,
+      },
+      {
+        icon: AddImpression,
+        label: "INACTIVE ADS",
+        value: adsCount?.data?.inactive || 0,
+      },
+      {
+        icon: ExpireAds,
+        label: "PENDING ADS",
+        value: adsCount?.data?.pending || 0,
+      },
+    ],
+    [adsCount],
+  );
 
   // Handlers
   const handleTabSelect = useCallback((tab) => {
@@ -186,11 +179,14 @@ const Dashboard = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-  const handleEdit = useCallback((rowData) => {
-    navigate(ROUTES.EDITAD.replace(":id", rowData?._id), {
-      state: { carData: rowData },
-    });
-  }, []);
+  const handleEdit = useCallback(
+    (rowData) => {
+      navigate(ROUTES.EDITAD.replace(":id", rowData?._id), {
+        state: { carData: rowData },
+      });
+    },
+    [navigate],
+  );
 
   const handleRemoveAddClick = useCallback((rowData) => {
     setCarToDelete(rowData);
@@ -235,11 +231,7 @@ const Dashboard = () => {
         },
       },
     );
-  }, [carToDelete, deleteAd, dispatch, refetchAllCars, refetchAdsCount]);
-
-  const handleToggleAvailability = useCallback((carId, newStatus) => {
-    // TODO: call API to update availability status
-  }, []);
+  }, [carToDelete, deleteAd, dispatch, queryClient, refetchAdsCount]);
 
   const handleBoostAdd = useCallback(
     (rowData) => {
@@ -301,10 +293,7 @@ const Dashboard = () => {
       label: "Available",
       hasToggle: true,
       getValue: (rowData) => rowData?.status === "inactive",
-      onToggle: (rowData, value) => {
-        const newStatus = value ? "inactive" : "active";
-        handleToggleAvailability(rowData._id, newStatus);
-      },
+      onToggle: (rowData, value) => {},
     },
     {
       icon: <DeleteIcon className="text-[#5D717D] w-4 h-4 flex shrink-0" />,
@@ -355,18 +344,7 @@ const Dashboard = () => {
     }
   };
 
-  const isLoading = loadingAdsData || carsDataLoading;
-
-  // Display data
   const displayData = allCarsData?.cars || [];
-
-  if (isLoading) {
-    return (
-      <div className="flex w-full items-center justify-center h-[calc(100vh-200px)]">
-        <Loader />
-      </div>
-    );
-  }
 
   return (
     <div className="flex w-full overflow-auto items-center flex-col my-4 px-3">
@@ -384,9 +362,13 @@ const Dashboard = () => {
               </p>
             </div>
             <div className="flex flex-col w-full h-12">
-              <h1 className="font-archivo font-bold text-[32px] h-[35px] leading-[100%] text-[#44505A]">
-                {stat.value}
-              </h1>
+              {loadingAdsData ? (
+                <div className="w-16 h-8 bg-gray-200 animate-pulse rounded mt-1" />
+              ) : (
+                <h1 className="font-archivo font-bold text-[32px] h-[35px] leading-[100%] text-[#44505A]">
+                  {stat.value}
+                </h1>
+              )}
             </div>
           </div>
         ))}
@@ -407,7 +389,7 @@ const Dashboard = () => {
             </p>
             {showTabDropdown && (
               <div className="absolute top-full right-0 mt-1 w-full bg-white border border-[#E3E8EA] rounded shadow-lg z-50">
-                {addTabs.map((tab) => (
+                {ADD_TABS.map((tab) => (
                   <div
                     key={tab.key}
                     className={`px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer transition-colors duration-200 ${
@@ -443,7 +425,11 @@ const Dashboard = () => {
 
         {/* Mobile Car Cards */}
         <div className="w-full mt-4">
-          {carsDataError ? (
+          {carsDataLoading ? (
+            <div className="flex justify-center items-center py-10">
+              <Loader />
+            </div>
+          ) : carsDataError ? (
             <p className="text-red-500 text-center">Error loading data</p>
           ) : displayData?.length > 0 ? (
             displayData.map((item, index) => (
@@ -453,7 +439,6 @@ const Dashboard = () => {
                 handleEdit={(e) => {
                   e?.stopPropagation();
                   setSelectedRow(item);
-
                   op.current?.toggle(e);
                 }}
                 handleRemoveAdd={() => handleRemoveAddClick(item)}
@@ -476,7 +461,7 @@ const Dashboard = () => {
 
         <div className="flex justify-between">
           <div className="flex gap-4">
-            {addTabs.map((btn) => (
+            {ADD_TABS.map((btn) => (
               <Button
                 key={btn.key}
                 label={btn.label}
@@ -508,7 +493,11 @@ const Dashboard = () => {
 
       {/* Desktop DataTable */}
       <div className="mt-6 dashboard hidden lg:block w-[90%]">
-        {carsDataError ? (
+        {carsDataLoading ? (
+          <div className="flex justify-center items-center py-10">
+            <Loader />
+          </div>
+        ) : carsDataError ? (
           <p className="text-red-500 text-center">Error loading data</p>
         ) : (
           <div className="w-full overflow-x-auto">
@@ -710,7 +699,7 @@ const Dashboard = () => {
 
           <div className="mt-6">
             <Dropdown
-              options={daysOptions}
+              options={DAYS_OPTIONS}
               placeholder="Number of days"
               value={formik.values.days}
               onChange={(e) => formik.setFieldValue("days", e.value)}

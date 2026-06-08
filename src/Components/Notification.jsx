@@ -8,13 +8,10 @@ export default function NotificationProvider() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    notifications.forEach((n) => {
-      const timer = setTimeout(() => {
-        dispatch(clearNotification(n.id));
-      }, 5000);
-
-      return () => clearTimeout(timer);
-    });
+    const timers = notifications.map((n) =>
+      setTimeout(() => dispatch(clearNotification(n.id)), 5000),
+    );
+    return () => timers.forEach(clearTimeout);
   }, [notifications, dispatch]);
 
   return (

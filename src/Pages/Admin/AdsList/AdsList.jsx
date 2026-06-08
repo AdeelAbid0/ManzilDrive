@@ -54,11 +54,8 @@ const AddList = () => {
               message: response?.message,
               status: "success",
             }),
-            queryClient.invalidateQueries([
-              "GetAllAds",
-              { page, limit, status },
-            ]),
           );
+          queryClient.invalidateQueries({ queryKey: ["GetAllAds"] });
         },
         onError: (error) => {
           dispatch(

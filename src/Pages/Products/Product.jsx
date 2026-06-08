@@ -60,9 +60,7 @@ const Products = () => {
         setTotalPages(res?.totalPages);
         setAllCarsData(res?.cars);
       },
-      onError: (error) => {
-        console.error("Error fetching cars:", error);
-      },
+      onError: () => {},
     });
   };
   useEffect(() => {

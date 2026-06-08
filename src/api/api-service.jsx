@@ -5,7 +5,6 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import { isEmpty } from "lodash";
 import api from "./AxiosInceptor";
 
 export const useClientQuery = ({
@@ -38,7 +37,7 @@ export const useClientMutation = ({
         if (!(payload instanceof FormData) && payload?.suffixUrl) {
           finalUrl = `${url}${payload.suffixUrl ?? ""}`;
           const { suffixUrl, ...rest } = payload;
-          body = isEmpty(rest) ? undefined : rest;
+          body = Object.keys(rest).length === 0 ? undefined : rest;
         }
 
         const response = await api({

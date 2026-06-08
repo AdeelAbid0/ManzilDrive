@@ -9,13 +9,13 @@ const AllBusinessCars = () => {
   const location = useLocation();
   const { id } = useParams();
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const limit = 10;
+  const status = "";
+  const viewAll = true;
   const handlePageChange = (newPage) => {
     setPage(newPage);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-  const [status, setStatus] = useState("");
-  const viewAll = true;
   const { data, isPending } = useGetAllBusinessCars(
     page,
     limit,
@@ -24,7 +24,7 @@ const AllBusinessCars = () => {
     id,
   );
   const carsDetail = data?.cars;
-  const businessDetail = data?.cars[0]?.business;
+  const businessDetail = data?.cars?.[0]?.business;
   return (
     <div className="flex flex-col items-center justify-center w-full !h-full px-4 py-4 md:py-0 md:px-0 ">
       {isPending ? (
@@ -58,8 +58,7 @@ const AllBusinessCars = () => {
                 )}
               </span>
               <p className="text-[#666666] font-medium text-sm pt-4">
-                {businessDetail?.location?.address} Bug here : Not showing
-                location
+                {businessDetail?.location?.address}
               </p>
             </div>
           </div>
@@ -73,9 +72,9 @@ const AllBusinessCars = () => {
               </p>
             </div>
             <div className="flex w-full gap-4 mt-4 flex-wrap justify-center">
-              {carsDetail?.map((item, index) => {
-                return <CarCard key={index} items={item} />;
-              })}
+              {carsDetail?.map((item) => (
+                <CarCard key={item._id} items={item} />
+              ))}
             </div>
           </div>
         </div>

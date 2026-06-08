@@ -1,4 +1,4 @@
-﻿import { useState, useRef } from "react";
+﻿import { useState, useRef, useMemo } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import "./Dashboard-admin.css";
@@ -38,47 +38,32 @@ const Dashboard_Admin = () => {
     refetch: refetchBusinesses,
   } = useGetAllBusinesses(page, limit);
 
-  const { mutate: ApproveBusiness, isLoading: ApproveBusinessLoading } =
-    useApproveBusiness();
+  const { mutate: ApproveBusiness } = useApproveBusiness();
 
-  const { mutate: RejectBusiness, isLoading: RejectBusinessLoading } =
+  const { mutate: RejectBusiness, isPending: RejectBusinessLoading } =
     useRejectBusiness();
 
-  // Stats data
-  const stats = [
-    {
-      icon: Users,
-      label: "TOTAL USERS",
-      value: AdsCount?.data?.totalUsers || 0,
-    },
-    {
-      icon: Eye,
-      label: "ACTIVE ADS",
-      value: AdsCount?.data?.live || 0,
-    },
-    {
-      icon: Clock,
-      label: "EXPIRED ADS",
-      value: AdsCount?.data?.expired || 0,
-    },
-    {
-      icon: XCircle,
-      label: "INACTIVE ADS",
-      value: AdsCount?.data?.inactive || 0,
-    },
-  ];
+  const stats = useMemo(
+    () => [
+      { icon: Users, label: "TOTAL USERS", value: AdsCount?.data?.totalUsers || 0 },
+      { icon: Eye, label: "ACTIVE ADS", value: AdsCount?.data?.live || 0 },
+      { icon: Clock, label: "EXPIRED ADS", value: AdsCount?.data?.expired || 0 },
+      { icon: XCircle, label: "INACTIVE ADS", value: AdsCount?.data?.inactive || 0 },
+    ],
+    [AdsCount],
+  );
 
-  // Filter businesses based on search term
-  const filteredBusinesses = AllBusinsses?.businesses?.filter((business) => {
-    if (!searchTerm) return true;
+  const filteredBusinesses = useMemo(() => {
+    if (!searchTerm) return AllBusinsses?.businesses || [];
     const searchLower = searchTerm.toLowerCase();
-    return (
-      business?.name?.toLowerCase().includes(searchLower) ||
-      business?.email?.toLowerCase().includes(searchLower) ||
-      business?.phoneNumber?.toLowerCase().includes(searchLower) ||
-      business?.location?.city?.toLowerCase().includes(searchLower)
+    return (AllBusinsses?.businesses || []).filter(
+      (b) =>
+        b?.name?.toLowerCase().includes(searchLower) ||
+        b?.email?.toLowerCase().includes(searchLower) ||
+        b?.phoneNumber?.toLowerCase().includes(searchLower) ||
+        b?.location?.city?.toLowerCase().includes(searchLower),
     );
-  });
+  }, [AllBusinsses, searchTerm]);
 
   const handlePageChange = (newPage) => {
     setPage(newPage);
@@ -237,7 +222,6 @@ const Dashboard_Admin = () => {
               value={searchTerm}
               onChange={handleSearchChange}
               placeholder="Search by name, email, phone..."
-              // prefixIcon={SearchIcon}
               className="!h-10 w-full"
             />
           </div>
