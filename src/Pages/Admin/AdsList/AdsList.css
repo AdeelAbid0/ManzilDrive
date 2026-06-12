@@ -94,11 +94,11 @@
 }
 .boostadd .p-datatable-thead > tr > th:nth-of-type(2),
 .boostadd tbody > tr > td:nth-of-type(2) {
-  width: 200px !important;
+  width: 130px !important;
 }
 .boostadd .p-datatable-thead > tr > th:nth-of-type(3),
 .boostadd tbody > tr > td:nth-of-type(3) {
-  width: 130px !important;
+  width: 200px !important;
 }
 .boostadd .p-datatable-thead > tr > th:nth-of-type(4),
 .boostadd tbody > tr > td:nth-of-type(4) {

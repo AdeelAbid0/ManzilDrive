@@ -5,6 +5,7 @@ import "./Dashboard-admin.css";
 import { Users, Eye, Clock, XCircle } from "lucide-react";
 import {
   useApproveBusiness,
+  useDeactivateBusiness,
   useGetAdsCount,
   useGetAllBusinesses,
   useRejectBusiness,
@@ -43,12 +44,26 @@ const Dashboard_Admin = () => {
   const { mutate: RejectBusiness, isPending: RejectBusinessLoading } =
     useRejectBusiness();
 
+  const { mutate: DeactivateBusiness } = useDeactivateBusiness();
+
   const stats = useMemo(
     () => [
-      { icon: Users, label: "TOTAL USERS", value: AdsCount?.data?.totalUsers || 0 },
+      {
+        icon: Users,
+        label: "TOTAL USERS",
+        value: AdsCount?.data?.totalUsers || 0,
+      },
       { icon: Eye, label: "ACTIVE ADS", value: AdsCount?.data?.live || 0 },
-      { icon: Clock, label: "EXPIRED ADS", value: AdsCount?.data?.expired || 0 },
-      { icon: XCircle, label: "INACTIVE ADS", value: AdsCount?.data?.inactive || 0 },
+      {
+        icon: Clock,
+        label: "EXPIRED ADS",
+        value: AdsCount?.data?.expired || 0,
+      },
+      {
+        icon: XCircle,
+        label: "INACTIVE ADS",
+        value: AdsCount?.data?.inactive || 0,
+      },
     ],
     [AdsCount],
   );
@@ -106,6 +121,18 @@ const Dashboard_Admin = () => {
     op.current?.hide();
   };
 
+  const handleDeactivate = () => {
+    DeactivateBusiness(
+      { businessId: selectedRow?._id },
+      {
+        onSuccess: () => {
+          refetchBusinesses();
+          op.current?.hide();
+        },
+      },
+    );
+  };
+
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
     setPage(1);
@@ -159,6 +186,28 @@ const Dashboard_Admin = () => {
     return <span className="cell-content">{rowData?.totalAds || 0}</span>;
   };
 
+  // Status template
+  const statusBodyTemplate = (rowData) => {
+    const s = rowData?.status;
+    const styles =
+      s === "active"
+        ? "bg-[#00796B1A] text-[#00796B]"
+        : s === "rejected"
+          ? "bg-[#D32F2F1A] text-[#D32F2F]"
+          : s === "pending"
+            ? "bg-[#F57C001A] text-[#F57C00]"
+            : s === "inactive"
+              ? "bg-[#78909C1A] text-[#78909C]"
+              : "bg-gray-100 text-gray-500";
+    return (
+      <p
+        className={`inline-flex items-center justify-center px-3 py-1 text-sm font-normal rounded-[4px] capitalize ${styles}`}
+      >
+        {s || "N/A"}
+      </p>
+    );
+  };
+
   if (LoadingAdsData || DashboardDataLoading) {
     return (
       <div className="flex w-full items-center justify-center h-full flex-col my-4">
@@ -195,16 +244,28 @@ const Dashboard_Admin = () => {
       <OverlayPanel ref={op}>
         <div className="flex flex-col min-w-[120px]">
           <div
-            className="px-3 py-2 hover:bg-gray-100 cursor-pointer rounded"
-            onClick={handleApprove}
+            className={`px-3 py-2 rounded ${selectedRow?.status === "approved" ? "opacity-40 cursor-not-allowed" : "hover:bg-gray-100 cursor-pointer"}`}
+            onClick={
+              selectedRow?.status !== "approved" ? handleApprove : undefined
+            }
           >
             <p className="text-sm font-medium">Approve</p>
           </div>
           <div
-            className="px-3 py-2 hover:bg-gray-100 cursor-pointer rounded"
-            onClick={handleReject}
+            className={`px-3 py-2 rounded ${selectedRow?.status === "rejected" ? "opacity-40 cursor-not-allowed" : "hover:bg-gray-100 cursor-pointer"}`}
+            onClick={
+              selectedRow?.status !== "rejected" ? handleReject : undefined
+            }
           >
             <p className="text-sm font-medium">Reject</p>
+          </div>
+          <div
+            className={`px-3 py-2 rounded ${selectedRow?.status === "inactive" ? "opacity-40 cursor-not-allowed" : "hover:bg-gray-100 cursor-pointer"}`}
+            onClick={
+              selectedRow?.status !== "inactive" ? handleDeactivate : undefined
+            }
+          >
+            <p className="text-sm font-medium text-red-600">Deactive</p>
           </div>
         </div>
       </OverlayPanel>
@@ -271,6 +332,12 @@ const Dashboard_Admin = () => {
                 body={adsBodyTemplate}
                 headerClassName="bg-blue-600 text-white"
                 style={{ width: "38px" }}
+              />
+              <Column
+                header="Status"
+                body={statusBodyTemplate}
+                headerClassName="bg-blue-600 text-white"
+                style={{ width: "120px" }}
               />
               <Column
                 header="Action"

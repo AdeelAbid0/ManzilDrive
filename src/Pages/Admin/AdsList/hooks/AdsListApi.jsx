@@ -35,3 +35,11 @@ export const useApproveAd = () => {
     enabled: true,
   });
 };
+
+export const useRejectAd = () => {
+  return useClientMutation({
+    mutationKey: ["RejectAd"],
+    url: ApiUrl.AdsList.RejectAd(),
+    enabled: true,
+  });
+};

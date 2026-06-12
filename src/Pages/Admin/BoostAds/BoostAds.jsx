@@ -1,4 +1,4 @@
-﻿import { useState, useMemo } from "react";
+﻿import { useState, useMemo, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import "./BoostAds.css";
@@ -34,9 +34,13 @@ const BoostAdds = () => {
 
   const {
     data: BoostAdsRequests,
-    refetch: refetchBoostAds,
+    mutate: fetchBoostAds,
     isPending: LoadingBoostAdsRequests,
-  } = useGetAllBoostAdsRequests(page, limit, status, status);
+  } = useGetAllBoostAdsRequests();
+
+  useEffect(() => {
+    fetchBoostAds({ page, limit, status: ["active"], tab: status });
+  }, [page, status]);
   const { mutate: rejectBoostRequest, isPending: rejectingBoostRequest } =
     useRejectBoostRequest();
   const { mutate: approveBoostAdRequest, isPending: approvingBoostRequest } =
@@ -68,7 +72,7 @@ const BoostAdds = () => {
       { carId: selectedRow?._id },
       {
         onSuccess: (res) => {
-          refetchBoostAds();
+          fetchBoostAds({ page, limit, status: ["active"], tab: status });
           op.current.hide();
           dispatch(
             showNotification({
@@ -104,7 +108,7 @@ const BoostAdds = () => {
         onSuccess: (res) => {
           setShowRejectDialog(false);
           setRejectReason("");
-          refetchBoostAds();
+          fetchBoostAds({ page, limit, status: ["active"], tab: status });
           op.current?.hide();
           dispatch(
             showNotification({
@@ -235,12 +239,14 @@ const BoostAdds = () => {
                 headerClassName="bg-blue-600 text-white text-start py-2"
               />
               <Column
-                header="Phone"
+                header="Phone/Email"
                 body={(rowData) => (
                   <p className="text-sm text-[#666666] font-normal">
                     {rowData?.business?.phoneNumber
                       ? `${rowData.business.phoneNumber}`
-                      : "N/A"}
+                      : rowData?.business?.email
+                        ? `${rowData.business.email}`
+                        : "N/A"}
                   </p>
                 )}
                 headerClassName="bg-blue-600 text-white text-start py-2"

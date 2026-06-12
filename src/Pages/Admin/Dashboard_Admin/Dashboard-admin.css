@@ -49,18 +49,24 @@
   flex: 0 0 130px;
 }
 .dashboardadmin .p-datatable-thead > tr > th:nth-child(4) {
-  width: 303px;
-  flex: 0 0 303px;
+  width: 260px;
+  flex: 0 0 260px;
 }
 .dashboardadmin .p-datatable-thead > tr > th:nth-child(5) {
-  width: 38px; /* Increased from 38px for better visibility */
+  width: 60px;
   flex: 0 0 60px;
   display: flex;
   justify-content: flex-start;
 }
 .dashboardadmin .p-datatable-thead > tr > th:nth-child(6) {
-  width: 80px; /* Increased from 46px for better click area */
-  flex: 0 0 80px;
+  width: 120px;
+  flex: 0 0 120px;
+  display: flex;
+  justify-content: flex-start;
+}
+.dashboardadmin .p-datatable-thead > tr > th:nth-child(7) {
+  width: 60px;
+  flex: 0 0 60px;
   display: flex;
   justify-content: center;
 }
@@ -107,18 +113,24 @@
   flex: 0 0 130px;
 }
 .dashboardadmin .p-datatable-tbody > tr > td:nth-child(4) {
-  width: 303px;
-  flex: 0 0 303px;
+  width: 260px;
+  flex: 0 0 260px;
 }
 .dashboardadmin .p-datatable-tbody > tr > td:nth-child(5) {
-  width: 60px; /* Increased from 38px */
+  width: 60px;
   flex: 0 0 60px;
   display: flex;
   justify-content: flex-start;
 }
 .dashboardadmin .p-datatable-tbody > tr > td:nth-child(6) {
-  width: 80px; /* Increased from 46px */
-  flex: 0 0 80px;
+  width: 120px;
+  flex: 0 0 120px;
+  display: flex;
+  justify-content: flex-start;
+}
+.dashboardadmin .p-datatable-tbody > tr > td:nth-child(7) {
+  width: 60px;
+  flex: 0 0 60px;
   display: flex;
   justify-content: center;
 }
@@ -207,9 +219,9 @@
   }
 }
 
-/* Fix for last column alignment */
-.dashboardadmin .p-datatable-thead > tr > th:last-child,
-.dashboardadmin .p-datatable-tbody > tr > td:last-child {
+/* Action column alignment */
+.dashboardadmin .p-datatable-thead > tr > th:nth-child(7),
+.dashboardadmin .p-datatable-tbody > tr > td:nth-child(7) {
   justify-content: center;
 }
 

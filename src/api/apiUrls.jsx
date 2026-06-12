@@ -90,18 +90,18 @@ export const ApiUrl = {
     //Businesses
     ApproveBusiness: () => "business/approve",
     RejectBusiness: () => "business/rejectBusiness",
+    DeactivateBusiness: () => "business/deactivate",
     // Ads list
     GetAllAds: () => "cars/getAdminAllCars",
   },
   BoostAds: {
-    GetAllBoostAdsRequest: (page, limit, status, tab) =>
-      `cars/carBoostedRequests?page=${page}&limit=${limit}&status=${status}&tab=${tab}`,
+    GetAllBoostAdsRequest: () => `cars/carBoostedRequests`,
     RejectBoostRequest: () => "cars/rejectCarBoost",
     ApproveBoostRequest: () => "cars/approveCarBoost",
   },
   AdsList: {
     GetAllAds: () => "cars/getAdminAllCars",
     ApproveAd: () => "cars/approve",
-    RejectAd: () => "cars/reject",
+    RejectAd: () => "cars/rejectCar",
   },
 };

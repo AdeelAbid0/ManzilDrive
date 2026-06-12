@@ -28,3 +28,10 @@ export const useRejectBusiness = () => {
     enabled: true,
   });
 };
+export const useDeactivateBusiness = () => {
+  return useClientMutation({
+    url: ApiUrl.AdminDashboard.DeactivateBusiness(),
+    method: "PUT",
+    enabled: true,
+  });
+};
