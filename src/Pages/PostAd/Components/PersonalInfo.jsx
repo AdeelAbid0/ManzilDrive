@@ -30,12 +30,6 @@ const PersonalInfo = ({
     BusinessDetail?.business?.phoneVerified ? false : true
   );
   useEffect(() => {
-    if (formik.values?.location?.value === undefined) {
-      formik.setFieldValue("location", null);
-    }
-  }, []);
-
-  useEffect(() => {
     if (BusinessDetail?.business?.phoneVerified) {
       setVisible(false);
       if (!BusinessDetail?.business?.emailVerified) {
@@ -51,8 +45,9 @@ const PersonalInfo = ({
   } = useGetAllActiveByCountryId("665000000000000000000001");
   const handleChange = (e) => {
     formik.setFieldValue("location", {
-      value: e.value || e.place_id,
-      label: e.label || e.description,
+      lat: e.lat,
+      lng: e.lng,
+      label: e.label,
     });
   };
 

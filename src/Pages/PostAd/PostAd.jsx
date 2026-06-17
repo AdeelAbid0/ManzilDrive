@@ -58,15 +58,14 @@ const PostAd = () => {
       formDataForPersonalInfo.append("name", values.name);
       formDataForPersonalInfo.append("city", values.city);
       formDataForPersonalInfo.append("phoneNumber", values.phoneNumber);
-      formDataForPersonalInfo.append("sessionToken", "");
       formDataForPersonalInfo.append("shopName", values.shopName);
       formDataForPersonalInfo.append("secondaryNumber", values.secondaryNumber);
-      formDataForPersonalInfo.append("address", values.location.label);
-      formDataForPersonalInfo.append("placeId", values.location.value);
+      formDataForPersonalInfo.append("lat", values.location.lat);
+      formDataForPersonalInfo.append("lng", values.location.lng);
 
       addBusiness(formDataForPersonalInfo, {
         onSuccess: (res) => {
-          dispatch(setUser(res));
+          dispatch(setUser({ ...userData, ...(res || {}), token: userData.token, refreshToken: userData.refreshToken }));
           dispatch(
             showNotification({
               message: "Business Updated Successfully",
@@ -308,8 +307,9 @@ const PostAd = () => {
         BusinessDetail?.business?.city?._id,
       );
       formikPersonalInfo.setFieldValue("location", {
-        value: BusinessDetail?.business?.location?.placeId,
-        label: BusinessDetail?.business?.location?.address,
+        lat: BusinessDetail?.business?.location?.lat,
+        lng: BusinessDetail?.business?.location?.lng,
+        label: BusinessDetail?.business?.location?.address || "",
       });
     }
   }, [BusinessDetail]);

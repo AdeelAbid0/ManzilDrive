@@ -27,9 +27,6 @@ const Products = () => {
   const { mutate: getAllCarsData, isPending: LoadingCarsData } =
     useGetAllCars();
 
-  const handleChange = (e) => {
-    formik.setFieldValue("location", e.value);
-  };
   const handlePageChange = (newPage) => {
     setPage(newPage);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -44,7 +41,8 @@ const Products = () => {
       variant: formik.values.variant,
       status: formik.values.status,
       year: formik.values.year,
-      location: formik.values.location,
+      lat: formik.values.location?.lat,
+      lng: formik.values.location?.lng,
       transmission: Array.isArray(formik.values.transmission)
         ? formik.values.transmission
         : [],

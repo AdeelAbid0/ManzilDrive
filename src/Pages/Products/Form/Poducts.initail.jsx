@@ -7,7 +7,7 @@ export const initialValues = {
   // status: ["active"],
   status: ["pending"],
   city: "",
-  location: "",
+  location: { lat: null, lng: null, label: "" },
   transmission: [],
   availability: [],
   category: [],

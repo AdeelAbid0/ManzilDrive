@@ -7,13 +7,6 @@ export const useGetAllCars = () => {
     method: "POST",
   });
 };
-export const useGetLocation = ({ input, sessionToken }) => {
-  return useClientQuery({
-    queryKeys: ["getLocation", input],
-    url: ApiUrl.Location.GetLocation({ input, sessionToken }),
-    enabled: !!input,
-  });
-};
 export const useGetAllActiveByCountryId = (countryId) => {
   return useClientQuery({
     queryKey: ["getAllCity", countryId],

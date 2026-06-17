@@ -27,13 +27,6 @@ export const useGetAllActiveByCountryId = (countryId) => {
     enabled: !!countryId,
   });
 };
-export const useGetLocation = ({ input, sessionToken }) => {
-  return useClientQuery({
-    queryKeys: ["getLocation", input],
-    url: ApiUrl.Location.GetLocation({ input, sessionToken }),
-    enabled: !!input,
-  });
-};
 export const AddBusiness = () => {
   return useClientMutation({
     url: ApiUrl.Business.AddBusiness,

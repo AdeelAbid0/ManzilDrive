@@ -30,7 +30,7 @@ const SearchDialog = ({ formik, handleSearch, setShowSearchDialog }) => {
   } = useGetAllActiveByCountryId("665000000000000000000001");
 
   const handleChange = (e) => {
-    formik.setFieldValue("location", e.value);
+    formik.setFieldValue("location", { lat: e.lat, lng: e.lng, label: e.label });
   };
 
   return (

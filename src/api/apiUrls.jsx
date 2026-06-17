@@ -52,11 +52,6 @@ export const ApiUrl = {
     GetAllActiveByCountryId: (countryId) =>
       `cities/active/by-country/${countryId}`,
   },
-  Location: {
-    GetLocation: ({ input, sessionToken }) =>
-      `places/autocomplete?input=${input}&sessionToken=${sessionToken}`,
-  },
-
   Country: {
     AddCountry: "countries",
     ChangeStatus: (countryId) => `countries/${countryId}/status`,

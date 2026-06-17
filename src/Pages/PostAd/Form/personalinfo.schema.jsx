@@ -12,8 +12,8 @@ export const ValidationSchemaPersonalInfo = Yup.object().shape({
   city: Yup.string().required("City is required"),
   location: Yup.object()
     .shape({
-      value: Yup.string().required("Location is required"),
-      label: Yup.string().required("Location is required"),
+      lat: Yup.number().nullable().required("Location is required"),
+      lng: Yup.number().nullable().required("Location is required"),
     })
     .required("Location is required"),
 });
