@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import MapPicker from "./MapPicker";
-import { getAddressFromCoords } from "../../utils/locationUtils";
+import { getAddressFromCoords } from "../../Utils/locationUtils";
 
 const Location = ({ value, onChange, placeholder, className }) => {
   const [isMapOpen, setIsMapOpen] = useState(false);
