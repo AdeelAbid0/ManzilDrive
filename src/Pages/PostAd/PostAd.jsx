@@ -287,12 +287,10 @@ const PostAd = () => {
   // ------------------- Effects -------------------
   useEffect(() => {
     if (BusinessDetail) {
-      if (BusinessDetail?.business?.phoneVerified) {
-        formikPersonalInfo.setFieldValue(
-          "phoneNumber",
-          BusinessDetail?.business?.phoneNumber,
-        );
-      }
+      formikPersonalInfo.setFieldValue(
+        "phoneNumber",
+        String(BusinessDetail?.business?.phoneNumber || ""),
+      );
       formikPersonalInfo.setFieldValue("name", BusinessDetail?.business?.name);
       formikPersonalInfo.setFieldValue(
         "secondaryNumber",

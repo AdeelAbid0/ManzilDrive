@@ -27,7 +27,7 @@ const PersonalInfo = ({
 }) => {
   const userData = useSelector((state) => state?.user?.user);
   const [visible, setVisible] = useState(
-    BusinessDetail?.business?.phoneVerified ? false : true
+    BusinessDetail?.business?.phoneVerified ? false : true,
   );
   useEffect(() => {
     if (BusinessDetail?.business?.phoneVerified) {
