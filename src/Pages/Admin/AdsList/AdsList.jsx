@@ -105,6 +105,7 @@ const AddList = () => {
           dispatch(
             showNotification({ message: res?.message, status: "success" }),
           );
+
           queryClient.invalidateQueries({ queryKey: ["GetAllAds"] });
         },
         onError: (error) => {

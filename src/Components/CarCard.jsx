@@ -1,16 +1,39 @@
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
-import {
-  AC,
-  Bag,
-  Location,
-  Passengers,
-  Service,
-  Steric,
-} from "../Utils/Icons";
+import { AC, Bag, Location, Passengers, Service, Steric } from "../Utils/Icons";
 import EditIcon from "../assets/SVG/edit.svg?react";
 import DeleteIcon from "../assets/SVG/delete.svg?react";
 import { ROUTES } from "../constants/routes";
+
+const LocationLabel = ({ lat, lng, address }) => {
+  const [label, setLabel] = useState(address || "");
+
+  useEffect(() => {
+    if (address) return;
+    if (!lat || !lng) {
+      setLabel("Location not available");
+      return;
+    }
+    fetch(
+      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`,
+      { headers: { "Accept-Language": "en" } },
+    )
+      .then((r) => r.json())
+      .then((data) => {
+        const { city, town, village, county, state, country } =
+          data.address || {};
+        setLabel(
+          [city || town || village || county, state, country]
+            .filter(Boolean)
+            .join(", ") || "Location not available",
+        );
+      })
+      .catch(() => setLabel("Location not available"));
+  }, [lat, lng, address]);
+
+  return <span>{label || "..."}</span>;
+};
 
 const CarCard = ({ items, isDashboard, handleRemoveAdd, handleEdit }) => {
   const location = useLocation();
@@ -119,7 +142,11 @@ const CarCard = ({ items, isDashboard, handleRemoveAdd, handleEdit }) => {
                 <Location />
               </span>
               <p className="font-inter font-normal text-xs leading-4 text-primarygrey">
-                {items?.business?.location?.address || "Location not available"}
+                <LocationLabel
+                  lat={items?.business?.location?.lat}
+                  lng={items?.business?.location?.lng}
+                  address={items?.business?.location?.address}
+                />
               </p>
             </div>
           </div>

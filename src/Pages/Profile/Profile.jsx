@@ -88,14 +88,23 @@ const Profile = () => {
               htmlFor="avatarUpload"
               className="cursor-pointer block w-full h-full"
             >
-              <img
-                src={preview || user?.business?.img}
-                alt="avatar"
-                className="w-20 h-20 rounded-xl object-cover transition-all duration-300"
-              />
-              <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-black/30 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                <i className="pi pi-pencil text-white text-lg"></i>
-              </div>
+              {preview || user?.business?.img ? (
+                <>
+                  <img
+                    src={preview || user?.business?.img}
+                    alt="avatar"
+                    className="w-20 h-20 rounded-xl object-cover transition-all duration-300"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-black/30 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                    <i className="pi pi-pencil text-white text-lg"></i>
+                  </div>
+                </>
+              ) : (
+                <div className="w-20 h-20 rounded-xl border-2 border-dashed border-[#BFD0CB] flex flex-col items-center justify-center gap-1 hover:border-primary transition-colors">
+                  <i className="pi pi-plus text-primary text-xl"></i>
+                  <span className="text-[9px] font-inter text-[#6B7B7A] leading-tight text-center">Upload Photo</span>
+                </div>
+              )}
             </label>
             <input
               id="avatarUpload"

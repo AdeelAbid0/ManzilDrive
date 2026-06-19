@@ -1,10 +1,40 @@
 ﻿import { useLocation, useParams } from "react-router-dom";
 import { useGetAllBusinessCars } from "./hooks/AllBusinessCarsApi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Avatar from "../../assets/SVG/avatar.svg?react";
+import LocationIcon from "../../assets/SVG/location.svg?react";
 import CarCard from "../../Components/CarCard";
 import Loader from "../../Components/Loader/Loader";
 import Pagination from "../../Common/Pagination";
+const LocationLabel = ({ lat, lng, address }) => {
+  const [label, setLabel] = useState(address || "");
+
+  useEffect(() => {
+    if (address) return;
+    if (!lat || !lng) {
+      setLabel("Location not available");
+      return;
+    }
+    fetch(
+      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`,
+      { headers: { "Accept-Language": "en" } },
+    )
+      .then((r) => r.json())
+      .then((data) => {
+        const { city, town, village, county, state, country } =
+          data.address || {};
+        setLabel(
+          [city || town || village || county, state, country]
+            .filter(Boolean)
+            .join(", ") || "Location not available",
+        );
+      })
+      .catch(() => setLabel("Location not available"));
+  }, [lat, lng, address]);
+
+  return <span>{label || "..."}</span>;
+};
+
 const AllBusinessCars = () => {
   const location = useLocation();
   const { id } = useParams();
@@ -57,9 +87,16 @@ const AllBusinessCars = () => {
                   },
                 )}
               </span>
-              <p className="text-[#666666] font-medium text-sm pt-4">
-                {businessDetail?.location?.address}
-              </p>
+              <div className="flex items-start gap-1 pt-4">
+                <LocationIcon className="w-5 h-5 shrink-0 mt-1" />
+                <p className="text-[#666666] font-medium text-sm leading-0">
+                  <LocationLabel
+                    lat={businessDetail?.location?.lat}
+                    lng={businessDetail?.location?.lng}
+                    address={businessDetail?.location?.address}
+                  />
+                </p>
+              </div>
             </div>
           </div>
           <div className="flex flex-col w-full md:w-[78%]">

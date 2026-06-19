@@ -35,14 +35,13 @@ const Products = () => {
   const getAllActiveAds = () => {
     const filters = {
       page: page,
-      limit: formik.values.limit,
+      limit: Number(formik.values.limit),
       make: formik.values.make,
       model: formik.values.model,
       variant: formik.values.variant,
-      status: formik.values.status,
-      year: formik.values.year,
-      lat: formik.values.location?.lat,
-      lng: formik.values.location?.lng,
+      status: Array.isArray(formik.values.status) ? formik.values.status : [],
+      year: formik.values.year ? Number(formik.values.year) : null,
+      location: formik.values.location?.label || "",
       transmission: Array.isArray(formik.values.transmission)
         ? formik.values.transmission
         : [],

@@ -1,6 +1,5 @@
-import { useFormik } from "formik";
-import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
+import { InputText } from "primereact/inputtext";
 import PrimaryButton from "../../../../Common/Button";
 import Location from "../../../../Common/LocationInput/Location";
 import {
@@ -9,28 +8,28 @@ import {
   useGetAllVariantsBymodel,
 } from "../../../PostAd/hooks/PostApi";
 import { useGetAllActiveByCountryId } from "../../hooks/ProductsApi";
+
+const dropdownClass =
+  "!w-full font-inter items-center font-normal text-input text-sm h-[49px] bg-[#F7F7F7] rounded placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px]";
+
+const dropdownStyle = { width: "100%" };
+
 const SearchDialog = ({ formik, handleSearch, setShowSearchDialog }) => {
-  // ------------------- API HOOKS -------------------
-  // Get all makes api
   const { data: makesData } = useGetAllMakes();
   const makeId = formik.values.make;
   const modelId = formik.values.model;
-  // Get All models by make api
-  const { data: modelsData, refetch: refetchmodel } =
-    useGetAllmodelByMake(makeId);
-  // Get All Variants api
-  const { data: variantData, refetch: refetchVariant } =
-    useGetAllVariantsBymodel(modelId);
+  const { data: modelsData } = useGetAllmodelByMake(makeId);
+  const { data: variantData } = useGetAllVariantsBymodel(modelId);
+  const { data: CityData } = useGetAllActiveByCountryId(
+    "665000000000000000000001",
+  );
 
-  // Get all cities api
-  const {
-    data: CityData,
-    isLoading,
-    error,
-  } = useGetAllActiveByCountryId("665000000000000000000001");
-
-  const handleChange = (e) => {
-    formik.setFieldValue("location", { lat: e.lat, lng: e.lng, label: e.label });
+  const handleLocationChange = (e) => {
+    formik.setFieldValue("location", {
+      lat: e.lat,
+      lng: e.lng,
+      label: e.label,
+    });
   };
 
   return (
@@ -44,6 +43,7 @@ const SearchDialog = ({ formik, handleSearch, setShowSearchDialog }) => {
           car ads.
         </p>
       </div>
+
       <Dropdown
         value={formik.values.make}
         name="make"
@@ -55,7 +55,8 @@ const SearchDialog = ({ formik, handleSearch, setShowSearchDialog }) => {
         placeholder="Select Make"
         filter
         filterPlaceholder="Search Make"
-        className={`font-inter items-center font-normal text-input text-sm h-[49px] bg-[#F7F7F7] rounded placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px]`}
+        style={dropdownStyle}
+        className={dropdownClass}
       />
       <Dropdown
         value={formik.values.model}
@@ -65,10 +66,11 @@ const SearchDialog = ({ formik, handleSearch, setShowSearchDialog }) => {
         onBlur={formik.handleBlur}
         optionLabel="name"
         optionValue="_id"
-        placeholder="Select model"
+        placeholder="Select Model"
         filter
-        filterPlaceholder="Search model"
-        className={` mt-3 font-inter items-center font-normal text-input text-sm h-[49px] bg-[#F7F7F7] rounded placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px]`}
+        filterPlaceholder="Search Model"
+        style={dropdownStyle}
+        className={`mt-3 ${dropdownClass}`}
       />
       <Dropdown
         value={formik.values.variant}
@@ -81,7 +83,8 @@ const SearchDialog = ({ formik, handleSearch, setShowSearchDialog }) => {
         placeholder="Select Variant"
         filter
         filterPlaceholder="Search Variant"
-        className={` mt-3 font-inter items-center font-normal text-input text-sm h-[49px] bg-[#F7F7F7] rounded placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px]`}
+        style={dropdownStyle}
+        className={`mt-3 ${dropdownClass}`}
       />
       <InputText
         type="number"
@@ -90,25 +93,28 @@ const SearchDialog = ({ formik, handleSearch, setShowSearchDialog }) => {
         placeholder="Year"
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
-        className={`mt-3 font-inter font-normal text-input text-sm bg-[#F7F7F7] h-[49px] rounded focus:ring-0 focus:outline-none placeholder-placeholder placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3`}
+        className="mt-3 w-full font-inter font-normal text-input text-sm bg-[#F7F7F7] h-[49px] rounded focus:ring-0 focus:outline-none placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px] pl-3"
       />
-      <Dropdown
-        value={formik.values.city}
-        name="city"
-        options={CityData || []}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        optionLabel="name"
-        optionValue="_id"
-        placeholder="City"
-        filter
-        filterPlaceholder="Search Make"
-        className={`mt-3 font-inter items-center font-normal text-input text-sm h-[49px] bg-[#F7F7F7] rounded placeholder:font-normal placeholder:font-inter placeholder:text-sm placeholder:leading-[18px]`}
-      />
-
+      <div className="mt-3 w-full overflow-hidden">
+        <Dropdown
+          value={formik.values.city}
+          name="city"
+          options={CityData || []}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          optionLabel="name"
+          optionValue="_id"
+          placeholder="Select City"
+          filter
+          filterPlaceholder="Search City"
+          style={{ width: "100%", minWidth: 0 }}
+          panelStyle={{ maxWidth: "90vw" }}
+          className={dropdownClass}
+        />
+      </div>
       <Location
         value={formik.values.location}
-        onChange={handleChange}
+        onChange={handleLocationChange}
         placeholder="Search Location"
         className="mt-3 w-full !bg-[#F7F7F7] !h-[48px]"
       />
@@ -121,7 +127,7 @@ const SearchDialog = ({ formik, handleSearch, setShowSearchDialog }) => {
           handleSearch();
         }}
         loading={""}
-        className={"mt-8 "}
+        className="mt-8"
       />
     </div>
   );

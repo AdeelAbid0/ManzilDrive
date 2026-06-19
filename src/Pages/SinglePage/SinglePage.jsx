@@ -5,8 +5,37 @@ import ArrowLeft from "../../assets/SVG/arrow-left.svg?react";
 import ArrowRight from "../../assets/SVG/arrow-right.svg?react";
 import CameraIcon from "../../assets/SVG/camera.svg?react";
 import PrimaryButton from "../../Common/Button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+
+const LocationLabel = ({ lat, lng, address }) => {
+  const [label, setLabel] = useState(address || "");
+
+  useEffect(() => {
+    if (address) return;
+    if (!lat || !lng) {
+      setLabel("Location not available");
+      return;
+    }
+    fetch(
+      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`,
+      { headers: { "Accept-Language": "en" } },
+    )
+      .then((r) => r.json())
+      .then((data) => {
+        const { city, town, village, county, state, country } =
+          data.address || {};
+        setLabel(
+          [city || town || village || county, state, country]
+            .filter(Boolean)
+            .join(", ") || "Location not available",
+        );
+      })
+      .catch(() => setLabel("Location not available"));
+  }, [lat, lng, address]);
+
+  return <span>{label || "..."}</span>;
+};
 
 const SinglePage = () => {
   const navigate = useNavigate();
@@ -77,7 +106,11 @@ const SinglePage = () => {
             <div className="flex items-start gap-2 pt-3">
               <LocationIcon />
               <p className="text-sm font-normal text-[#666666]">
-                {carDetail?.business?.location?.address}
+                <LocationLabel
+                  lat={carDetail?.business?.location?.lat}
+                  lng={carDetail?.business?.location?.lng}
+                  address={carDetail?.business?.location?.address}
+                />
               </p>
             </div>
           </div>
@@ -145,7 +178,11 @@ const SinglePage = () => {
               )}
             </span>
             <p className="text-[#666666] font-medium text-sm pt-4">
-              {carDetail?.business?.location?.address}
+              <LocationLabel
+                lat={carDetail?.business?.location?.lat}
+                lng={carDetail?.business?.location?.lng}
+                address={carDetail?.business?.location?.address}
+              />
             </p>
             <span
               className="pt-4 text-[#00796B] text-[16px] font-medium underline underline-offset-2 cursor-pointer"

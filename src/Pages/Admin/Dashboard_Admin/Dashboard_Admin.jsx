@@ -1,4 +1,4 @@
-﻿import { useState, useRef, useMemo } from "react";
+﻿import { useState, useRef, useMemo, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import "./Dashboard-admin.css";
@@ -175,10 +175,45 @@ const Dashboard_Admin = () => {
   };
 
   // Location template
-  const locationBodyTemplate = (rowData) => {
+  const LocationCell = ({ lat, lng, address }) => {
+    const [label, setLabel] = useState(address || "");
+
+    useEffect(() => {
+      if (address) return;
+      if (!lat || !lng) {
+        setLabel("N/A");
+        return;
+      }
+      fetch(
+        `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`,
+        { headers: { "Accept-Language": "en" } },
+      )
+        .then((r) => r.json())
+        .then((data) => {
+          const { city, town, village, county, state, country } =
+            data.address || {};
+          setLabel(
+            [city || town || village || county, state, country]
+              .filter(Boolean)
+              .join(", ") || "N/A",
+          );
+        })
+        .catch(() => setLabel("N/A"));
+    }, [lat, lng, address]);
+
     return (
-      <span className="cell-content">{rowData?.location?.city || "N/A"}</span>
+      <span
+        className="cell-content block truncate max-w-[260px]"
+        title={label || ""}
+      >
+        {label || "..."}
+      </span>
     );
+  };
+
+  const locationBodyTemplate = (rowData) => {
+    const { address, lat, lng } = rowData?.location || {};
+    return <LocationCell lat={lat} lng={lng} address={address} />;
   };
 
   // Ads count template
@@ -325,7 +360,7 @@ const Dashboard_Admin = () => {
                 header="Location"
                 body={locationBodyTemplate}
                 headerClassName="bg-blue-600 text-white"
-                style={{ width: "303px" }}
+                style={{ width: "260px", maxWidth: "260px" }}
               />
               <Column
                 header="Ads"
