@@ -8,4 +8,9 @@ export const initialValues = (user) => ({
   shopName: user?.business?.shopName || "",
   userName: user?.business?.userName || "",
   email: user?.business?.email || "",
+  location: {
+    lat: user?.business?.location?.lat || null,
+    lng: user?.business?.location?.lng || null,
+    label: user?.business?.location?.address || "",
+  },
 });

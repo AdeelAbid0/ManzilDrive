@@ -44,6 +44,8 @@ const Profile = () => {
       formData.append("shopName", values.shopName);
       formData.append("userName", values.userName);
       formData.append("email", values.email);
+      formData.append("lat", values.location.lat);
+      formData.append("lng", values.location.lng);
 
       updateProfile(formData, {
         onSuccess: (res) => {

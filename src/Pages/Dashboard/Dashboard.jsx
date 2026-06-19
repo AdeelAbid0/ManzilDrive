@@ -569,7 +569,7 @@ const Dashboard = () => {
               <Column
                 header="Availability"
                 body={(rowData) => {
-                  const isAvailable = rowData?.status === "inactive";
+                  const isAvailable = rowData?.isAvailable;
                   return (
                     <div
                       className={`flex items-center justify-center rounded-[4px] px-2 py-[6px] ${
@@ -634,14 +634,16 @@ const Dashboard = () => {
                 {item.hasToggle && selectedRow && (
                   <div onClick={(e) => e.stopPropagation()}>
                     <InputSwitch
-                      checked={selectedRow?.status === "inactive"}
+                      checked={selectedRow?.isAvailable}
+                      disabled={updateAvailabilityLoading}
                       onChange={(e) => {
                         if (item.onToggle) {
                           item.onToggle(selectedRow, e.value);
                         }
+                        op.current?.hide();
                         updateCarAvailability(
                           {
-                            isAvailable: false,
+                            isAvailable: e.value,
                             carId: selectedRow._id,
                           },
                           {
@@ -649,15 +651,20 @@ const Dashboard = () => {
                               dispatch(
                                 showNotification({
                                   message: response?.message,
-                                  success: true,
+                                  status: "success",
                                 }),
                               );
+                              queryClient.invalidateQueries({
+                                queryKey: ["GetAllCars"],
+                              });
                             },
                             onError: (error) => {
-                              showNotification({
-                                message: error?.message,
-                                success: false,
-                              });
+                              dispatch(
+                                showNotification({
+                                  message: error?.message,
+                                  status: "error",
+                                }),
+                              );
                             },
                           },
                         );

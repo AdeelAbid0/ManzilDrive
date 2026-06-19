@@ -126,6 +126,14 @@
   min-width: 150px;
 }
 
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+  background: #00796B !important;
+}
+
+.p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover .p-inputswitch-slider {
+  background: #005f56 !important;
+}
+
 /* Responsive design for smaller screens */
 @media screen and (max-width: 1200px) {
   .dashboard {

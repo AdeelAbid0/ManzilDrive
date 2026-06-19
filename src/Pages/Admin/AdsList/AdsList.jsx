@@ -165,7 +165,6 @@ const AddList = () => {
     );
   };
 
-
   return (
     <div className="flex w-full items-center flex-col my-4 max-w-[1102px]">
       <div className="w-full">
@@ -235,80 +234,80 @@ const AddList = () => {
               <p className="text-red-500">Error loading data</p>
             </div>
           ) : (
-          <DataTable
-            value={GetAdsList?.data || []}
-            rows={limit}
-            paginator={false}
-            className="w-full"
-          >
-            <Column
-              header="Ad Title"
-              body={(rowData) => (
-                <div className="flex items-center gap-2">
-                  <img
-                    src={`${rowData?.photos[0]}`}
-                    alt="ad-image"
-                    className="!w-10 !h-10 object-cover rounded"
-                  />
+            <DataTable
+              value={GetAdsList?.data || []}
+              rows={limit}
+              paginator={false}
+              className="w-full"
+            >
+              <Column
+                header="Ad Title"
+                body={(rowData) => (
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={`${rowData?.photos[0]}`}
+                      alt="ad-image"
+                      className="!w-10 !h-10 object-cover rounded"
+                    />
+                    <p className="text-sm text-[#666666] font-normal">
+                      {rowData?.make?.name ? `${rowData?.make?.name} ` : ""}{" "}
+                      {rowData?.model?.name ? `${rowData?.model?.name}` : ""}{" "}
+                      {rowData?.year ? `${rowData?.year}` : ""}
+                    </p>
+                  </div>
+                )}
+                headerClassName="bg-blue-600 text-start py-2"
+              />
+              <Column
+                header="User Name"
+                body={(rowData) => (
                   <p className="text-sm text-[#666666] font-normal">
-                    {rowData?.make?.name ? `${rowData?.make?.name} ` : ""}{" "}
-                    {rowData?.model?.name ? `${rowData?.model?.name}` : ""}{" "}
-                    {rowData?.year ? `${rowData?.year}` : ""}
+                    {rowData?.business?.name || "N/A"}
                   </p>
-                </div>
-              )}
-              headerClassName="bg-blue-600 text-start py-2"
-            />
-            <Column
-              header="User Name"
-              body={(rowData) => (
-                <p className="text-sm text-[#666666] font-normal">
-                  {rowData?.business?.name || "N/A"}
-                </p>
-              )}
-              headerClassName="bg-blue-600 text-white text-start py-2"
-            />
-            <Column
-              header="Phone/Email"
-              body={(rowData) => (
-                <p className="text-sm text-[#666666] font-normal">
-                  {rowData?.phoneNumber
-                    ? `${rowData?.phoneNumber}`
-                    : rowData?.business?.email
-                      ? `${rowData.business.email}`
-                      : "N/A"}
-                </p>
-              )}
-              headerClassName="bg-blue-600 text-white text-start py-2"
-            />
-            <Column
-              header="Status"
-              body={(rowData) => {
-                const s = rowData?.status;
-                const styles =
-                  s === "live"
-                    ? "bg-[#00796B1A] text-[#00796B]"
-                    : s === "pending"
-                      ? "bg-[#F57C001A] text-[#F57C00]"
-                      : s === "inactive"
-                        ? "bg-[#6161611A] text-[#616161]"
-                        : "bg-gray-100 text-gray-500";
-                return (
-                  <p
-                    className={`inline-flex items-center justify-center px-3 py-1 text-sm font-normal rounded-[4px] capitalize ${styles}`}
-                  >
-                    {s || "N/A"}
+                )}
+                headerClassName="bg-blue-600 text-white text-start py-2"
+              />
+              <Column
+                header="Phone/Email"
+                body={(rowData) => (
+                  <p className="text-sm text-[#666666] font-normal">
+                    {rowData?.phoneNumber
+                      ? `${rowData?.phoneNumber}`
+                      : rowData?.business?.email
+                        ? `${rowData.business.email}`
+                        : "N/A"}
                   </p>
-                );
-              }}
-              headerClassName="bg-blue-600 text-white text-start py-2"
-            />
-            <Column
-              header="Action"
-              body={actionBodyTemplate}
-              headerClassName="bg-blue-600 text-white text-start py-2"
-            />
-          </DataTable>
+                )}
+                headerClassName="bg-blue-600 text-white text-start py-2"
+              />
+              <Column
+                header="Status"
+                body={(rowData) => {
+                  const s = rowData?.status;
+                  const styles =
+                    s === "live"
+                      ? "bg-[#00796B1A] text-[#00796B]"
+                      : s === "pending"
+                        ? "bg-[#F57C001A] text-[#F57C00]"
+                        : s === "inactive"
+                          ? "bg-[#6161611A] text-[#616161]"
+                          : "bg-gray-100 text-gray-500";
+                  return (
+                    <p
+                      className={`inline-flex items-center justify-center px-3 py-1 text-sm font-normal rounded-[4px] capitalize ${styles}`}
+                    >
+                      {s || "N/A"}
+                    </p>
+                  );
+                }}
+                headerClassName="bg-blue-600 text-white text-start py-2"
+              />
+              <Column
+                header="Action"
+                body={actionBodyTemplate}
+                headerClassName="bg-blue-600 text-white text-start py-2"
+              />
+            </DataTable>
           )}
 
           <OverlayPanel ref={op}>

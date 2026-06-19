@@ -5,7 +5,7 @@ export const initialValues = {
   model: "",
   variant: "",
   // status: ["active"],
-  status: ["pending"],
+  status: [],
   city: "",
   location: { lat: null, lng: null, label: "" },
   transmission: [],
