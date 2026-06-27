@@ -58,7 +58,12 @@ const Profile = () => {
           );
         },
         onError: (err) => {
-          dispatch(showNotification({ status: "error", message: err?.message || "Update failed" }));
+          dispatch(
+            showNotification({
+              status: "error",
+              message: err?.message || "Update failed",
+            }),
+          );
         },
       });
     },
@@ -102,7 +107,9 @@ const Profile = () => {
               ) : (
                 <div className="w-20 h-20 rounded-xl border-2 border-dashed border-[#BFD0CB] flex flex-col items-center justify-center gap-1 hover:border-primary transition-colors">
                   <i className="pi pi-plus text-primary text-xl"></i>
-                  <span className="text-[9px] font-inter text-[#6B7B7A] leading-tight text-center">Upload Photo</span>
+                  <span className="text-[9px] font-inter text-[#6B7B7A] leading-tight text-center">
+                    Upload Photo
+                  </span>
                 </div>
               )}
             </label>

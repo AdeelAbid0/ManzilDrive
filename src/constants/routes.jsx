@@ -17,6 +17,19 @@ export const ROUTES = {
   EDITAD: "/editAd/:id",
   PROFILE: "/profile",
 
+  // EVENTS ROUTES (private - user's own events)
+  EVENTS: "/events",
+  CREATE_EVENT: "/create-event",
+  EDIT_EVENT: "/edit-event/:id",
+  EVENT_DETAIL: "/event-detail/:id",
+
+  // PUBLIC EVENTS ROUTES
+  PUBLIC_EVENTS: "/events-listing",
+  PUBLIC_EVENT_DETAIL: "/events-listing/:id",
+
+  // ADMIN EVENTS ROUTE
+  ADMIN_EVENTS: "/admin-events",
+
   // ADMIN ROUTES
   DASHBOARD_ADMIN: "/dashboard-admin",
   LIST_ADS: "/list-ads",

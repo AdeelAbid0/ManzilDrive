@@ -16,6 +16,7 @@ const Header = ({ isPrivateRoute }) => {
   const [openProfile, setOpenProfile] = useState(false);
   const [menu, setMenu] = useState(false);
   const user = useSelector((state) => state.user.user);
+  const isAdmin = user?.business?.role && user.business.role !== "customer";
   const profileDropdownRef = useRef(null);
 
   useEffect(() => {
@@ -59,6 +60,16 @@ const Header = ({ isPrivateRoute }) => {
         </div>
         <div className="hidden md:flex justify-end w-[81.9%]">
           <div className="flex items-center gap-3">
+            {!isAdmin && (
+              <NavLink
+                to={ROUTES.PUBLIC_EVENTS}
+                className={({ isActive }) =>
+                  `font-inter font-medium text-sm px-3 py-1 rounded transition-colors duration-200 ${isActive ? "text-primary bg-[#00796B1A]" : "text-[#505F6A] hover:text-primary"}`
+                }
+              >
+                Events
+              </NavLink>
+            )}
             {user ? (
               <div
                 className="flex items-center w-[68px] h-10 gap-1 cursor-pointer profile-icon-container"

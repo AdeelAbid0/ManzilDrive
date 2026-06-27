@@ -13,6 +13,10 @@ const Dashboard_Admin = lazy(
 );
 const BoostAdds = lazy(() => import("../../Pages/Admin/BoostAds/BoostAds"));
 const Products = lazy(() => import("../../Pages/Products/Product"));
+const Events = lazy(() => import("../../Pages/Events/Events"));
+const CreateEvent = lazy(() => import("../../Pages/Events/CreateEvent"));
+const EventDetail = lazy(() => import("../../Pages/Events/EventDetail"));
+const AdminEventsList = lazy(() => import("../../Pages/Admin/EventsList/EventsList"));
 
 export const PRIVATE_ROUTES = [
   {
@@ -84,6 +88,46 @@ export const PRIVATE_ROUTES = [
     element: (
       <PrivateRoutes>
         <Products />
+      </PrivateRoutes>
+    ),
+  },
+  {
+    path: ROUTES.EVENTS,
+    element: (
+      <PrivateRoutes>
+        <Events />
+      </PrivateRoutes>
+    ),
+  },
+  {
+    path: ROUTES.CREATE_EVENT,
+    element: (
+      <PrivateRoutes>
+        <CreateEvent />
+      </PrivateRoutes>
+    ),
+  },
+  {
+    path: ROUTES.EDIT_EVENT,
+    element: (
+      <PrivateRoutes>
+        <CreateEvent />
+      </PrivateRoutes>
+    ),
+  },
+  {
+    path: ROUTES.EVENT_DETAIL,
+    element: (
+      <PrivateRoutes>
+        <EventDetail />
+      </PrivateRoutes>
+    ),
+  },
+  {
+    path: ROUTES.ADMIN_EVENTS,
+    element: (
+      <PrivateRoutes>
+        <AdminEventsList />
       </PrivateRoutes>
     ),
   },

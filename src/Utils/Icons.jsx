@@ -862,6 +862,17 @@ export const EditProfile = () => {
     </>
   );
 };
+export const EventsIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="2" y="3.333" width="12" height="10.667" rx="1.333" stroke="#00796B" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M10.667 2V4.667" stroke="#00796B" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M5.333 2V4.667" stroke="#00796B" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M2 7.333H14" stroke="#00796B" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="5.333" cy="10.667" r="0.833" fill="#00796B"/>
+    <circle cx="8" cy="10.667" r="0.833" fill="#00796B"/>
+    <circle cx="10.667" cy="10.667" r="0.833" fill="#00796B"/>
+  </svg>
+);
 export const Hambergur = () => {
   return (
     <>

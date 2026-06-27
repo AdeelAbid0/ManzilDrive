@@ -77,6 +77,24 @@ export const ApiUrl = {
       `car-makemodel/variantby-model?modelId=${modelId}`,
   },
 
+  Events: {
+    Create: "events",
+    GetMyEvents: (page, limit, status) =>
+      `events/my?page=${page}&limit=${limit}&status=${status}`,
+    Update: (id) => `events/${id}`,
+    Delete: (id) => `events/${id}`,
+    ToggleStatus: (id) => `events/${id}/toggle-status`,
+    GetPublicEvents: (page, limit) =>
+      `events/public?page=${page}&limit=${limit}`,
+    GetPublicEventById: (id) => `events/public/${id}`,
+    Admin: {
+      GetAll: (page, limit, status) =>
+        `events/admin/all?page=${page}&limit=${limit}&status=${status}`,
+      Approve: (id) => `events/admin/${id}/approve`,
+      Reject: (id) => `events/admin/${id}/reject`,
+    },
+  },
+
   // Admin side Apis
   AdminDashboard: {
     GetAllBusinesses: (page, limit) =>

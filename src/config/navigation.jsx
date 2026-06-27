@@ -1,4 +1,4 @@
-﻿import { DashboardIcon } from "../Utils/Icons";
+﻿import { DashboardIcon, EventsIcon } from "../Utils/Icons";
 import ProfileIcon from "../assets/SVG/profile-icon.svg?react";
 import LogoutIcon from "../assets/SVG/logout.svg?react";
 import { ROUTES } from "../constants/routes";
@@ -8,6 +8,11 @@ export const sidebarNavItems = [
     title: "Dashboard",
     path: ROUTES.DASHBOARD,
     icon: DashboardIcon,
+  },
+  {
+    title: "Events",
+    path: ROUTES.EVENTS,
+    icon: EventsIcon,
   },
 ];
 
@@ -26,6 +31,11 @@ export const sidebarNavItemsAdmin = [
     title: "Boost Ads",
     path: ROUTES.BOOST_ADS,
     icon: DashboardIcon,
+  },
+  {
+    title: "Events",
+    path: ROUTES.ADMIN_EVENTS,
+    icon: EventsIcon,
   },
 ];
 
